@@ -19,8 +19,12 @@ function EmailModla() {
   };
 
   return (
-    <>
-      <Button type="primary" onClick={showModal}>
+    <div>
+      <Button
+        type="primary"
+        onClick={showModal}
+        style={{ display: 'flex', margin: '0px 1rem 0px 0px' }}
+      >
         인증하기
       </Button>
       <Modal
@@ -32,7 +36,7 @@ function EmailModla() {
         <p>인증번호를 입력해주세요.</p>
         <Input style={{ width: '80%' }} />
       </Modal>
-    </>
+    </div>
   );
 }
 

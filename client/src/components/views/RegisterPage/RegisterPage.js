@@ -1,17 +1,7 @@
 import React, { useState } from 'react';
 import residences from 'utils/areaInfo';
 import EmailModal from './Sections/EmailModla';
-import {
-  Form,
-  Input,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-} from 'antd';
+import { Form, Input, Cascader, Select, Checkbox, Button } from 'antd';
 import 'antd/dist/antd.css';
 
 const { Option } = Select;
@@ -67,22 +57,6 @@ const RegisterPage = () => {
       </Select>
     </Form.Item>
   );
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-
-  const onWebsiteChange = value => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(
-        ['.com', '.org', '.net'].map(domain => `${value}${domain}`),
-      );
-    }
-  };
-
-  const websiteOptions = autoCompleteResult.map(website => ({
-    label: website,
-    value: website,
-  }));
 
   return (
     <div style={{ padding: '2rem' }}>
@@ -111,9 +85,7 @@ const RegisterPage = () => {
             },
           ]}
         >
-          <Input style={{ width: '65%', margin: '0.5rem' }} />
-          {/* <Button size={size}>인증하기</Button> */}
-          <EmailModal />
+          <Input style={{ margin: '0.5rem' }} />
         </Form.Item>
 
         <Form.Item
@@ -204,9 +176,12 @@ const RegisterPage = () => {
           </Checkbox>
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
-            Register
-          </Button>
+          <div style={{ display: 'flex' }}>
+            <EmailModal />
+            <Button type="primary" htmlType="submit">
+              Register
+            </Button>
+          </div>
         </Form.Item>
       </Form>
     </div>
