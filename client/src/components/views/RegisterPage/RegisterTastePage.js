@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import TasteAvatar from './Sections/TasteAvatar';
-import { Typography, Button, Link } from 'antd';
+import { Typography, Button, Steps } from 'antd';
 import 'antd/dist/antd.css';
 
 function RegisterTastePage() {
   const { Title } = Typography;
+  const { Step } = Steps;
+
   const [TasteList, setTasteList] = useState([
     { name: '한식', link: 'https://picsum.photos/100/100/?random' },
     { name: '분식', link: 'https://source.unsplash.com/random' },
@@ -18,12 +20,17 @@ function RegisterTastePage() {
   ]);
 
   return (
-    <div style={{ margin: '20% auto' }}>
+    <div style={{ margin: '5% auto', padding: '2rem' }}>
+      <Steps size="small" current={1}>
+        <Step title="회원가입" />
+        <Step title="취향선택" />
+        <Step title="완료" />
+      </Steps>
+      ,
       <Title level={3} style={{ textAlign: 'center' }}>
         당신의 취향을 알려주세요
       </Title>
       <TasteAvatar list={TasteList} />
-
       <a href={`/`}>
         <Button
           type="primary"

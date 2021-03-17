@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import residences from 'utils/areaInfo';
 import EmailModal from './Sections/EmailModla';
-import { Form, Input, Cascader, Select, Checkbox, Button } from 'antd';
+import { Form, Input, Cascader, Select, Checkbox, Button, Steps } from 'antd';
 import 'antd/dist/antd.css';
 
 const { Option } = Select;
@@ -40,6 +40,7 @@ const tailFormItemLayout = {
 const RegisterPage = () => {
   const [form] = Form.useForm();
   const [size, setsize] = useState('middle');
+  const { Step } = Steps;
 
   const onFinish = values => {
     console.log('Received values of form: ', values);
@@ -59,7 +60,12 @@ const RegisterPage = () => {
   );
 
   return (
-    <div style={{ padding: '2rem' }}>
+    <div style={{ margin: '5% auto', padding: '2rem' }}>
+      <Steps size="small" current={0}>
+        <Step title="회원가입" />
+        <Step title="취향선택" />
+        <Step title="완료" />
+      </Steps>
       <Form
         {...formItemLayout}
         form={form}
@@ -141,8 +147,8 @@ const RegisterPage = () => {
           ]}
         >
           <Input style={{ width: '65%', margin: '0.5rem' }} />
-          <Button size={size}>랜덤선택</Button>
         </Form.Item>
+        <Button size={size}>랜덤선택</Button>
 
         <Form.Item
           name="residence"
@@ -178,8 +184,9 @@ const RegisterPage = () => {
         <Form.Item {...tailFormItemLayout}>
           <div style={{ display: 'flex' }}>
             <EmailModal />
-            <Button type="primary" htmlType="submit">
-              Register
+
+            <Button href={'/register/taste'} type="primary" htmlType="submit">
+              다음
             </Button>
           </div>
         </Form.Item>

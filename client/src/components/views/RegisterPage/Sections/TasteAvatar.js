@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Avatar, Row, Col, Image } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Row, Col } from 'antd';
+
 import 'antd/dist/antd.css';
 
 function TasteAvatar(props) {
