@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import 'antd/dist/antd.css';
 import LoginPage from './components/views/LoginPage/LoginPage';
 import MainPage from './components/views/MainPage/MainPage';
 import RegisterPage from './components/views/RegisterPage/RegisterPage';

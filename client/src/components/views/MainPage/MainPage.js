@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Carousel, Typography } from 'antd';
+import { Typography } from 'antd';
 import MainPageBar from './Sections/MainPageBar';
 import RecommendFooder from './Sections/RecommendFooder';
 import StoreCard from 'utils/StoreCard';
+import { render } from '@testing-library/react';
 
 function MainPage() {
   const [Address, setAddress] = useState(''); //초기에 입력한 주소 받아와서 할당하기
@@ -24,6 +25,7 @@ function MainPage() {
       img: 'https://picsum.photos/100/100/?random',
     },
   ]);
+  const [Stores, setStore] = useState([1, 2, 3]);
   const { Title, Text } = Typography;
 
   useEffect(() => {
@@ -31,18 +33,19 @@ function MainPage() {
     setAddress(newAddress);
   }, []);
 
+  const renderStoreCard = Stores.map((store, index) => {
+    return <StoreCard />;
+  });
+
   return (
     <div>
       <MainPageBar address={Address} />
       <div>
         <Title level={4}>뜨고 있는 인기 푸더!!</Title>
         <Text strong>이 지역 인기 푸더를 팔로잉하고 소식을 받아보세요!</Text>
-        {/* {renderRecommand} */}
-        <div>
-          <RecommendFooder list={Fooders} />
-        </div>
+        <RecommendFooder list={Fooders} />
       </div>
-      <StoreCard />
+      {renderStoreCard}
     </div>
   );
 }
