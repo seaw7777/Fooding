@@ -25,12 +25,18 @@ SECRET_KEY = '*9kbcj#=fpk8le67w&hpg0u+%7+6%#lubs5lax4)jg#w_%y-nq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'accompany', #동행자기반추천
+    'accounts',  # 회원관리
+    'main',  #메인(팔로워기반추천)
+    'reviews',  #리뷰
+    'search',  #검색
+    'stores', #가게상세
 
     'rest_framework',
     'django_extensions',
@@ -42,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
