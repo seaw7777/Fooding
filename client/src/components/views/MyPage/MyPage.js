@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Row, Col, Avatar, Badge, Button } from 'antd';
 import { Tabs, Tab } from 'react-bootstrap';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
-import Diary from './Components/Diary';
+import Diary from './Sections/Diary';
 // import DetailReview from './Components/DetailReview';
 import ReviewCard from '../../../utils/ReviewCard';
 
@@ -13,7 +13,8 @@ const rowStyle = {
 };
 
 function MyPage() {
-  const [showPage, setshowPage] = useState(true);
+  const [showDiaryPage, setshowDiaryPage] = useState(true);
+  const [showReviewCardPage, setshowReviewCardPage] = useState(false);
   const [diaryButtonStyle, setdiaryButtonStyle] = useState({
     backgroundColor: '#faad14',
     borderColor: '#faad14',
@@ -23,26 +24,29 @@ function MyPage() {
     borderColor: '#faad14',
   });
 
-  const showPageButton = () => {
-    setshowPage(!showPage);
-    if (showPage === false) {
-      setdiaryButtonStyle({
-        backgroundColor: '#faad14',
-        borderColor: '#faad14',
-      });
-      setdetailButtonStyle({ color: '#faad14', borderColor: '#faad14' });
-    } else {
-      setdiaryButtonStyle({
-        color: '#faad14',
-        borderColor: '#faad14',
-        backgroundColor: 'white',
-      });
-      setdetailButtonStyle({
-        color: 'white',
-        backgroundColor: '#faad14',
-        borderColor: '#faad14',
-      });
-    }
+  const showDiaryPageButton = () => {
+    setshowDiaryPage(true);
+    setshowReviewCardPage(false);
+    setdiaryButtonStyle({
+      backgroundColor: '#faad14',
+      borderColor: '#faad14',
+    });
+    setdetailButtonStyle({ color: '#faad14', borderColor: '#faad14' });
+  };
+
+  const showReviewCardPageButton = () => {
+    setshowDiaryPage(false);
+    setshowReviewCardPage(true);
+    setdiaryButtonStyle({
+      color: '#faad14',
+      borderColor: '#faad14',
+      backgroundColor: 'white',
+    });
+    setdetailButtonStyle({
+      color: 'white',
+      backgroundColor: '#faad14',
+      borderColor: '#faad14',
+    });
   };
 
   return (
@@ -102,7 +106,7 @@ function MyPage() {
                   style={diaryButtonStyle}
                   shape="round"
                   size={'small'}
-                  onClick={showPageButton}
+                  onClick={showDiaryPageButton}
                 >
                   다이어리
                 </Button>
@@ -112,13 +116,14 @@ function MyPage() {
                   style={detailButtonStyle}
                   shape="round"
                   size={'small'}
-                  onClick={showPageButton}
+                  onClick={showReviewCardPageButton}
                 >
                   리뷰 상세
                 </Button>
               </Col>
             </Row>
-            {showPage ? <Diary /> : <ReviewCard />}
+            {showDiaryPage && <Diary />}
+            {showReviewCardPage && <ReviewCard />}
           </Tab>
           <Tab eventKey="likePlace" title="찜한 장소"></Tab>
         </Tabs>
