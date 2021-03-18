@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '*9kbcj#=fpk8le67w&hpg0u+%7+6%#lubs5lax4)jg#w_%y-nq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -128,6 +128,14 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+# DRF auth settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 
 # Static files (CSS, JavaScript, Images)
