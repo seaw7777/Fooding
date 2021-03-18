@@ -1,33 +1,35 @@
 import React from 'react';
-import { Card, Avatar } from 'antd';
+import { Card, Avatar, Carousel } from 'antd';
 import { PlusCircleFilled } from '@ant-design/icons';
 
-function RecommendFooder() {
+function RecommendFooder(props) {
   const { Meta } = Card;
 
   return (
-    <div>
-      <Card
-        hoverable
-        style={{ width: 200, border: 'solid orange-1', padding: '2rem' }}
-        cover={
-          <img
-            alt="example"
-            src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-          />
-        }
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Meta
-            avatar={
-              <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-            }
-            title="푸더 이름 넣는 곳"
-            description="푸더 설명"
-          />
-          <PlusCircleFilled />
-        </div>
-      </Card>
+    <div style={{ width: '250px', margin: 'auto' }}>
+      <Carousel>
+        {props.list.map((fooder, index) => (
+          <div style={{ height: '100px', width: '150px' }}>
+            <Card
+              hoverable
+              cover={
+                <img alt="example" src={fooder.img} style={{ width: '100%' }} />
+              }
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Meta
+                  avatar={
+                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                  }
+                  title={fooder.title}
+                  description="푸더 설명"
+                />
+                <PlusCircleFilled />
+              </div>
+            </Card>
+          </div>
+        ))}
+      </Carousel>
     </div>
   );
 }
