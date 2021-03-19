@@ -5,6 +5,7 @@ import RegisterPage from './components/views/RegisterPage/RegisterPage';
 import RegisterTastePage from './components/views/RegisterPage/RegisterTastePage';
 import Mypage from './components/views/MyPage/MyPage';
 import FollowPage from './components/views/FollowPage/FollowPage';
+import StoreDetailPage from './components/views/StoreDetailPage/StoreDetailPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route exact path="/register/taste" component={RegisterTastePage} />
             <Route exact path="/mypage" component={Mypage} />
             <Route exact path="/follow" component={FollowPage} />
+            <Route exact path="/store/:storeId" component={StoreDetailPage} />
           </Switch>
         </div>
       </Router>
