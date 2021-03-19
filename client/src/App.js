@@ -9,6 +9,8 @@ import SpoonPage from './components/views/SpoonPage/SpoonPage';
 import Footer from './components/views/Footer/Footer';
 import NavBarPage from './components/views/NavBar/NavBarPage';
 import UserUpdatePage from './components/views/UserUpdatePage/UserUpdatePage';
+import StoreDetailPage from './components/views/StoreDetailPage/StoreDetailPage';
+
 function App() {
   return (
     <div className="App">
@@ -24,6 +26,7 @@ function App() {
             <Route exact path="/follow" component={FollowPage} />
             <Route exact path="/mypage/spoon" component={SpoonPage} />
             <Route exact path="/mypage/update" component={UserUpdatePage} />
+            <Route exact path="/store/:storeId" component={StoreDetailPage} />
           </Switch>
         </div>
         <Footer />

@@ -61,7 +61,7 @@ const RegisterPage = () => {
 
   return (
     <div style={{ margin: '5% auto', padding: '2rem' }}>
-      <Steps size="small" current={0}>
+      <Steps size="small" current={0} style={{ Color: '#faad14' }}>
         <Step title="회원가입" />
         <Step title="취향선택" />
         <Step title="완료" />

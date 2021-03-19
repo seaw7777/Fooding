@@ -3,7 +3,6 @@ import { Typography } from 'antd';
 import MainPageBar from './Sections/MainPageBar';
 import RecommendFooder from './Sections/RecommendFooder';
 import StoreCard from 'utils/StoreCard';
-import { render } from '@testing-library/react';
 
 function MainPage() {
   const [Address, setAddress] = useState(''); //초기에 입력한 주소 받아와서 할당하기
@@ -25,7 +24,7 @@ function MainPage() {
       img: 'https://picsum.photos/100/100/?random',
     },
   ]);
-  const [Stores, setStore] = useState([1, 2, 3]);
+  const [Stores, setStore] = useState([{ _id: 1 }, { _id: 2 }, { _id: 3 }]);
   const { Title, Text } = Typography;
 
   useEffect(() => {
@@ -34,7 +33,7 @@ function MainPage() {
   }, []);
 
   const renderStoreCard = Stores.map((store, index) => {
-    return <StoreCard />;
+    return <StoreCard store={store} />;
   });
 
   return (
