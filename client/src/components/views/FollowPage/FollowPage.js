@@ -27,7 +27,11 @@ function FollowPage() {
           paddingBottom: '15px',
         }}
       >
-        <LeftCircleOutlined style={{ fontSize: '25px', marginRight: '10px' }} />
+        <a href="/mypage" style={{ textDecoration: 'none', color: 'grey' }}>
+          <LeftCircleOutlined
+            style={{ fontSize: '25px', marginRight: '10px' }}
+          />
+        </a>
         팔로우 관리
       </div>
       <div style={{ marginTop: '1rem' }}>
@@ -35,7 +39,11 @@ function FollowPage() {
           type="primary"
           shape="round"
           size={'small'}
-          style={{ marginRight: '10px' }}
+          style={{
+            marginRight: '10px',
+            backgroundColor: '#faad14',
+            borderColor: '#faad14',
+          }}
           onClick={showFollowListButton}
         >
           팔로우
@@ -45,6 +53,7 @@ function FollowPage() {
           shape="round"
           size={'small'}
           onClick={showFollowingListButton}
+          style={{ backgroundColor: '#faad14', borderColor: '#faad14' }}
         >
           팔로잉
         </Button>

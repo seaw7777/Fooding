@@ -3,7 +3,6 @@ import { Row, Col, Avatar, Badge, Button } from 'antd';
 import { Tabs, Tab } from 'react-bootstrap';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
 import Diary from './Sections/Diary';
-// import DetailReview from './Components/DetailReview';
 import ReviewCard from '../../../utils/ReviewCard';
 
 const rowStyle = {
@@ -55,7 +54,6 @@ function MyPage() {
         style={{
           backgroundColor: '#ffd666',
           width: '100%',
-          marginTop: '3rem',
           paddingBottom: '3rem',
           paddingTop: '2rem',
         }}
@@ -68,7 +66,12 @@ function MyPage() {
                 <EditOutlined style={{ fontSize: 20, marginRight: '-22' }} />
               }
             >
-              <Avatar size={64} icon={<UserOutlined />} />
+              <a
+                href="/mypage/update"
+                style={{ color: 'black', textDecoration: 'none' }}
+              >
+                <Avatar size={64} icon={<UserOutlined />} />
+              </a>
             </Badge>
           </Col>
         </Row>
@@ -83,7 +86,10 @@ function MyPage() {
             <span>리뷰</span>
           </Col>
           <Col span={6}>
-            <a href="/follow" style={{ color: 'black' }}>
+            <a
+              href="/follow"
+              style={{ color: 'black', textDecoration: 'none' }}
+            >
               팔로우
             </a>
           </Col>
@@ -91,16 +97,26 @@ function MyPage() {
             <span>팔로잉</span>
           </Col>
           <Col span={6}>
-            <span>스푼</span>
+            <a
+              href="/mypage/spoon"
+              style={{ color: 'black', textDecoration: 'none' }}
+            >
+              스푼
+            </a>
           </Col>
         </Row>
       </div>
 
       <div>
-        <Tabs fill defaultActiveKey="review" id="uncontrolled-tab-example">
+        <Tabs
+          className="myTabs"
+          fill
+          defaultActiveKey="review"
+          id="uncontrolled-tab-example"
+        >
           <Tab eventKey="review" title="리뷰">
             <Row style={{ marginTop: '1rem' }}>
-              <Col span={6} offset={6}>
+              <Col span={6} offset={(0, 6)}>
                 <Button
                   type="primary"
                   style={diaryButtonStyle}
@@ -111,7 +127,7 @@ function MyPage() {
                   다이어리
                 </Button>
               </Col>
-              <Col>
+              <Col span={6} offset={(6, 0)}>
                 <Button
                   style={detailButtonStyle}
                   shape="round"
