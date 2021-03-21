@@ -1,13 +1,16 @@
-import React from 'react';
-import { Avatar, Badge, Card } from 'antd';
+import React, { useState } from 'react';
+import { LeftCircleOutlined } from '@ant-design/icons';
 import UserInfoUpdate from './Sections/UserInfoUpdate';
-import {
-  LeftCircleOutlined,
-  UserOutlined,
-  EditOutlined,
-} from '@ant-design/icons';
+import UserImageUpdate from './Sections/UserImageUpdate';
 
 function UserUpdatePage() {
+  const [checkModal, setcheckModal] = useState(false);
+
+  const modalHandler = () => {
+    console.log(checkModal);
+    setcheckModal(true);
+  };
+
   return (
     <div style={{ padding: '1rem' }}>
       <div
@@ -24,14 +27,7 @@ function UserUpdatePage() {
         </a>
         회원정보 수정
       </div>
-      <div style={{ padding: '3rem', textAlign: 'center' }}>
-        <Badge
-          offset={[-10, 55]}
-          count={<EditOutlined style={{ fontSize: 20, marginRight: '-22' }} />}
-        >
-          <Avatar size={64} icon={<UserOutlined />} />
-        </Badge>
-      </div>
+      <UserImageUpdate />
       <UserInfoUpdate />
     </div>
   );
