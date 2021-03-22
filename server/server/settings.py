@@ -31,16 +31,17 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
-    'accompany', #동행자기반추천
+    'accompany',  # 동행자기반추천
     'accounts',  # 회원관리
-    'main',  #메인(팔로워기반추천)
-    'reviews',  #리뷰
-    'search',  #검색
-    'stores', #가게상세
+    'main',  # 메인(팔로워기반추천)
+    'reviews',  # 리뷰
+    'search',  # 검색
+    'stores',  # 가게상세
 
     'rest_framework',
     'django_extensions',
     'django_seed',
+    'corsheaders',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -138,10 +140,19 @@ REST_FRAMEWORK = {
 }
 
 
-JWT_AUTH = { 'JWT_ALLOW_REFRESH' : True, }
+JWT_AUTH = {'JWT_ALLOW_REFRESH': True, }
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+CORS_ORIGIN_ALLOW_ALL = False
+
+# AWS 배포할때 바꾸기
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',  # React 도메인
+    'http://localhost:8000',  # Django 도메인
+)

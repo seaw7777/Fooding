@@ -14,7 +14,7 @@ import datetime
 
 
 # Create your views here.
-#회원가입
+# 회원가입
 @api_view(['POST'])
 def signup(request):
     # password = request.data.get('password')
@@ -35,13 +35,13 @@ def signup(request):
             spoon_cnt=0,
         ).save()
 
-        return Response(status=status.HTTP_201_CREATED)
+        return Response({'success': 'success'}, status=status.HTTP_201_CREATED)
 
     except KeyError:
         return Response({'error': 'KeyError'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-#로그인
+# 로그인
 @api_view(['POST'])
 def login(request):
     if User.objects.filter(email=request.data.get('username')).exists():
@@ -50,21 +50,23 @@ def login(request):
                 'email': request.data.get('username'),
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=300),
                 "iat": datetime.datetime.utcnow()
-                },
+            },
                 SECRET_KEY,
                 algorithm="HS256"
             ).decode('UTF-8')
 
-            return Response({'token': token}, status=status.HTTP_200_OK)
+            user = User.objects.get(email=request.data.get('username'))
+
+            return Response({'email': request.data.get('username'), 'nickname': user.nickname, 'address': user.address, 'spoon_cnt': user.spoon_cnt, 'token': token}, status=status.HTTP_200_OK)
 
         else:
             return Response({'message': '입력된 이메일 혹은 비밀번호가 틀렸습니다'}, status=status.HTTP_400_BAD_REQUEST)
-        
+
     else:
         return Response({'message': '존재하지 않는 이메일입니다'}, status=status.HTTP_400_BAD_REQUEST)
-    
 
-#회원별 회원정보 불러오기
+
+# 회원별 회원정보 불러오기
 @api_view(['GET'])
 def user_info(request, id):
     if User.objects.filter(id=id).exists():
@@ -73,12 +75,12 @@ def user_info(request, id):
         serializer = UserSerializer(user)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+
     else:
-        return Response({'message':'회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-#회원별 팔로워 불러오기
+# 회원별 팔로워 불러오기
 @api_view(['GET'])
 def follower_info(request, id):
     if User.objects.filter(id=id).exists():
@@ -89,10 +91,10 @@ def follower_info(request, id):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     else:
-        return Response({'message':'회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-#회원별 팔로잉 불러오기
+# 회원별 팔로잉 불러오기
 @api_view(['GET'])
 def following_info(request, id):
     if User.objects.filter(id=id).exists():
@@ -103,10 +105,10 @@ def following_info(request, id):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     else:
-        return Response({'message':'회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-#회원별 좋아요(가게) 불러오기
+# 회원별 좋아요(가게) 불러오기
 @api_view(['GET'])
 def like_info(request, id):
     if User.objects.filter(id=id).exists():
@@ -117,4 +119,4 @@ def like_info(request, id):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     else:
-        return Response({'message':'회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
