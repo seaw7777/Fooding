@@ -17,7 +17,6 @@ function LoginPage() {
   };
 
   const handleSubmit = event => {
-    console.log('ggxgasdfasdfgg');
     event.preventDefault();
     if (!Email || !Password) {
       return alert('모든 값을 입력해주세요.');
