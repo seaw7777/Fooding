@@ -32,7 +32,10 @@ function Footer() {
             </a>
           </Col>
           <Col span={6}>
-            <a href="" style={{ color: 'black', textDecoration: 'none' }}>
+            <a
+              href="/accompany"
+              style={{ color: 'black', textDecoration: 'none' }}
+            >
               <FcConferenceCall />
               <p style={{ fontSize: '12px', marginBottom: '8px' }}>동행자</p>
             </a>
