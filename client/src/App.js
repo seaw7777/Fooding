@@ -1,4 +1,7 @@
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { BrowserRouter as Switch, Route } from 'react-router-dom';
+import Auth from 'hoc/auth';
+/// Pages for product
 import LoginPage from './components/views/LoginPage/LoginPage';
 import MainPage from './components/views/MainPage/MainPage';
 import RegisterPage from './components/views/RegisterPage/RegisterPage';
@@ -14,26 +17,40 @@ import AccompanyPage from './components/views/AccompanyPage/AccompanyPage';
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <div style={{ paddingTop: '0', minHeight: 'calc(98vh - 45px)' }}>
-          <NavBarPage />
-          <Switch>
-            <Route exact path="/" component={MainPage} />
-            <Route exact path="/login" component={LoginPage} />
-            <Route exact path="/register" component={RegisterPage} />
-            <Route exact path="/register/taste" component={RegisterTastePage} />
-            <Route exact path="/mypage" component={Mypage} />
-            <Route exact path="/follow" component={FollowPage} />
-            <Route exact path="/mypage/spoon" component={SpoonPage} />
-            <Route exact path="/mypage/update" component={UserUpdatePage} />
-            <Route exact path="/store/:storeId" component={StoreDetailPage} />
-            <Route exact path="/accompany" component={AccompanyPage} />
-          </Switch>
-        </div>
-        <Footer />
-      </Router>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <div style={{ paddingTop: '0', minHeight: 'calc(98vh - 45px)' }}>
+        <NavBarPage />
+        <Switch>
+          <Route exact path="/" component={Auth(MainPage, true)} />
+          <Route exact path="/login" component={Auth(LoginPage, false)} />
+          <Route exact path="/register" component={Auth(RegisterPage, false)} />
+          <Route
+            exact
+            path="/register/taste"
+            component={Auth(RegisterTastePage, false)}
+          />
+          <Route exact path="/mypage" component={Auth(Mypage, true)} />
+          <Route exact path="/follow" component={Auth(FollowPage, true)} />
+          <Route exact path="/mypage/spoon" component={Auth(SpoonPage, true)} />
+          <Route
+            exact
+            path="/mypage/update"
+            component={Auth(UserUpdatePage, true)}
+          />
+          <Route
+            exact
+            path="/store/:storeId"
+            component={Auth(StoreDetailPage, true)}
+          />
+          <Route
+            exact
+            path="/accompany"
+            component={Auth(AccompanyPage, true)}
+          />
+        </Switch>
+      </div>
+      <Footer />
+    </Suspense>
   );
 }
 
