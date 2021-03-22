@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import residences from 'utils/areaInfo';
 import EmailModal from './Sections/EmailModla';
 import { Form, Input, Cascader, Select, Checkbox, Button, Steps } from 'antd';
@@ -41,6 +42,7 @@ const RegisterPage = () => {
   const [form] = Form.useForm();
   const [size, setsize] = useState('middle');
   const { Step } = Steps;
+  const dispatch = useDispatch();
 
   const onFinish = values => {
     console.log('Received values of form: ', values);
@@ -185,7 +187,11 @@ const RegisterPage = () => {
           <div style={{ display: 'flex' }}>
             <EmailModal />
 
-            <Button href={'/register/taste'} type="primary" htmlType="submit">
+            <Button
+              onClick={handleSubmit}
+              type="primary"
+              disabled={isSubmitting}
+            >
               다음
             </Button>
           </div>
