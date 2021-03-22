@@ -507,32 +507,7 @@ const areaList = [
       },
     ],
   },
-  {
-    value: '대전',
-    label: '대전',
-    children: [
-      {
-        value: '대덕구',
-        label: '대덕구',
-      },
-      {
-        value: '동구',
-        label: '동구',
-      },
-      {
-        value: '서구',
-        label: '서구',
-      },
-      {
-        value: '유성구',
-        label: '유성구',
-      },
-      {
-        value: '중구',
-        label: '중구',
-      },
-    ],
-  },
+
   {
     value: '부산',
     label: '부산',
