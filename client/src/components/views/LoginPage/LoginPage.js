@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 import './LoginPage.css';
+import { loginUser } from '../../../_actions/user_actions';
+import { useDispatch } from 'react-redux';
 
-function LoginPage() {
+function LoginPage(props) {
+  const dispatch = useDispatch();
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
 
@@ -21,6 +24,27 @@ function LoginPage() {
     if (!Email || !Password) {
       return alert('모든 값을 입력해주세요.');
     }
+    let dataToSubmit = {
+      username: Email,
+      password: Password,
+    };
+    dispatch(loginUser(dataToSubmit))
+      .then(res => {
+        console.log(res.payload);
+        if (res.payload.loginSuccess) {
+          window.localStorage.setItem('token', res.payload.token);
+          props.history.push('/');
+        } else {
+          if (res.payload.message1) {
+            alert('비밀번호가 틀렸습니다.');
+          } else {
+            alert('존재하지 않는 이메일입니다.');
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (

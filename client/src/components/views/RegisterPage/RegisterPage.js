@@ -187,13 +187,7 @@ const RegisterPage = () => {
           <div style={{ display: 'flex' }}>
             <EmailModal />
 
-            <Button
-              onClick={handleSubmit}
-              type="primary"
-              disabled={isSubmitting}
-            >
-              다음
-            </Button>
+            <Button type="primary">다음</Button>
           </div>
         </Form.Item>
       </Form>
