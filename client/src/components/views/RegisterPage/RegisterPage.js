@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { registerUser } from '_actions/user_actions';
 import residences from 'utils/areaInfo';
 import EmailModal from './Sections/EmailModla';
 import { Form, Input, Cascader, Select, Checkbox, Button, Steps } from 'antd';
@@ -38,14 +39,62 @@ const tailFormItemLayout = {
   },
 };
 
-const RegisterPage = () => {
+const RegisterPage = props => {
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [size, setsize] = useState('middle');
   const { Step } = Steps;
-  const dispatch = useDispatch();
+  const [Email, setEmail] = useState('');
+  const [NickName, setNickName] = useState('');
+  const [Password, setPassword] = useState('');
+  const [ConfirmPassword, setConfirmPassword] = useState('');
+  const [Address, setAddress] = useState([]);
 
   const onFinish = values => {
     console.log('Received values of form: ', values);
+  };
+
+  const onEmailHandler = event => {
+    setEmail(event.currentTarget.value);
+  };
+  const onPasswordHandler = event => {
+    setPassword(event.currentTarget.value);
+  };
+  const onConfirmPasswordHandler = event => {
+    setConfirmPassword(event.currentTarget.value);
+  };
+  const onNickNameHandler = event => {
+    setNickName(event.currentTarget.value);
+  };
+
+  const onAddressHandler = event => {
+    let address = event[0] + ' ' + event[1];
+    console.log(address);
+    setAddress(address);
+  };
+
+  const handlerSubmit = event => {
+    event.preventDefault();
+    // console.log(Email, Password, NickName, ConfirmPassword, Address);
+
+    //비밀번호랑 비밀번호 확인 다를때
+    if (Password !== ConfirmPassword) {
+      return alert('비밀번호와 비밀번호 확인은 같아야 합니다.');
+    }
+
+    let body = {
+      email: Email,
+      nickname: NickName,
+      password: Password,
+      address: Address,
+    };
+    dispatch(registerUser(body)).then(response => {
+      if (response.payload.success === 'success') {
+        props.history.push('/login');
+      } else {
+        alert('회원가입에 실패 했습니다.');
+      }
+    });
   };
 
   const prefixSelector = (
@@ -93,7 +142,11 @@ const RegisterPage = () => {
             },
           ]}
         >
-          <Input style={{ margin: '0.5rem' }} />
+          <Input
+            value={Email}
+            onChange={onEmailHandler}
+            style={{ margin: '0.5rem' }}
+          />
         </Form.Item>
 
         <Form.Item
@@ -107,7 +160,7 @@ const RegisterPage = () => {
           ]}
           hasFeedback
         >
-          <Input.Password />
+          <Input.Password value={Password} onChange={onPasswordHandler} />
         </Form.Item>
 
         <Form.Item
@@ -133,7 +186,10 @@ const RegisterPage = () => {
             }),
           ]}
         >
-          <Input.Password />
+          <Input.Password
+            value={ConfirmPassword}
+            onChange={onConfirmPasswordHandler}
+          />
         </Form.Item>
 
         <Form.Item
@@ -148,7 +204,11 @@ const RegisterPage = () => {
             },
           ]}
         >
-          <Input style={{ width: '65%', margin: '0.5rem' }} />
+          <Input
+            value={NickName}
+            onChange={onNickNameHandler}
+            style={{ width: '65%', margin: '0.5rem' }}
+          />
         </Form.Item>
         <Button size={size}>랜덤선택</Button>
 
@@ -163,7 +223,7 @@ const RegisterPage = () => {
             },
           ]}
         >
-          <Cascader options={residences} />
+          <Cascader onChange={onAddressHandler} options={residences} />
         </Form.Item>
 
         <Form.Item
@@ -188,6 +248,9 @@ const RegisterPage = () => {
             <EmailModal />
 
             <Button type="primary">다음</Button>
+            <Button onClick={handlerSubmit} type="primary">
+              다음
+            </Button>
           </div>
         </Form.Item>
       </Form>

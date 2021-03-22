@@ -1,2 +1,2 @@
 //serer Routes
-export const SERVER = 'https://localhost:8000/';
+export const SERVER = 'http://localhost:8000/';

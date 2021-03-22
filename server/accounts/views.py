@@ -35,7 +35,7 @@ def signup(request):
             spoon_cnt=0,
         ).save()
 
-        return Response(status=status.HTTP_201_CREATED)
+        return Response({'success': 'success'},status=status.HTTP_201_CREATED)
 
     except KeyError:
         return Response({'error': 'KeyError'}, status=status.HTTP_400_BAD_REQUEST)
