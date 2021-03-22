@@ -3,4 +3,6 @@ from . import views
 
 app_name = 'stores'
 
-urlpatterns = []
+urlpatterns = [
+    path('detail/<int:id>/', views.store_detail)
+]
