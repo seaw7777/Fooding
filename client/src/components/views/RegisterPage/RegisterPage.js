@@ -247,6 +247,7 @@ const RegisterPage = props => {
           <div style={{ display: 'flex' }}>
             <EmailModal />
 
+            <Button type="primary">다음</Button>
             <Button onClick={handlerSubmit} type="primary">
               다음
             </Button>

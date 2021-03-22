@@ -55,13 +55,13 @@ def login(request):
                 algorithm="HS256"
             ).decode('UTF-8')
 
-            return Response({'token': token}, status=status.HTTP_200_OK)
+            return Response({'loginSuccess': True, 'token': token}, status=status.HTTP_200_OK)
 
         else:
-            return Response({'message': '입력된 이메일 혹은 비밀번호가 틀렸습니다'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'loginSuccess': False,'message1': '입력된 이메일 혹은 비밀번호가 틀렸습니다'})
         
     else:
-        return Response({'message': '존재하지 않는 이메일입니다'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'loginSuccess': False, 'message2': '존재하지 않는 이메일입니다'})
     
 
 #회원별 회원정보 불러오기
