@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
@@ -23,9 +24,9 @@ ReactDOM.render(
         window.__REDUX_DEVTOOLS_EXTENSION__(),
     )}
   >
-    <React.StrictMode>
+    <BrowserRouter>
       <App />
-    </React.StrictMode>
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root'),
 );

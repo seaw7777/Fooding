@@ -23,6 +23,7 @@ function App() {
           <NavBarPage />
           <Route exact path="/" component={Auth(MainPage, true)} />
           {/* 로그인, 회원가입 하단바가 안보여야함 */}
+
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route
