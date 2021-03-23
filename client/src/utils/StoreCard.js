@@ -14,12 +14,12 @@ function StoreCard(props) {
           />
 
           <div>
-            <Card.Title>가게이름</Card.Title>
-            <Card.Text>리뷰갯수</Card.Text>
+            <Card.Title>{props.store.store_name}</Card.Title>
+            <Card.Text>{props.store.review_cnt}</Card.Text>
           </div>
           <StarFilled style={{ fontSize: '50px', color: '#faad14' }} />
         </div>
-        <a href={`/store/${props.store._id}`}>
+        <a href={`/store/${props.store.id}`}>
           <Card.Img
             variant="top"
             src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
