@@ -85,7 +85,7 @@ def user_info(request, id):
 def follower_info(request, id):
     if User.objects.filter(id=id).exists():
         follower = Follow.objects.filter(follow_id=id)
-
+        
         serializer = FollowSerializer(follower, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)

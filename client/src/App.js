@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, HashRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import Auth from 'hoc/auth';
 /// Pages for product
 import LoginPage from './components/views/LoginPage/LoginPage';

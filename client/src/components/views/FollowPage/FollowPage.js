@@ -1,10 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'antd';
 import { LeftCircleOutlined } from '@ant-design/icons';
 import FollowList from './Sections/FollowList';
 import FollowingList from './Sections/FollowingList';
+import user_reducer from '_reducer/user_reducer';
+import axios from 'axios';
+import { SERVER } from '../../../Config.js';
 
-function FollowPage() {
+function FollowPage(props) {
+  useEffect(() => {
+    let followList = [];
+    if (props.user.loginSuccess.email) {
+      axios
+        .get(`${SERVER}accounts/followInfo/${props.user.loginSuccess.email}/`)
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err));
+    }
+  });
   const [showFollowList, setshowFollowList] = useState(true);
   const [showFollowingList, setshowFollowingList] = useState(false);
 

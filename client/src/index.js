@@ -5,27 +5,15 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { applyMiddleware, createStore } from 'redux';
-import promiseMiddleware from 'redux-promise';
-import ReduxThunk from 'redux-thunk';
-import Reducer from './_reducer';
-
-const createStoreWithMiddleware = applyMiddleware(
-  promiseMiddleware,
-  ReduxThunk,
-)(createStore);
+import configureStore from './_reducer/store';
+import { PersistGate } from 'redux-persist/integration/react';
+const { store, persistor } = configureStore();
 
 ReactDOM.render(
-  <Provider
-    store={createStoreWithMiddleware(
-      Reducer,
-      window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__(),
-    )}
-  >
-    <React.StrictMode>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
       <App />
-    </React.StrictMode>
+    </PersistGate>
   </Provider>,
   document.getElementById('root'),
 );

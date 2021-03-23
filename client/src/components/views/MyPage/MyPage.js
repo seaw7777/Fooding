@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Row, Col, Avatar, Badge, Button } from 'antd';
-import { Tabs, Tab } from 'react-bootstrap';
+import { NavLink } from 'react-router-dom';
+import { Tabs, Tab, Nav } from 'react-bootstrap';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
 import Diary from './Sections/Diary';
 import ReviewCard from '../../../utils/ReviewCard';
@@ -12,7 +13,6 @@ const rowStyle = {
 };
 
 function MyPage(props) {
-  console.log(props.user);
   const [showDiaryPage, setshowDiaryPage] = useState(true);
   const [showReviewCardPage, setshowReviewCardPage] = useState(false);
   const [diaryButtonStyle, setdiaryButtonStyle] = useState({
@@ -77,7 +77,7 @@ function MyPage(props) {
         </Row>
         <Row style={rowStyle}>
           <Col>
-            <span>username</span>
+            <span>{props.user.loginSuccess.nickname}</span>
           </Col>
         </Row>
         <Row className="mypagetag" style={{ textAlign: 'center' }}>
@@ -86,12 +86,12 @@ function MyPage(props) {
             <span>리뷰</span>
           </Col>
           <Col span={6}>
-            <a
-              href="/follow"
+            <NavLink
+              to="/follow"
               style={{ color: 'black', textDecoration: 'none' }}
             >
               팔로우
-            </a>
+            </NavLink>
           </Col>
           <Col span={6}>
             <span>팔로잉</span>
