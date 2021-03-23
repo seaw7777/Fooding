@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import JsonResponse
+from django.http import HttpResponse
 
 from rest_framework import viewsets
 from rest_framework import status
@@ -84,11 +86,22 @@ def user_info(request, id):
 @api_view(['GET'])
 def follower_info(request, id):
     if User.objects.filter(id=id).exists():
-        follower = Follow.objects.filter(follow_id=id)
+        follower_id = Follow.objects.filter(follow_id=id)
 
-        serializer = FollowSerializer(follower, many=True)
+        follower = []
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        for f in follower_id:
+            fw = User.objects.get(id=f.following_id)
+
+            follower.append({
+                "id": fw.id,
+                "nickname": fw.nickname,
+                "email": fw.email,
+                "address": fw.address,
+                "spoon_cnt": fw.spoon_cnt,
+            })
+
+        return JsonResponse(follower, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
 
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
@@ -98,11 +111,22 @@ def follower_info(request, id):
 @api_view(['GET'])
 def following_info(request, id):
     if User.objects.filter(id=id).exists():
-        following = Follow.objects.filter(following_id=id)
+        following_id = Follow.objects.filter(following_id=id)
 
-        serializer = FollowSerializer(following, many=True)
+        following = []
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        for f in following_id:
+            fw = User.objects.get(id=f.follow_id)
+
+            following.append({
+                "id": fw.id,
+                "nickname": fw.nickname,
+                "email": fw.email,
+                "address": fw.address,
+                "spoon_cnt": fw.spoon_cnt,
+            })
+
+        return JsonResponse(following, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
 
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)

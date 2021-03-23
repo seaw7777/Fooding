@@ -23,7 +23,7 @@ class Like(models.Model):
 
 class User(models.Model):
     nickname = models.CharField(max_length=100, blank=True, null=True)
-    email = models.CharField(max_length=100, blank=True, primary_key=True)
+    email = models.CharField(max_length=100, blank=True, null=True)
     password = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=500, blank=True, null=True)
     spoon_cnt = models.IntegerField(blank=True, null=True)
