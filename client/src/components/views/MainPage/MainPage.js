@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Typography } from 'antd';
 import MainPageBar from './Sections/MainPageBar';
 import RecommendFooder from './Sections/RecommendFooder';
 import StoreCard from 'utils/StoreCard';
 
 function MainPage(props) {
+  const user = useSelector(state => state.user);
   const [Address, setAddress] = useState(''); //초기에 입력한 주소 받아와서 할당하기
   const [Fooders, setFooders] = useState([
     {

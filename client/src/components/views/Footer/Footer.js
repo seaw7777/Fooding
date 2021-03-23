@@ -81,8 +81,8 @@ function Footer() {
           </Col>
         </Row>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Footer;
