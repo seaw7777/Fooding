@@ -11,4 +11,4 @@ class StoreSerializer(serializers.ModelSerializer):
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:
         model = Menu
-        fields = ('id', 'store_id', 'price', 'name')
+        fields = ('id', 'price', 'name')
