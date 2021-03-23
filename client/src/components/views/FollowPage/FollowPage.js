@@ -8,15 +8,27 @@ import axios from 'axios';
 import { SERVER } from '../../../Config.js';
 
 function FollowPage(props) {
+  const [followList, setfollowList] = useState([]);
+  const [followingList, setfollowingList] = useState([]);
   useEffect(() => {
-    let followList = [];
     if (props.user.loginSuccess.email) {
       axios
-        .get(`${SERVER}accounts/followInfo/${props.user.loginSuccess.email}/`)
-        .then(res => console.log(res.data))
+        .get(`${SERVER}accounts/followerInfo/${props.user.loginSuccess.id}`)
+        .then(res => {
+          setfollowList(res.data);
+        })
+        .catch(err => console.log(err));
+
+      axios
+        .get(`${SERVER}accounts/followingInfo/${props.user.loginSuccess.id}`)
+        .then(res => {
+          setfollowingList(res.data);
+        })
         .catch(err => console.log(err));
     }
-  });
+  }, []);
+  // followingList => 바로 불러올 것인가?
+
   const [showFollowList, setshowFollowList] = useState(true);
   const [showFollowingList, setshowFollowingList] = useState(false);
 
@@ -71,8 +83,8 @@ function FollowPage(props) {
         </Button>
       </div>
       <div style={{ marginTop: '2rem' }}>
-        {showFollowList && <FollowList />}
-        {showFollowingList && <FollowingList />}
+        {showFollowList && <FollowList followList={followList} />}
+        {showFollowingList && <FollowingList followingList={followingList} />}
       </div>
     </div>
   );

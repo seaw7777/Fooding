@@ -2,18 +2,10 @@ import React, { useState } from 'react';
 import { Row, Col, Avatar } from 'antd';
 import { UserOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
-function FollowList() {
-  const [followList, setfollowList] = useState([
-    '예림',
-    '주이',
-    '희은',
-    '현철',
-    '준오',
-  ]);
-
+function FollowList(props) {
   const renderFollowList = () =>
-    followList.map((follow, index) => (
-      <Row style={{ marginBottom: '1rem' }}>
+    props.followList.map((follow, index) => (
+      <Row style={{ marginBottom: '1rem' }} key={index}>
         <Col>
           <Avatar size="large" icon={<UserOutlined />} />
         </Col>
@@ -21,7 +13,7 @@ function FollowList() {
           span={18}
           style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem' }}
         >
-          {follow}
+          {follow.nickname}
         </Col>
         <Col style={{ display: 'flex', alignItems: 'center' }}>
           <CloseCircleOutlined style={{ fontSize: '20px' }} />

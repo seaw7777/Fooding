@@ -6,11 +6,16 @@ function NavBarPage() {
       <div
         style={{
           backgroundColor: '#ffe7ba',
-          height: '40px',
-          padding: '0.4rem',
+          height: '50px',
         }}
       >
-        <span style={{ marginLeft: '0.2rem' }}>LOGO</span>
+        <span style={{ marginLeft: '1rem' }}>
+          <img
+            src="/images/logo.png"
+            alt="logo"
+            style={{ margin: '0', maxWidth: '80px', maxHeight: '60px' }}
+          />
+        </span>
       </div>
     </div>
   );
