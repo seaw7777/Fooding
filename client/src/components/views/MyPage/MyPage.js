@@ -54,7 +54,7 @@ function MyPage(props) {
         style={{
           backgroundColor: '#ffd666',
           width: '100%',
-          paddingBottom: '3rem',
+          paddingBottom: '1rem',
           paddingTop: '2rem',
         }}
       >
