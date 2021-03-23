@@ -4,7 +4,7 @@ import MainPageBar from './Sections/MainPageBar';
 import RecommendFooder from './Sections/RecommendFooder';
 import StoreCard from 'utils/StoreCard';
 
-function MainPage() {
+function MainPage(props) {
   const [Address, setAddress] = useState(''); //초기에 입력한 주소 받아와서 할당하기
   const [Fooders, setFooders] = useState([
     {
@@ -35,7 +35,6 @@ function MainPage() {
   const renderStoreCard = Stores.map((store, index) => {
     return <StoreCard store={store} />;
   });
-
   return (
     <div>
       <MainPageBar address={Address} />

@@ -30,7 +30,6 @@ function LoginPage(props) {
     };
     dispatch(loginUser(dataToSubmit))
       .then(res => {
-        console.log(res.payload);
         if (res.payload.loginSuccess) {
           window.localStorage.setItem('token', res.payload.token);
           props.history.push('/');
