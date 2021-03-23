@@ -26,7 +26,7 @@ function RecommendFooder(props) {
                   avatar={
                     <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
                   }
-                  title={fooder.title}
+                  title={fooder.nickname}
                   style={{ height: '50px' }}
                 />
                 <Button
