@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export default function (SpecificComponent, option) {
   function AuthenticationCheck(props) {
     let user = useSelector(state => state.user);
     let isAuth = localStorage.getItem('token');
-    console.log(isAuth === null);
 
     //Not Loggined in Status
     if (isAuth === null) {

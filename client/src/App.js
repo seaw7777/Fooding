@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter as Switch, Route } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route } from 'react-router-dom';
 import Auth from 'hoc/auth';
 /// Pages for product
 import LoginPage from './components/views/LoginPage/LoginPage';
@@ -18,10 +18,11 @@ import AccompanyPage from './components/views/AccompanyPage/AccompanyPage';
 function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <div style={{ paddingTop: '0', minHeight: 'calc(98vh - 45px)' }}>
-        <NavBarPage />
-        <Switch>
+      <BrowserRouter>
+        <div style={{ paddingTop: '0', minHeight: 'calc(98vh - 45px)' }}>
+          <NavBarPage />
           <Route exact path="/" component={Auth(MainPage, true)} />
+          {/* 로그인, 회원가입 하단바가 안보여야함 */}
           <Route exact path="/login" component={Auth(LoginPage, false)} />
           <Route exact path="/register" component={Auth(RegisterPage, false)} />
           <Route
@@ -47,9 +48,9 @@ function App() {
             path="/accompany"
             component={Auth(AccompanyPage, true)}
           />
-        </Switch>
-      </div>
-      <Footer />
+        </div>
+        <Footer />
+      </BrowserRouter>
     </Suspense>
   );
 }

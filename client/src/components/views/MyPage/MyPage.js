@@ -11,7 +11,8 @@ const rowStyle = {
   padding: '10px',
 };
 
-function MyPage() {
+function MyPage(props) {
+  console.log(props.user);
   const [showDiaryPage, setshowDiaryPage] = useState(true);
   const [showReviewCardPage, setshowReviewCardPage] = useState(false);
   const [diaryButtonStyle, setdiaryButtonStyle] = useState({
@@ -47,7 +48,6 @@ function MyPage() {
       borderColor: '#faad14',
     });
   };
-
   return (
     <div>
       <div

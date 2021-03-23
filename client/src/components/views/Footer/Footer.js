@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter, Link, NavLink } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import {
   FcHome,
@@ -6,6 +7,7 @@ import {
   FcConferenceCall,
   FcVoicePresentation,
 } from 'react-icons/fc';
+import MyPage from '../MyPage/MyPage';
 
 function Footer() {
   return (
@@ -20,10 +22,10 @@ function Footer() {
           }}
         >
           <Col span={6}>
-            <a href="/" style={{ color: 'black', textDecoration: 'none' }}>
+            <Link to="/">
               <FcHome />
               <p style={{ fontSize: '12px', marginBottom: '8px' }}>홈</p>
-            </a>
+            </Link>
           </Col>
           <Col span={6}>
             <a href="" style={{ color: 'black', textDecoration: 'none' }}>
@@ -32,24 +34,19 @@ function Footer() {
             </a>
           </Col>
           <Col span={6}>
-            <a
-              href="/accompany"
-              style={{ color: 'black', textDecoration: 'none' }}
-            >
+            <Link>
               <FcConferenceCall />
               <p style={{ fontSize: '12px', marginBottom: '8px' }}>동행자</p>
-            </a>
+            </Link>
           </Col>
           <Col span={6}>
-            <a
-              href="/mypage"
-              style={{ color: 'black', textDecoration: 'none' }}
-            >
+            {/* router link */}
+            <Link to="/mypage">
               <FcVoicePresentation />
               <p style={{ fontSize: '12px', marginBottom: '8px' }}>
                 마이페이지
               </p>
-            </a>
+            </Link>
           </Col>
         </Row>
       </div>
