@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-// import './StoreDetailPage.css';
 import ImageSlider from 'utils/ImageSlider';
 import StoreMap from './Sections/StoreMap';
 import ReviewCard from 'utils/ReviewCard';
-import { Typography, Tabs } from 'antd';
+import { Typography } from 'antd';
 import { StarFilled, PhoneFilled, CompassTwoTone } from '@ant-design/icons';
+import { Tabs, Tab } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Sections/StoreDetailPage.css';
 
 function StoreDetailPage() {
   const [Images, setImages] = useState([1, 2]);
   const { Title, Text } = Typography;
-  const { TabPane } = Tabs;
 
   return (
     <div>
@@ -43,24 +44,18 @@ function StoreDetailPage() {
           <CompassTwoTone />
           <Text>주소자리</Text>
         </div>
-        <Tabs
-          defaultActiveKey="1"
-          centered
-          tabBarStyle={{
-            backgroundColor: 'orange',
-            margin: '1rem',
-          }}
-        >
-          <TabPane tab="지도" key="1" style={{ minheight: 200 }}>
-            <StoreMap></StoreMap>
-          </TabPane>
-          <TabPane tab="리뷰" key="2">
-            <ReviewCard></ReviewCard>
-          </TabPane>
-          <TabPane tab="메뉴" key="3">
-            Content of Tab Pane 3
-          </TabPane>
-        </Tabs>
+
+        <div>
+          <Tabs className="myClass" fill defaultActiveKey="storeMap">
+            <Tab eventKey="storeMap" title="지도">
+              <StoreMap></StoreMap>
+            </Tab>
+            <Tab eventKey="storeReview" title="리뷰">
+              <ReviewCard></ReviewCard>
+            </Tab>
+            <Tab eventKey="storeMenu" title="메뉴"></Tab>
+          </Tabs>
+        </div>
       </div>
     </div>
   );
