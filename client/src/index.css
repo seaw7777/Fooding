@@ -1,5 +1,6 @@
 @import "~react-image-gallery/styles/css/image-gallery.css";
 @import '~antd/dist/antd.css';
+@import '~bootstrap/dist/css/bootstrap.css';
 
 body {
   margin: 0;
@@ -45,3 +46,26 @@ input.error {
 .ant-steps-item-process .ant-steps-item-icon { background: red; }
 
 .ant-abs-tab-active { color: orange !important;}
+
+
+.myClass ul > li > a {
+  background-color: white;
+  color: red;
+}
+.myClass ul > li > a:hover {
+  background-color: pink;
+}
+
+/* Active tab */
+.myClass ul > li.active > a,
+.myClass ul > li.active > a:hover,
+.myClass ul > li.active > a:focus {
+  background-color: red;
+  color: white;
+}
+
+/* Disabled tab */
+.myClass ul > li.disabled > a {
+  background-color: lightgray;
+  color: darkgray;
+}

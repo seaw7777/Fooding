@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import configureStore from './_reducer/store';
 import { PersistGate } from 'redux-persist/integration/react';
 const { store, persistor } = configureStore();
