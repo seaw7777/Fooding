@@ -1,3 +1,5 @@
+from django.db.models import query
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 
 from rest_framework import viewsets
@@ -44,9 +46,20 @@ def review_list(request, store_id):
 
 # 리뷰 목록 불러오기(최신 날짜 순 30개)
 @api_view(['GET'])
-def review(request):
+def review_cur(request):
     list = Review.objects.all().order_by('-write_date')[:30]
 
     serializer = ReviewSerializer(list, many=True)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# 리뷰 삭제(리뷰 번호 일치시 삭제)
+@api_view(['DELETE'])
+def review_del(request, id):
+    if Review.objects.filter(id=id).exists():
+        queryset = Review.objects.filter(id=id)
+        return queryset.delete()
+
+    else:
+        return Response({'message': '리뷰정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
