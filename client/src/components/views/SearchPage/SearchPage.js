@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Row, Col, Input, Button } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { ContainerFilled, SearchOutlined } from '@ant-design/icons';
 import { Tabs, Tab, Nav } from 'react-bootstrap';
 import FooderList from './Sections/FooderList';
 import StoreList from './Sections/StoreList';
 
 function SearchPage() {
+  const [InputValue, setInputValue] = useState('푸더의 이름을 검색해주세요.');
   const [showFooderPage, setshowFooderPage] = useState(true);
   const [showStoreCardPage, setshowStoreCardPage] = useState(false);
   const [FooderButtonStyle, setFooderButtonStyle] = useState({
@@ -13,11 +14,18 @@ function SearchPage() {
     borderColor: '#faad14',
   });
   const [StoreListButtonStyle, setStoreListButtonStyle] = useState({
-    color: '#faad14',
     borderColor: '#faad14',
+    backgroundColor: 'white',
+    color: '#faad14',
   });
+  const [FollowingList, setFollowingList] = useState([
+    { nickname: 'fooder1' },
+    { nickname: 'fooder2' },
+  ]);
 
   const showFooderPageButton = () => {
+    let val = 'fooder';
+    showFooderInput(val);
     setshowFooderPage(true);
     setshowStoreCardPage(false);
     setFooderButtonStyle({
@@ -32,6 +40,8 @@ function SearchPage() {
   };
 
   const showStoreCardPageButton = () => {
+    let val = 'store';
+    showFooderInput(val);
     setshowFooderPage(false);
     setshowStoreCardPage(true);
     setFooderButtonStyle({
@@ -44,6 +54,15 @@ function SearchPage() {
       backgroundColor: '#faad14',
       borderColor: '#faad14',
     });
+  };
+
+  const showFooderInput = val => {
+    console.log(val);
+    if (val === 'fooder') {
+      setInputValue('푸더의 이름을 입력해주세요.');
+    } else {
+      setInputValue('가게 이름을 입력해주세요');
+    }
   };
 
   return (
@@ -59,7 +78,7 @@ function SearchPage() {
       >
         <Input
           size="large"
-          placeholder="large size"
+          placeholder={InputValue}
           style={{ height: '50px', width: '85%' }}
           prefix={<SearchOutlined />}
         />
@@ -70,10 +89,11 @@ function SearchPage() {
             type="primary"
             shape="round"
             size="small"
+            id="fooder"
             onClick={showFooderPageButton}
             style={FooderButtonStyle}
           >
-            인플루언서
+            Fooder
           </Button>
         </Col>
         <Col span={6} offset={(6, 0)}>
@@ -88,7 +108,7 @@ function SearchPage() {
           </Button>
         </Col>
       </Row>
-      {showFooderPage && <FooderList />}
+      {showFooderPage && <FooderList followingList={FollowingList} />}
       {showStoreCardPage && <StoreList />}
     </div>
   );
