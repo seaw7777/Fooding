@@ -6,6 +6,7 @@ import RecommendFooder from './Sections/RecommendFooder';
 import StoreCard from 'utils/StoreCard';
 import { fetchStoresMainPage } from '_api/Stores';
 import { fetchInfluencer } from '_api/Main';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 function MainPage(props) {
   const user = useSelector(state => state.user);
@@ -42,9 +43,21 @@ function MainPage(props) {
       <div>
         <Title level={4}>뜨고 있는 인기 푸더!!</Title>
         <Text strong>이 지역 인기 푸더를 팔로잉하고 소식을 받아보세요!</Text>
-        <RecommendFooder list={Fooders} />
       </div>
-      {renderStoreCard}
+      <div
+        style={{
+          height: 500,
+          overflow: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <InfiniteScroll dataLength={'10'}>
+          <RecommendFooder list={Fooders} />
+          {renderStoreCard}
+        </InfiniteScroll>
+      </div>
     </div>
   );
 }
