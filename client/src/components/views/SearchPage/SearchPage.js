@@ -3,10 +3,16 @@ import { Row, Col, Input, Button } from 'antd';
 import { ContainerFilled, SearchOutlined } from '@ant-design/icons';
 import { Tabs, Tab, Nav } from 'react-bootstrap';
 import FooderList from './Sections/FooderList';
-import StoreList from './Sections/StoreList';
+import StoreCard from 'utils/StoreCard';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 function SearchPage() {
   const [InputValue, setInputValue] = useState('푸더의 이름을 검색해주세요.');
+  const [Stores, setStores] = useState([
+    { store_name: 'abc', review_cnt: 0, id: 2 },
+    { store_name: 'def', review_cnt: 0, id: 3 },
+    { store_name: 'ghi', review_cnt: 0, id: 4 },
+  ]);
   const [showFooderPage, setshowFooderPage] = useState(true);
   const [showStoreCardPage, setshowStoreCardPage] = useState(false);
   const [FooderButtonStyle, setFooderButtonStyle] = useState({
@@ -65,6 +71,26 @@ function SearchPage() {
     }
   };
 
+  const renderStoreCard = () => {
+    return (
+      <div
+        style={{
+          height: 485,
+          overflow: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <InfiniteScroll dataLength={Stores.length}>
+          {Stores.map((store, index) => (
+            <StoreCard store={store} />
+          ))}
+        </InfiniteScroll>
+      </div>
+    );
+  };
+
   return (
     <div>
       <div
@@ -109,7 +135,7 @@ function SearchPage() {
         </Col>
       </Row>
       {showFooderPage && <FooderList followingList={FollowingList} />}
-      {showStoreCardPage && <StoreList />}
+      {showStoreCardPage && renderStoreCard()}
     </div>
   );
 }

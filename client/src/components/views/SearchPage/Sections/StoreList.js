@@ -1,7 +1,12 @@
 import React from 'react';
+import StoreCard from 'utils/StoreCard';
 
 function StoreList() {
-  return <div>StoreList 입니다.</div>;
+  return (
+    <div>
+      <StoreCard />
+    </div>
+  );
 }
 
 export default StoreList;
