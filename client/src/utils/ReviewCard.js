@@ -33,27 +33,26 @@ function ReviewCard() {
       <Container>
         <div
           style={{
-            height: 340,
+            height: 335,
             overflow: 'auto',
             display: 'flex',
-            flexDirection: 'column-reverse',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          <InfiniteScroll dataLength={example.length} inverse={true}>
+          <InfiniteScroll dataLength={example.length}>
             {example.map((idx, index) => (
-              <Row key={index} style={{ marginTop: '1rem' }}>
+              <Row key={index}>
                 <Col>
-                  <Card style={{ width: '200' }}>
+                  <Card style={{ width: '22rem', marginBottom: '0.5rem' }}>
                     <Card.Img
+                      style={{ width: '22rem', height: '8rem' }}
                       variant="top"
                       src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
                     />
                     <Card.Body>
                       <Card.Title>Card Title</Card.Title>
-                      <Card.Text>
-                        Some quick example text to build on the card title and
-                        make up the bulk of the card's content.
-                      </Card.Text>
+                      <Card.Text>hi</Card.Text>
                       <Button variant="primary">Go somewhere</Button>
                     </Card.Body>
                   </Card>

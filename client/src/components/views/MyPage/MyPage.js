@@ -115,7 +115,7 @@ function MyPage(props) {
           id="uncontrolled-tab-example"
         >
           <Tab eventKey="review" title="리뷰">
-            <Row style={{ marginTop: '1rem' }}>
+            <Row style={{ marginTop: '1rem', marginBottom: '1rem' }}>
               <Col span={6} offset={(0, 6)}>
                 <Button
                   type="primary"
