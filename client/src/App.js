@@ -14,6 +14,7 @@ import NavBarPage from './components/views/NavBar/NavBarPage';
 import UserUpdatePage from './components/views/UserUpdatePage/UserUpdatePage';
 import StoreDetailPage from './components/views/StoreDetailPage/StoreDetailPage';
 import AccompanyPage from './components/views/AccompanyPage/AccompanyPage';
+import SearchPage from './components/views/SearchPage/SearchPage';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
             path="/accompany"
             component={Auth(AccompanyPage, true)}
           />
+          <Route exact path="/search" component={Auth(SearchPage, true)} />
         </div>
         <Footer />
       </BrowserRouter>
