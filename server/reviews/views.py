@@ -34,7 +34,7 @@ def review_info(request, id):
                 "user_id": i.user_id,
                 "store_id": i.store_id,
                 "store_name": store.store_name,
-                "content": i.contents,
+                "contents": i.contents,
                 "write_date": i.write_date,
                 "star": i.star,
             })
