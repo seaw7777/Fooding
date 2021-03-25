@@ -64,6 +64,16 @@ def review_write(request):
         write_date = request.data.get('write_Date'),
     ).save()
 
+    # 스푼 카운트 갱신 및 등급 조정
+    if User.objects.filter(id=request.data.get('user')):
+        
+        userdata = User.objects.get(id=id)
+        userdata.update(spoon_cnt=userdata.spoon_cnt+1)
+        if userdata.spoon_cnt >=99:
+            userdata.update(grade='gold')
+        elif userdata.spoon_cnt >=49:
+            userdata.update(grade='silver')
+
     return Response({'success': 'success'}, status=status.HTTP_201_CREATED)
 
 
