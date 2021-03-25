@@ -53,6 +53,20 @@ def review_cur(request):
 
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+# 리뷰 작성
+@api_view(['POST'])
+def review_write(request):
+    Review.objects.create(
+        user = request.data.get('user'),
+        store = request.data.get('store'),
+        content = request.data.get('content'),
+        star = request.data.get('star'),
+        write_date = request.data.get('write_Date'),
+    ).save()
+
+    return Response({'success': 'success'}, status=status.HTTP_201_CREATED)
+
+
 
 # 리뷰 삭제(리뷰 번호 일치시 삭제)
 @api_view(['DELETE'])
