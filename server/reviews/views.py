@@ -1,5 +1,6 @@
 from django.db.models import query
 from django.db.models.query import QuerySet
+from django.http import JsonResponse
 from django.shortcuts import render
 
 from rest_framework import viewsets
@@ -51,7 +52,7 @@ def review_list(request, store_id):
                 "star": r.star,
             })
 
-         return JsonResponse(review_user, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
+        return JsonResponse(review_user, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
 
     else:
         return Response({'message': '가게정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
