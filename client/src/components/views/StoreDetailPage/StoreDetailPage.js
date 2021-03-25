@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import ImageSlider from 'utils/ImageSlider';
 import StoreMap from './Sections/StoreMap';
 import ReviewCard from 'utils/ReviewCard';
@@ -7,11 +8,37 @@ import { StarFilled, PhoneFilled, CompassTwoTone } from '@ant-design/icons';
 import { Tabs, Tab } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Sections/StoreDetailPage.css';
+import { StoreDetailInfo } from '_api/Stores';
 
-function StoreDetailPage() {
+function StoreDetailPage(props) {
   const [Images, setImages] = useState([1, 2]);
   const { Title, Text } = Typography;
+  const [StoreInfo, setStoreInfo] = useState([]);
+  const storeId = props.match.params.StoreId;
+  // const { StoreId } = useParams();
+  // console.log(useParams());
+  const [StoreLocation, setStoreLocation] = useState([]);
 
+  useEffect(() => {
+    const StoreInfo = async () => {
+      try {
+        const response = await StoreDetailInfo('2');
+        console.log(response.data);
+        setStoreInfo(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    StoreInfo();
+  }, []);
+
+  const StoreLocationInfo = () => {
+    let storeLatLng = [];
+    storeLatLng.push(StoreInfo.lat);
+    storeLatLng.push(StoreInfo.lng);
+    setStoreLocation(storeLatLng);
+    console.log(StoreLocation);
+  };
   return (
     <div>
       <ImageSlider images={Images} />
@@ -24,10 +51,10 @@ function StoreDetailPage() {
             }
           />
           <div>
-            <Title level={4}>가게이름</Title>
-            <Text>리뷰갯수</Text>
+            <Title level={4}>{StoreInfo.store_name}</Title>
+            <Text>{StoreInfo.review_cnt}</Text>
           </div>
-          <Text mark>카테고리</Text>
+          <Text mark>{StoreInfo.main_category}</Text>
           <StarFilled style={{ fontSize: '50px', color: '#faad14' }} />
         </div>
         <div
@@ -39,16 +66,18 @@ function StoreDetailPage() {
           }}
         >
           <PhoneFilled />
-          <Text>전화번호 자리</Text>
+          <Text>{StoreInfo.tel}</Text>
           <br />
           <CompassTwoTone />
-          <Text>주소자리</Text>
+          <Text>{StoreInfo.address}</Text>
         </div>
 
         <div>
           <Tabs className="myClass" fill defaultActiveKey="storeMap">
             <Tab eventKey="storeMap" title="지도">
-              <StoreMap></StoreMap>
+              <StoreMap
+                MapInfo={{ lng: StoreInfo.lng, lat: StoreInfo.lat }}
+              ></StoreMap>
             </Tab>
             <Tab eventKey="storeReview" title="리뷰">
               <ReviewCard></ReviewCard>
