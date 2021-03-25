@@ -1,6 +1,7 @@
 from django.db.models import query
 from django.db.models.query import QuerySet
 from django.shortcuts import render
+from django.http import JsonResponse
 
 from rest_framework import viewsets
 from rest_framework import status
@@ -21,10 +22,27 @@ from reviews import serializers
 def review_info(request, id):
     if User.objects.filter(id=id).exists():
         review = Review.objects.filter(user_id=id)
+        
+        review_data = []
 
-        serializer = ReviewSerializer(review, many=True)
+        for i in review:
+            store = Store.objects.get(id=i.store_id)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+            review_data.append({
+                "id": i.id,
+                "user_id": i.user_id,
+                "store_id": i.store_id,
+                "store_name": store.store_name,
+                "content": i.contents,
+                "write_date": i.write_date,
+                "star": i.star,
+            })
+        
+        return JsonResponse(review_data, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
+
+        # serializer = ReviewSerializer(review_data, many=True)
+ 
+        # return Response(serializer.data, store_num, status=status.HTTP_200_OK)
 
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
