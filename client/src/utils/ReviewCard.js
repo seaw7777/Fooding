@@ -15,8 +15,8 @@ function ReviewCard(props) {
               src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
             />
             <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>hi</Card.Text>
+              <Card.Title>{props.review.contents}</Card.Title>
+              <Card.Text>{props.review.write_date}</Card.Text>
               <Button variant="primary">Go somewhere</Button>
             </Card.Body>
           </Card>

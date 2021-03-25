@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ImageSlider from 'utils/ImageSlider';
-import StoreMap from './Sections/StoreMap';
 import ReviewCard from 'utils/ReviewCard';
 import { Typography } from 'antd';
-import { StarFilled, PhoneFilled, CompassTwoTone } from '@ant-design/icons';
+import {
+  StarFilled,
+  PhoneFilled,
+  CompassTwoTone,
+  CompassOutlined,
+} from '@ant-design/icons';
 import { Tabs, Tab } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Sections/StoreDetailPage.css';
 import { StoreDetailInfo } from '_api/Stores';
+import { fetchStoreReview } from '_api/Review';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 function StoreDetailPage(props) {
   const [Images, setImages] = useState([1, 2]);
@@ -18,13 +24,48 @@ function StoreDetailPage(props) {
   // const { StoreId } = useParams();
   // console.log(useParams());
   const [StoreLocation, setStoreLocation] = useState([]);
+  const [Reviews, setReviews] = useState([]);
+  const { kakao } = window;
 
   useEffect(() => {
     const StoreInfo = async () => {
       try {
-        const response = await StoreDetailInfo('2');
+        const response = await StoreDetailInfo(storeId);
         console.log(response.data);
         setStoreInfo(response.data);
+        const res = await fetchStoreReview('2');
+        setReviews(res.data);
+        console.log(res.data);
+
+        const container = document.getElementById('myMap');
+        const options = {
+          center: new kakao.maps.LatLng(response.data.lat, response.data.lng),
+          level: 3,
+        };
+        const map = new kakao.maps.Map(container, options);
+        const imageSrc = '/images/FoodingMarker.png', // 마커이미지의 주소입니다
+          imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+          imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+
+        // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+        const markerImage = new kakao.maps.MarkerImage(
+            imageSrc,
+            imageSize,
+            imageOption,
+          ),
+          markerPosition = new kakao.maps.LatLng(
+            response.data.lat,
+            response.data.lng,
+          ); // 마커가 표시될 위치입니다
+
+        // 마커를 생성합니다
+        const marker = new kakao.maps.Marker({
+          position: markerPosition,
+          image: markerImage, // 마커이미지 설정
+        });
+
+        // 마커가 지도 위에 표시되도록 설정합니다
+        marker.setMap(map);
       } catch (err) {
         console.log(err);
       }
@@ -32,13 +73,26 @@ function StoreDetailPage(props) {
     StoreInfo();
   }, []);
 
-  const StoreLocationInfo = () => {
-    let storeLatLng = [];
-    storeLatLng.push(StoreInfo.lat);
-    storeLatLng.push(StoreInfo.lng);
-    setStoreLocation(storeLatLng);
-    console.log(StoreLocation);
+  const renderReviewCard = () => {
+    return (
+      <div
+        style={{
+          height: '280px',
+          overflow: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <InfiniteScroll dataLength={Reviews.length}>
+          {Reviews.map((review, index) => (
+            <ReviewCard review={review}></ReviewCard>
+          ))}
+        </InfiniteScroll>
+      </div>
+    );
   };
+
   return (
     <div>
       <ImageSlider images={Images} />
@@ -75,12 +129,17 @@ function StoreDetailPage(props) {
         <div>
           <Tabs className="myClass" fill defaultActiveKey="storeMap">
             <Tab eventKey="storeMap" title="지도">
-              <StoreMap
-                MapInfo={{ lng: StoreInfo.lng, lat: StoreInfo.lat }}
-              ></StoreMap>
+              <div
+                id="myMap"
+                style={{
+                  width: '300px',
+                  height: '270px',
+                  margin: '0.5rem auto',
+                }}
+              ></div>
             </Tab>
             <Tab eventKey="storeReview" title="리뷰">
-              <ReviewCard></ReviewCard>
+              {renderReviewCard()}
             </Tab>
             <Tab eventKey="storeMenu" title="메뉴"></Tab>
           </Tabs>

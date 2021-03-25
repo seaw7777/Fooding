@@ -2,11 +2,19 @@ import React, { useEffect } from 'react';
 
 const { kakao } = window;
 
-const MapContainer = () => {
+const MapContainer = props => {
+  const map_lat = props.MapInfo['lat'];
+  const map_lng = props.MapInfo['lng'];
+  console.log(map_lat);
   useEffect(() => {
+    console.log('lat', map_lat);
+    console.log('lng', map_lng);
     const container = document.getElementById('myMap');
     const options = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      center: new kakao.maps.LatLng(
+        parseInt(parseFloat(map_lat)),
+        parseInt(parseFloat(map_lng)),
+      ),
       level: 3,
     };
     const map = new kakao.maps.Map(container, options);
