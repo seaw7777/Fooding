@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 const { kakao } = window;
 
-const MapContainer = () => {
+const MapContainer = props => {
   useEffect(() => {
     const container = document.getElementById('myMap');
     const options = {
