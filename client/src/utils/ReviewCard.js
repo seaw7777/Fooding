@@ -1,7 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Card, Button, Container } from 'react-bootstrap';
 
 function ReviewCard(props) {
+  const renderReviewTitle = () => {
+    // console.log(props.review.store_name);
+    if (props.review.store_name === undefined) {
+      return <Card.Title>{props.review.contents}</Card.Title>;
+    } else {
+      return <Card.Title>{props.review.store_name}</Card.Title>;
+    }
+  };
+
+  const rednerReviewText = () => {
+    if (props.review.nickname !== undefined) {
+      return <Card.Text>{props.review.write_date.substring(0, 10)}</Card.Text>;
+    } else {
+      return <Card.Title>{props.review.contents}</Card.Title>;
+    }
+  };
   return (
     <div>
       <Col>
@@ -12,8 +28,8 @@ function ReviewCard(props) {
             src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
           />
           <Card.Body>
-            <Card.Title>{props.review.store_name}</Card.Title>
-            <Card.Text>{props.review.content}</Card.Text>
+            {renderReviewTitle()}
+            {rednerReviewText()}
             <Button variant="primary">Go somewhere</Button>
           </Card.Body>
         </Card>

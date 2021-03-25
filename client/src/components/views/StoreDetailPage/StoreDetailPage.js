@@ -2,17 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ImageSlider from 'utils/ImageSlider';
 import ReviewCard from 'utils/ReviewCard';
+import StoreMenu from './Sections/StoreMenu';
 import { Typography } from 'antd';
-import {
-  StarFilled,
-  PhoneFilled,
-  CompassTwoTone,
-  CompassOutlined,
-} from '@ant-design/icons';
+import { StarFilled, PhoneFilled, CompassTwoTone } from '@ant-design/icons';
 import { Tabs, Tab } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Sections/StoreDetailPage.css';
-import { StoreDetailInfo } from '_api/Stores';
+import { StoreDetailInfo, StoreMenuInfo } from '_api/Stores';
 import { fetchStoreReview } from '_api/Review';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -25,17 +21,21 @@ function StoreDetailPage(props) {
   // console.log(useParams());
   const [StoreLocation, setStoreLocation] = useState([]);
   const [Reviews, setReviews] = useState([]);
+  const [Menus, setMenus] = useState([]);
   const { kakao } = window;
 
   useEffect(() => {
     const StoreInfo = async () => {
       try {
         const response = await StoreDetailInfo(storeId);
-        console.log(response.data);
+        // console.log(response.data);
         setStoreInfo(response.data);
         const res = await fetchStoreReview('2');
         setReviews(res.data);
-        console.log(res.data);
+        // console.log(res.data);
+        const ress = await StoreMenuInfo(storeId);
+        console.log(ress.data);
+        setMenus(ress.data);
 
         const container = document.getElementById('myMap');
         const options = {
@@ -141,7 +141,21 @@ function StoreDetailPage(props) {
             <Tab eventKey="storeReview" title="리뷰">
               {renderReviewCard()}
             </Tab>
-            <Tab eventKey="storeMenu" title="메뉴"></Tab>
+            <Tab eventKey="storeMenu" title="메뉴">
+              {Menus.length > 0 ? (
+                <StoreMenu Menus={Menus} />
+              ) : (
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginTop: '25%',
+                  }}
+                >
+                  <h3>등록된 메뉴가 없습니다.</h3>
+                </div>
+              )}
+            </Tab>
           </Tabs>
         </div>
       </div>
