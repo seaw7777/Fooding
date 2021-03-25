@@ -3,9 +3,9 @@ import { Row, Col, Card, Button, Container } from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 function ReviewCard(props) {
-  console.log(props.store);
+  console.log(props.review);
   return (
-    <Container>
+    <div>
       <Row>
         <Col>
           <Card style={{ width: '22rem', marginBottom: '0.5rem' }}>
@@ -15,14 +15,14 @@ function ReviewCard(props) {
               src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
             />
             <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>hi</Card.Text>
+              <Card.Title>{props.review.store_name}</Card.Title>
+              <Card.Text>{props.review.contents}</Card.Text>
               <Button variant="primary">Go somewhere</Button>
             </Card.Body>
           </Card>
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 }
 
