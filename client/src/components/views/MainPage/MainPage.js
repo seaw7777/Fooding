@@ -35,7 +35,7 @@ function MainPage(props) {
   }, []);
 
   const renderStoreCard = Stores.map((store, index) => {
-    return <StoreCard store={store} />;
+    return <StoreCard store={store} key={index} />;
   });
   return (
     <div>

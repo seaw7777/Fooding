@@ -10,7 +10,7 @@ function RecommendFooder(props) {
     >
       <Carousel autoplay>
         {props.list.map((fooder, index) => (
-          <div style={{ height: '100px', width: '150px' }}>
+          <div key={index} style={{ height: '100px', width: '150px' }}>
             <Card
               hoverable
               cover={
