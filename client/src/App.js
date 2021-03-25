@@ -42,7 +42,7 @@ function App() {
           />
           <Route
             exact
-            path="/store/:storeId"
+            path="/store/:StoreId"
             component={Auth(StoreDetailPage, true)}
           />
           <Route

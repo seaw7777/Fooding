@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Avatar, Badge, Button } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { Tabs, Tab, Nav } from 'react-bootstrap';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
 import Diary from './Sections/Diary';
 import ReviewCard from '../../../utils/ReviewCard';
+import axios from 'axios';
+import { SERVER } from '../../../Config';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const rowStyle = {
   display: 'flex',
@@ -23,6 +26,24 @@ function MyPage(props) {
     color: '#faad14',
     borderColor: '#faad14',
   });
+  const [myReview, setmyReview] = useState();
+
+  useEffect(() => {
+    axios
+      .get(`${SERVER}reviews/reviewInfo/${props.user.loginSuccess.id}`)
+      .then(res => {
+        setmyReview(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+
+  const renderReviewCards = review => {
+    axios.get(`${SERVER}stores/detail/${review.store_id}/`).then(res => {
+      console.log(res.data);
+    });
+  };
 
   const showDiaryPageButton = () => {
     setshowDiaryPage(true);
@@ -139,7 +160,25 @@ function MyPage(props) {
               </Col>
             </Row>
             {showDiaryPage && <Diary />}
-            {showReviewCardPage && <ReviewCard />}
+            {showReviewCardPage && (
+              <div
+                style={{
+                  height: 327,
+                  overflow: 'auto',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <InfiniteScroll dataLength={myReview.length}>
+                  {myReview.map((review, index) => {
+                    {
+                      renderReviewCards(review);
+                    }
+                  })}
+                </InfiniteScroll>
+              </div>
+            )}
           </Tab>
           <Tab eventKey="likePlace" title="찜한 장소"></Tab>
         </Tabs>

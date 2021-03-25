@@ -1,7 +1,9 @@
 import React from 'react';
 import MapContainer from './MapContainer';
 
-function StoreMap() {
+function StoreMap(props) {
+  console.log(props.MapInfo);
+  // MapInfo이름으로 props 했어!!
   return (
     <div
       style={{
