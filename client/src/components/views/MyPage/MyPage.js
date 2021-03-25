@@ -3,9 +3,11 @@ import { Row, Col, Avatar, Badge, Button } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { Tabs, Tab, Nav } from 'react-bootstrap';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
-import Diary from './Sections/Diary';
 import ReviewCard from '../../../utils/ReviewCard';
+import Diary from './Sections/Diary';
 import axios from 'axios';
+import { getStoreDetail } from '../../../_actions/store_actions';
+import { useDispatch } from 'react-redux';
 import { SERVER } from '../../../Config';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -26,9 +28,12 @@ function MyPage(props) {
     color: '#faad14',
     borderColor: '#faad14',
   });
-  const [myReview, setmyReview] = useState();
+  const dispatch = useDispatch();
+  const [myReview, setmyReview] = useState([]);
+  const [myReviewDetail, setmyReviewDetail] = useState([]);
 
   useEffect(() => {
+    let newReviewDetail = [];
     axios
       .get(`${SERVER}reviews/reviewInfo/${props.user.loginSuccess.id}`)
       .then(res => {
@@ -37,13 +42,23 @@ function MyPage(props) {
       .catch(err => {
         console.log(err);
       });
-  }, []);
 
-  const renderReviewCards = review => {
-    axios.get(`${SERVER}stores/detail/${review.store_id}/`).then(res => {
-      console.log(res.data);
+    myReview.map((review, index) => {
+      axios.get(`${SERVER}stores/detail/${review.store_id}/`).then(res => {
+        review.store_name = res.data.store_name;
+        newReviewDetail.push(review);
+      });
     });
-  };
+    setmyReviewDetail(newReviewDetail);
+  }, [props.user]);
+
+  const renderReviewCards = myReviewDetail.map((review, index) => {
+    return <ReviewCard review={review} />;
+  });
+
+  // const reviewCardCall = (storeName, review) => {
+  //   return <ReviewCard review={review} storeName={storeName} />;
+  // };
 
   const showDiaryPageButton = () => {
     setshowDiaryPage(true);
@@ -171,11 +186,7 @@ function MyPage(props) {
                 }}
               >
                 <InfiniteScroll dataLength={myReview.length}>
-                  {myReview.map((review, index) => {
-                    {
-                      renderReviewCards(review);
-                    }
-                  })}
+                  {renderReviewCards}
                 </InfiniteScroll>
               </div>
             )}
