@@ -1,5 +1,6 @@
 from django.db.models import query
 from django.db.models.query import QuerySet
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.http import JsonResponse
 
@@ -54,9 +55,22 @@ def review_list(request, store_id):
     if Store.objects.filter(id=store_id).exists():
         review = Review.objects.filter(store_id=store_id)
 
-        serializer = ReviewSerializer(review, many=True)
+        review_user = []
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        for r in review:
+            ru = User.objects.get(id=r.user_id)
+
+            review_user.append({
+                "id": r.id,
+                "user_id": r.user_id,
+                "nickname": ru.nickname,
+                "contents": r.contents,
+                "write_date": r.write_date,
+                "store_id": r.store_id,
+                "star": r.star,
+            })
+
+        return JsonResponse(review_user, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
 
     else:
         return Response({'message': '가게정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
