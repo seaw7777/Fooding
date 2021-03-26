@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
@@ -97,7 +97,7 @@ function LoginPage(props) {
         </Form.Item>
 
         <Form.Item style={{ textAlign: 'center' }}>
-          <a href="">회원가입</a>
+          <Link to="/register">회원가입</Link>
           <br />
           <a href="">비밀번호 찾기</a>
         </Form.Item>
