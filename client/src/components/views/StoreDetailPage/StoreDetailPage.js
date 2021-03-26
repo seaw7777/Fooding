@@ -31,11 +31,9 @@ function StoreDetailPage(props) {
     const StoreInfo = async () => {
       try {
         const response = await StoreDetailInfo(storeId);
-        console.log(response.data);
         setStoreInfo(response.data);
         const res = await fetchStoreReview('2');
         setReviews(res.data);
-        console.log(res.data);
 
         const container = document.getElementById('myMap');
         const options = {

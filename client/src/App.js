@@ -15,6 +15,7 @@ import UserUpdatePage from './components/views/UserUpdatePage/UserUpdatePage';
 import StoreDetailPage from './components/views/StoreDetailPage/StoreDetailPage';
 import AccompanyPage from './components/views/AccompanyPage/AccompanyPage';
 import SearchPage from './components/views/SearchPage/SearchPage';
+import FooderPage from './components/views/FooderPage/FooderPage';
 
 function App() {
   return (
@@ -53,6 +54,11 @@ function App() {
               exact
               path="/store/:StoreId"
               component={Auth(StoreDetailPage, true)}
+            />
+            <Route
+              exact
+              path="/fooder/:userId"
+              component={Auth(FooderPage, true)}
             />
             <Route
               exact

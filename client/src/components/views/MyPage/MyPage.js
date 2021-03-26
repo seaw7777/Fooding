@@ -6,8 +6,7 @@ import { Tabs, Tab, Card } from 'react-bootstrap';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
 import ReviewCard from '../../../utils/ReviewCard';
 import Diary from './Sections/Diary';
-import axios from 'axios';
-import { SERVER } from '../../../Config';
+import { fetchUserReview } from '../../../_api/Review';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 const rowStyle = {
@@ -32,11 +31,9 @@ function MyPage(props) {
   const [myReviewDetail, setmyReviewDetail] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`${SERVER}reviews/reviewInfo/${props.user.loginSuccess.id}`)
-      .then(res => {
-        setmyReview(res.data);
-      });
+    fetchUserReview(props.user.loginSuccess.id).then(res => {
+      setmyReview(res.data);
+    });
   }, []);
 
   const showDiaryPageButton = () => {
@@ -158,7 +155,7 @@ function MyPage(props) {
                 </Button>
               </Col>
             </Row>
-            {showDiaryPage && <Diary />}
+            {showDiaryPage && <Diary review={myReview} />}
             {showReviewCardPage && (
               <div
                 style={{

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Row, Col, Card, Button, Container } from 'react-bootstrap';
+import React from 'react';
+import { Col, Card, Button } from 'react-bootstrap';
 
 function ReviewCard(props) {
   return (
