@@ -35,6 +35,7 @@ function MyPage(props) {
 
   useEffect(() => {
     fetchUserReview(props.user.loginSuccess.id).then(res => {
+      console.log(res.data);
       setmyReview(res.data);
     });
   }, []);
@@ -101,7 +102,11 @@ function MyPage(props) {
           }}
         >
           <Dropdown overlay={menu} trigger={['click']}>
-            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+            <a
+              style={{ color: 'black', textDecoration: 'none' }}
+              className="ant-dropdown-link"
+              onClick={e => e.preventDefault()}
+            >
               <BiDotsVerticalRounded />
             </a>
           </Dropdown>

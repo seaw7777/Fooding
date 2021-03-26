@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Card, Button, Container } from 'react-bootstrap';
+import React from 'react';
+import { Row, Col, Card } from 'react-bootstrap';
+import Rating from '@material-ui/lab/Rating';
+import Box from '@material-ui/core/Box';
 
 function ReviewCard(props) {
   const renderReviewTitle = () => {
-    // console.log(props.review.store_name);
     if (props.review.store_name === undefined) {
-      return <Card.Title>{props.review.contents}</Card.Title>;
+      return (
+        <Card.Title style={{ fontSize: '15px' }}>
+          {props.review.contents}
+        </Card.Title>
+      );
     } else {
       return <Card.Title>{props.review.store_name}</Card.Title>;
     }
@@ -15,7 +20,11 @@ function ReviewCard(props) {
     if (props.review.nickname !== undefined) {
       return <Card.Text>{props.review.write_date.substring(0, 10)}</Card.Text>;
     } else {
-      return <Card.Title>{props.review.contents}</Card.Title>;
+      return (
+        <Card.Title style={{ fontSize: '15px' }}>
+          {props.review.contents}
+        </Card.Title>
+      );
     }
   };
   return (
@@ -30,7 +39,9 @@ function ReviewCard(props) {
           <Card.Body>
             {renderReviewTitle()}
             {rednerReviewText()}
-            <Button variant="primary">Go somewhere</Button>
+            <Box component="fieldset" mb={2} borderColor="transparent">
+              <Rating name="read-only" value={props.review.star} readOnly />
+            </Box>
           </Card.Body>
         </Card>
       </Col>
