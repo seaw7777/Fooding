@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Avatar, Carousel, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 function RecommendFooder(props) {
   const { Meta } = Card;
@@ -22,13 +23,21 @@ function RecommendFooder(props) {
               }
             >
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Meta
-                  avatar={
-                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                  }
-                  title={fooder.nickname}
-                  style={{ height: '50px' }}
-                />
+                <Link
+                  to={{
+                    pathname: `/fooder/4`,
+                    state: { username: fooder.nickname },
+                  }}
+                >
+                  {/* <Link to={`/fooder/${fooder.id}`}> */}
+                  <Meta
+                    avatar={
+                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                    }
+                    title={fooder.nickname}
+                    style={{ height: '50px' }}
+                  />
+                </Link>
                 <Button
                   type="primary"
                   shape="round"
