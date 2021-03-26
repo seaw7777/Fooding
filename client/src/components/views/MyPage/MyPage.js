@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Avatar, Badge, Button } from 'antd';
+import { useDispatch } from 'react-redux';
+import { Row, Col, Avatar, Badge, Button, Dropdown, Menu } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { Tabs, Tab, Card } from 'react-bootstrap';
-
+import { logoutUser } from '../../../_actions/user_actions';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
+import { BiDotsVerticalRounded } from 'react-icons/bi';
 import ReviewCard from '../../../utils/ReviewCard';
 import Diary from './Sections/Diary';
 import { fetchUserReview } from '../../../_api/Review';
@@ -16,6 +18,7 @@ const rowStyle = {
 };
 
 function MyPage(props) {
+  const dispatch = useDispatch();
   const [showDiaryPage, setshowDiaryPage] = useState(true);
   const [showReviewCardPage, setshowReviewCardPage] = useState(false);
   const [diaryButtonStyle, setdiaryButtonStyle] = useState({
@@ -65,6 +68,21 @@ function MyPage(props) {
     return <ReviewCard review={review} key={index} />;
   });
 
+  const renderLogout = () => {
+    window.localStorage.removeItem('token');
+    // redux 로 지워줘야함
+    dispatch(logoutUser());
+    props.history.push('/login');
+  };
+
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <div onClick={renderLogout}>로그아웃</div>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <div>
       <div
@@ -72,9 +90,23 @@ function MyPage(props) {
           backgroundColor: '#ffd666',
           width: '100%',
           paddingBottom: '1rem',
-          paddingTop: '2rem',
+          paddingTop: '0.5rem',
         }}
       >
+        <div
+          style={{
+            paddingRight: '0.5rem',
+            textAlign: 'right',
+            fontSize: '20px',
+          }}
+        >
+          <Dropdown overlay={menu} trigger={['click']}>
+            <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+              <BiDotsVerticalRounded />
+            </a>
+          </Dropdown>
+        </div>
+
         <Row style={rowStyle}>
           <Col>
             <Badge
