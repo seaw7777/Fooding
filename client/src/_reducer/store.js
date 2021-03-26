@@ -11,6 +11,7 @@ const persistConfig = {
   // configuration object for redux-persist
   key: 'root',
   storage, // define which storage to use
+  blacklist: ['token'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer); // create a persisted reducer
@@ -27,6 +28,7 @@ const configureStore = () => {
     persistedReducer,
     composeEnhancers(applyMiddleware(thunk, logger, promiseMiddleware)),
   );
+
   let persistor = persistStore(store);
   return { store, persistor };
 };
