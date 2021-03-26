@@ -2,7 +2,6 @@ from django.db.models import query
 from django.db.models.query import QuerySet
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.http import JsonResponse
 
 from rest_framework import viewsets
 from rest_framework import status
@@ -88,25 +87,31 @@ def review_cur(request):
 # 리뷰 작성
 @api_view(['POST'])
 def review_write(request):
-    Review.objects.create(
-        user_id = request.data.get('user_id'),
-        store_id = request.data.get('store_id'),
-        contents = request.data.get('contents'),
-        star = request.data.get('star'),
-        write_date = request.data.get('write_date'),
-    ).save()
 
-    # 스푼 카운트 갱신 및 등급 조정
-    if User.objects.get(id=request.data.get('user_id')):
-        
-        userdata = User.objects.get(id=id)
-        userdata.update(spoon_cnt=userdata.spoon_cnt+1)
-        if userdata.spoon_cnt >=99:
-            userdata.update(grade='gold')
-        elif userdata.spoon_cnt >=49:
-            userdata.update(grade='silver')
+    try:
+        if Review.objects.filter(id=request.data.get('id')).exists():
+            Review.objects.create(
+                user_id = request.data.get('user_id'),
+                store_id = request.data.get('store_id'),
+                contents = request.data.get('contents'),
+                star = request.data.get('star'),
+                write_date = request.data.get('write_date'),
+            ).save()
 
-    return Response({'success': 'success'}, status=status.HTTP_201_CREATED)
+            # 스푼 카운트 갱신 및 등급 조정
+            if User.objects.get(id=request.data.get('user_id')):
+                
+                userdata = User.objects.get(id=id)
+                userdata.update(spoon_cnt=userdata.spoon_cnt+1)
+                if userdata.spoon_cnt >=99:
+                    userdata.update(grade='gold')
+                elif userdata.spoon_cnt >=49:
+                    userdata.update(grade='silver')
+
+                print(userdata)
+            return Response({'success': 'success'}, status=status.HTTP_201_CREATED)
+    except KeyError:
+        return Response({'error': 'KeyError'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
