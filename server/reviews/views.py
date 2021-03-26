@@ -89,15 +89,15 @@ def review_cur(request):
 @api_view(['POST'])
 def review_write(request):
     Review.objects.create(
-        user = request.data.get('user'),
-        store = request.data.get('store'),
-        content = request.data.get('content'),
+        user_id = request.data.get('user_id'),
+        store_id = request.data.get('store_id'),
+        contents = request.data.get('contents'),
         star = request.data.get('star'),
-        write_date = request.data.get('write_Date'),
+        write_date = request.data.get('write_date'),
     ).save()
 
     # 스푼 카운트 갱신 및 등급 조정
-    if User.objects.filter(id=request.data.get('user')):
+    if User.objects.get(id=request.data.get('user_id')):
         
         userdata = User.objects.get(id=id)
         userdata.update(spoon_cnt=userdata.spoon_cnt+1)
