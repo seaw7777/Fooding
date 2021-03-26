@@ -16,6 +16,8 @@ import StoreDetailPage from './components/views/StoreDetailPage/StoreDetailPage'
 import AccompanyPage from './components/views/AccompanyPage/AccompanyPage';
 import SearchPage from './components/views/SearchPage/SearchPage';
 import FooderPage from './components/views/FooderPage/FooderPage';
+import CheckReceiptPage from './components/views/ReviewPage/CheckReceiptPage';
+import ReviewPage from './components/views/ReviewPage/ReviewPage';
 
 function App() {
   return (
@@ -66,6 +68,16 @@ function App() {
               component={Auth(AccompanyPage, true)}
             />
             <Route exact path="/search" component={Auth(SearchPage, true)} />
+            <Route
+              exact
+              path="/review/check-receipt"
+              component={Auth(CheckReceiptPage, true)}
+            />
+            <Route
+              exact
+              path="/review/post"
+              component={Auth(ReviewPage, true)}
+            />
           </div>
           <Footer />
         </>

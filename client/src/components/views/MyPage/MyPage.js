@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Col, Avatar, Badge, Button, Dropdown, Menu } from 'antd';
-import { NavLink } from 'react-router-dom';
 import { Tabs, Tab, Card } from 'react-bootstrap';
 import { logoutUser } from '../../../_actions/user_actions';
-import { UserOutlined, EditOutlined } from '@ant-design/icons';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
+import { Link, NavLink } from 'react-router-dom';
+import { UserOutlined, EditOutlined, ProfileFilled } from '@ant-design/icons';
 import ReviewCard from '../../../utils/ReviewCard';
 import Diary from './Sections/Diary';
 import { fetchUserReview } from '../../../_api/Review';
 import InfiniteScroll from 'react-infinite-scroll-component';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Sections/Mypage.css';
 
 const rowStyle = {
   display: 'flex',
@@ -159,6 +162,31 @@ function MyPage(props) {
             </a>
           </Col>
         </Row>
+        <Row style={rowStyle}>
+          <Col>
+            <Link to="/review/check-receipt">
+              <Button
+                shape="round"
+                style={{
+                  backgroundColor: '#F4A460',
+                  borderColor: '#F4A460',
+                  lineHeight: 'center',
+                }}
+                icon={
+                  <ProfileFilled
+                    style={{
+                      fontSize: '20px',
+                      color: 'black',
+                    }}
+                  />
+                }
+                size={'large'}
+              >
+                리뷰 작성
+              </Button>
+            </Link>
+          </Col>
+        </Row>
       </div>
 
       <div>
@@ -181,7 +209,7 @@ function MyPage(props) {
                   다이어리
                 </Button>
               </Col>
-              <Col span={6} offset={(6, 0)}>
+              <Col span={6} offset={(6, 0)} className="review-btn">
                 <Button
                   style={detailButtonStyle}
                   shape="round"
