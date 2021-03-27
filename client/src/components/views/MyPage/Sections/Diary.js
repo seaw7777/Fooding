@@ -14,7 +14,7 @@ function Diary(props) {
   return (
     <div
       style={{
-        height: 327,
+        height: 295,
         overflow: 'auto',
         display: 'flex',
         flexDirection: 'column',

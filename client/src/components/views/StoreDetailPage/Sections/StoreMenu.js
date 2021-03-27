@@ -11,7 +11,6 @@ function StoreMenu(props) {
       </p>
     );
   });
-  // console.log(props.Menus);
   return (
     <div
       style={{

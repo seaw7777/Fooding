@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import ImageSlider from 'utils/ImageSlider';
 import ReviewCard from 'utils/ReviewCard';
 import StoreMenu from './Sections/StoreMenu';
