@@ -40,6 +40,7 @@ urlpatterns = [
     path('accompany/', include('accompany.urls')),
     path('main/', include('main.urls')),
     path('reviews/', include('reviews.urls')),
+    path('recommend/', include('recommend.urls')),
     path('search/', include('search.urls')),
     path('stores/', include('stores.urls')),
 ]

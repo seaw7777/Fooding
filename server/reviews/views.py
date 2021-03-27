@@ -18,10 +18,14 @@ from reviews import serializers
 @api_view(['GET'])
 def review_info(request, id):
     if User.objects.filter(id=id).exists():
+        print("확인용")
         review = Review.objects.filter(user_id=id)
-
+        print(review[1].star)
+        # print(review.values())
+        for i in review:
+            for key , value in i.items():
+                 print(key , value)
         serializer = ReviewSerializer(review, many=True)
-
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     else:
@@ -33,7 +37,7 @@ def review_info(request, id):
 def review_list(request, store_id):
     if Store.objects.filter(id=store_id).exists():
         review = Review.objects.filter(store_id=store_id)
-
+        print(review)
         serializer = ReviewSerializer(review, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)

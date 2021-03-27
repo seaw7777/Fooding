@@ -36,7 +36,6 @@ def signup(request):
             address=request.data.get('address'),
             spoon_cnt=0,
         ).save()
-
         return Response({'success': 'success'}, status=status.HTTP_201_CREATED)
 
     except KeyError:
