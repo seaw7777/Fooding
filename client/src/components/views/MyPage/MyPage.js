@@ -9,6 +9,7 @@ import { UserOutlined, EditOutlined, ProfileFilled } from '@ant-design/icons';
 import ReviewCard from '../../../utils/ReviewCard';
 import Diary from './Sections/Diary';
 import { fetchUserReview } from '../../../_api/Review';
+import { fetchUserFollow, fetchUserFollowing } from '../../../_api/User';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -34,13 +35,26 @@ function MyPage(props) {
   });
 
   const [myReview, setmyReview] = useState([]);
-  const [myReviewDetail, setmyReviewDetail] = useState([]);
+  const [userFollowerInfo, setuserFollowerInfo] = useState([]);
+  const [userFollowingInfo, setuserFollowingInfo] = useState([]);
 
   useEffect(() => {
-    fetchUserReview(props.user.loginSuccess.id).then(res => {
-      console.log(res.data);
-      setmyReview(res.data);
-    });
+    const MainData = async () => {
+      try {
+        // redux에 저장된 user id 사용하기
+        const review = await fetchUserReview(props.user.loginSuccess.id);
+        setmyReview(review.data);
+
+        const follower = await fetchUserFollow(props.user.loginSuccess.id);
+        setuserFollowerInfo(follower.data);
+
+        const following = await fetchUserFollowing(props.user.loginSuccess.id);
+        setuserFollowingInfo(following.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    MainData();
   }, []);
 
   const showDiaryPageButton = () => {
@@ -139,8 +153,9 @@ function MyPage(props) {
         </Row>
         <Row className="mypagetag" style={{ textAlign: 'center' }}>
           <Col span={6}>
-            {/* row 추가해야할 듯 */}
             <span>리뷰</span>
+            <br />
+            <span>{myReview.length}</span>
           </Col>
           <Col span={6}>
             <NavLink
@@ -149,9 +164,13 @@ function MyPage(props) {
             >
               팔로우
             </NavLink>
+            <br />
+            <span>{userFollowerInfo.length}</span>
           </Col>
           <Col span={6}>
             <span>팔로잉</span>
+            <br />
+            <span>{userFollowingInfo.length}</span>
           </Col>
           <Col span={6}>
             <a
@@ -224,7 +243,7 @@ function MyPage(props) {
             {showReviewCardPage && (
               <div
                 style={{
-                  height: 327,
+                  height: 295,
                   overflow: 'auto',
                   display: 'flex',
                   flexDirection: 'column',

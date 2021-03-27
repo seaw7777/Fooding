@@ -3,8 +3,8 @@ import { Card, Avatar, Carousel, Button } from 'antd';
 import { Link } from 'react-router-dom';
 
 function RecommendFooder(props) {
+  console.log(props.list);
   const { Meta } = Card;
-
   return (
     <div
       style={{ width: '250px', height: '200px', margin: '2rem  auto 3.5rem' }}
@@ -25,8 +25,12 @@ function RecommendFooder(props) {
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Link
                   to={{
-                    pathname: `/fooder/4`,
-                    state: { username: fooder.nickname },
+                    pathname: `/fooder/${fooder.id}`,
+                    state: {
+                      username: fooder.nickname,
+                      spoon_cnt: fooder.spoon_cnt,
+                      grade: fooder.grade,
+                    },
                   }}
                 >
                   {/* <Link to={`/fooder/${fooder.id}`}> */}
