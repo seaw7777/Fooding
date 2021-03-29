@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { fetchUserReview } from '../../../_api/Review';
 import { fetchUserFollow, fetchUserFollowing } from '../../../_api/User';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
+import Grade from '../../../utils/Grade';
 import FooderReviewItems from './Sections/FooderReviewItems';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -71,8 +72,14 @@ function FooderPage(props) {
           </Col>
         </Row>
         <Row style={rowStyle}>
-          <Col>
-            <span>{props.location.state.username}</span>
+          <Col style={{ display: 'flex' }}>
+            <Grade
+              style={{ display: 'inline' }}
+              grade={props.location.state.grade}
+            />
+            <span style={{ marginLeft: '0.3rem' }}>
+              {props.location.state.username}
+            </span>
           </Col>
         </Row>
         <Row style={{ justifyContent: 'center', paddingBottom: '0.5rem' }}>

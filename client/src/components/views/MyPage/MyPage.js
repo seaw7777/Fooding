@@ -8,6 +8,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { UserOutlined, EditOutlined, ProfileFilled } from '@ant-design/icons';
 import ReviewCard from '../../../utils/ReviewCard';
 import Diary from './Sections/Diary';
+import Grade from '../../../utils/Grade';
 import { fetchUserReview } from '../../../_api/Review';
 import { fetchUserFollow, fetchUserFollowing } from '../../../_api/User';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -18,7 +19,7 @@ import './Sections/Mypage.css';
 const rowStyle = {
   display: 'flex',
   justifyContent: 'center',
-  padding: '10px',
+  padding: '7px',
 };
 
 function MyPage(props) {
@@ -107,15 +108,15 @@ function MyPage(props) {
         style={{
           backgroundColor: '#ffd666',
           width: '100%',
-          paddingBottom: '1rem',
-          paddingTop: '0.5rem',
+          paddingBottom: '0.4rem',
+          paddingTop: '0.2rem',
         }}
       >
         <div
           style={{
             paddingRight: '0.5rem',
             textAlign: 'right',
-            fontSize: '20px',
+            fontSize: '18px',
           }}
         >
           <Dropdown overlay={menu} trigger={['click']}>
@@ -132,26 +133,31 @@ function MyPage(props) {
         <Row style={rowStyle}>
           <Col>
             <Badge
-              offset={[-10, 55]}
-              count={
-                <EditOutlined style={{ fontSize: 20, marginRight: '-22' }} />
-              }
+              offset={[-10, 46]}
+              count={<EditOutlined style={{ fontSize: 15 }} />}
             >
               <a
                 href="/mypage/update"
                 style={{ color: 'black', textDecoration: 'none' }}
               >
-                <Avatar size={64} icon={<UserOutlined />} />
+                <Avatar size={50} icon={<UserOutlined />} />
               </a>
             </Badge>
           </Col>
         </Row>
         <Row style={rowStyle}>
-          <Col>
+          <Col style={{ display: 'flex' }}>
+            <Grade
+              style={{ display: 'inline' }}
+              grade={props.user.loginSuccess.grade}
+            />
             <span>{props.user.loginSuccess.nickname}</span>
           </Col>
         </Row>
-        <Row className="mypagetag" style={{ textAlign: 'center' }}>
+        <Row
+          className="mypagetag"
+          style={{ textAlign: 'center', fontSize: '15px' }}
+        >
           <Col span={6}>
             <span>리뷰</span>
             <br />
@@ -179,6 +185,8 @@ function MyPage(props) {
             >
               스푼
             </a>
+            <br />
+            <span>{props.user.loginSuccess.spoon_cnt}</span>
           </Col>
         </Row>
         <Row style={rowStyle}>
