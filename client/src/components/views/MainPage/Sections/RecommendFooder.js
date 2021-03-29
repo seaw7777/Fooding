@@ -1,16 +1,17 @@
 import React from 'react';
 import { Card, Avatar, Carousel, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 function RecommendFooder(props) {
+  console.log(props.list);
   const { Meta } = Card;
-
   return (
     <div
       style={{ width: '250px', height: '200px', margin: '2rem  auto 3.5rem' }}
     >
       <Carousel autoplay>
         {props.list.map((fooder, index) => (
-          <div style={{ height: '100px', width: '150px' }}>
+          <div key={index} style={{ height: '100px', width: '150px' }}>
             <Card
               hoverable
               cover={
@@ -22,13 +23,25 @@ function RecommendFooder(props) {
               }
             >
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Meta
-                  avatar={
-                    <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                  }
-                  title={fooder.nickname}
-                  style={{ height: '50px' }}
-                />
+                <Link
+                  to={{
+                    pathname: `/fooder/${fooder.id}`,
+                    state: {
+                      username: fooder.nickname,
+                      spoon_cnt: fooder.spoon_cnt,
+                      grade: fooder.grade,
+                    },
+                  }}
+                >
+                  {/* <Link to={`/fooder/${fooder.id}`}> */}
+                  <Meta
+                    avatar={
+                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                    }
+                    title={fooder.nickname}
+                    style={{ height: '50px' }}
+                  />
+                </Link>
                 <Button
                   type="primary"
                   shape="round"

@@ -13,3 +13,10 @@ export function fetchStoresMainPage() {
     payload: request,
   };
 }
+
+export function getStoreDetail(review) {
+  axios.get(`${SERVER}stores/detail/${review.store_id}/`).then(res => {
+    review.store_name = res.data.store_name;
+    return review;
+  });
+}

@@ -10,4 +10,5 @@ urlpatterns = [
     path('followerInfo/<int:id>/', views.follower_info),
     path('followingInfo/<int:id>/', views.following_info),
     path('likeInfo/<int:id>/', views.like_info),
+    path('change_pw/', views.change_pw),
 ]

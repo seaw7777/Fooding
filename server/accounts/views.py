@@ -67,6 +67,14 @@ def login(request):
         return Response({'loginSuccess': False, 'message2': '존재하지 않는 이메일입니다'})
 
 
+# 비밀번호 변경
+@api_view(['POST'])
+def change_pw(request):
+    user = User.objects.get(email=request.data.get('username'))
+    user.update(password=request.data.get('change_pw'))
+    
+    return Response({'success': 'success'}, status=status.HTTP_202_ACCEPTED)
+
 # 회원별 회원정보 불러오기
 @api_view(['GET'])
 def user_info(request, id):

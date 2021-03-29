@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import {
   FcHome,
@@ -38,18 +38,20 @@ function Footer() {
             </NavLink>
           </Col>
           <Col span={6}>
-            <a href="" style={{ stextDecoration: 'none' }}>
-              <FcSearch />
-              <p
-                style={{
-                  color: 'black',
-                  fontSize: '12px',
-                  marginBottom: '8px',
-                }}
-              >
-                검색
-              </p>
-            </a>
+            <Link to="/search" activeStyle={activeStyle}>
+              <a href="" style={{ stextDecoration: 'none' }}>
+                <FcSearch />
+                <p
+                  style={{
+                    color: 'black',
+                    fontSize: '12px',
+                    marginBottom: '8px',
+                  }}
+                >
+                  검색
+                </p>
+              </a>
+            </Link>
           </Col>
           <Col span={6}>
             <NavLink to="/accompany" activeStyle={activeStyle}>

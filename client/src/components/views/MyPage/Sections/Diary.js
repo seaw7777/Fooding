@@ -1,25 +1,34 @@
 import React from 'react';
 import { Timeline } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-function Diary() {
+function Diary(props) {
+  const renderTimeLine = props.review.map((rv, index) => {
+    return (
+      <Timeline.Item color="red" style={{ marginTop: '0.1rem' }} key={index}>
+        {rv.store_name} &nbsp;&nbsp;&nbsp;{rv.write_date.substring(0, 10)}
+      </Timeline.Item>
+    );
+  });
   return (
-    <div>
-      <Timeline
-        className="timeLine"
-        mode="left"
-        style={{ marginTop: '2rem', margin: '3rem' }}
-      >
-        <Timeline.Item>Create a services site 2015-09-01</Timeline.Item>
-        <Timeline.Item>Solve initial network problems 2015-09-01</Timeline.Item>
-        <Timeline.Item
-          dot={<ClockCircleOutlined style={{ fontSize: '16px' }} />}
-          color="red"
+    <div
+      style={{
+        height: 295,
+        overflow: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <InfiniteScroll dataLength={props.review.length}>
+        <Timeline
+          className="timeLine"
+          mode="left"
+          style={{ paddingLeft: '2.5rem', margin: '1rem' }}
         >
-          Technical testing 2015-09-01
-        </Timeline.Item>
-        <Timeline.Item>Network problems being solved 2015-09-01</Timeline.Item>
-      </Timeline>
+          {renderTimeLine}
+        </Timeline>
+      </InfiniteScroll>
     </div>
   );
 }

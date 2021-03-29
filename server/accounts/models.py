@@ -27,7 +27,7 @@ class User(models.Model):
     password = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=500, blank=True, null=True)
     spoon_cnt = models.IntegerField(blank=True, null=True)
-
+    grade = models.CharField(max_length=100)
     class Meta:
         managed = False
         db_table = 'User'
