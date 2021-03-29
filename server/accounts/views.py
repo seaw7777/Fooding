@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 
 from .serializers import FollowSerializer, UserSerializer, LikeSerializer
 from .models import Follow, Like, User
+from recommend.models import reviewcategory
 from server.settings import SECRET_KEY
 
 import jwt
@@ -36,6 +37,109 @@ def signup(request):
             address=request.data.get('address'),
             spoon_cnt=0,
         ).save()
+        
+        # 리뷰 카테고리 컬럼 생성
+        userid = User.objects.get(email=request.data.get('email'))
+        reviewcategory.objects.create(
+                    user_id = userid.id,
+                    krzzimandtang = 0,
+                    krbbq = 0,
+                    krgukbap = 0,
+                    krstewandcasserole = 0,
+                    krporkfeetandBossam = 0,
+                    krseafood = 0,
+                    krnoodles = 0,
+                    krhomecooking = 0,
+                    krchicken = 0,
+                    krfood = 0,
+                    bunsick =0,
+                    jpfriedfood =0,
+                    jpsashimi=0,
+                    jphomecooking=0,
+                    jpseafood=0,
+                    jpnoodles=0,
+                    jpfood=0,
+                    cddrink=0,
+                    cdcafe=0,
+                    cddessert=0,
+                    chnoodles=0,
+                    chfriedfood=0,
+                    chbbq=0,
+                    chfood=0,
+                    wenoodles=0,
+                    wepizza=0,
+                    wesalad=0,
+                    wefood=0,
+                    brbar=0,
+                    brjpanbar=0,
+                    bkbakery=0,
+                    fffood=0,
+                ).save()
+
+        # 카테고리 별 선호도 초기값 셋팅
+        taste = request.data.get('taste')
+        for i in taste:
+            if(i=="한식"):
+                reviewcategory.objects.update(
+                    krzzimandtang = 1,
+                    krbbq = 1,
+                    krgukbap = 1,
+                    krstewandcasserole = 1,
+                    krporkfeetandBossam = 1,
+                    krseafood = 1,
+                    krnoodles = 1,
+                    krhomecooking = 1,
+                    krchicken = 1,
+                    krfood = 1,
+                )
+            elif(i=="분식"):
+                reviewcategory.objects.update(
+                    bunsick = 1,
+                )
+            elif(i=="일식"):
+                reviewcategory.objects.update(
+                    jpfriedfood =1,
+                    jpsashimi=1,
+                    jphomecooking=1,
+                    jpseafood=1,
+                    jpnoodles=1,
+                    jpfood=1,
+                )
+            elif(i=="카페"):
+                reviewcategory.objects.update(
+                    cddrink =1,
+                    cdcafe=1,
+                    cddessert=1,
+                )
+            elif(i=="중식"):
+                reviewcategory.objects.update(
+                    chnoodles=1,
+                    chfriedfood=1,
+                    chbbq=1,
+                    chfood=1,
+                )
+            elif(i=="양식"):
+                    reviewcategory.objects.update(
+                    wenoodles=1,
+                    wepizza=1,
+                    wesalad=1,
+                    wefood=1,
+                )
+            elif(i=="술집"):
+                reviewcategory.objects.update(
+                    brbar =1,
+                    brjpanbar=1,
+                )
+            elif(i=="베이커리"):
+                reviewcategory.objects.update(
+                    bkbakery = 1,
+                )
+            elif(i=="패스트푸드"):
+                reviewcategory.objects.update(
+                    fffood = 1,
+                )
+
+
         return Response({'success': 'success'}, status=status.HTTP_201_CREATED)
 
     except KeyError:

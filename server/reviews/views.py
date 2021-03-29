@@ -12,6 +12,7 @@ from rest_framework.serializers import Serializer
 from .serializers import ReviewSerializer
 from .models import Review, Store
 from accounts.models import User
+from recommend.models import reviewcategory
 
 from reviews import serializers
 
@@ -108,6 +109,151 @@ def review_write(request):
     elif spoon >=49:
         userdata.update(grade='silver')
 
+
+    # 리뷰 카테고리 카운팅
+    ct = Store.objects.get(id=request.data.get('store_id'))
+    main_ct = ct.main_category
+    mid_ct = ct.middle_category
+    
+    reviewdata = reviewcategory.objects.filter(user_id=request.data.get('user_id')).values()
+
+    if(main_ct=="카페"):
+        if(mid_ct=="찜/탕"):
+            reviewdata.update(
+                krzzimandtang = reviewdata[0]["krzzimandtang"] + 1
+            )
+        elif(mid_ct=="고기집"):
+            reviewdata.update(
+                krbbq = reviewdata[0]["krbbq"] + 1
+            )
+        elif(mid_ct=="국밥"):
+            reviewdata.update(
+                krgukbap = reviewdata[0]["krgukbap"] + 1
+            )
+        elif(mid_ct=="전골/찌개"):
+            reviewdata.update(
+                krstewandcasserole = reviewdata[0]["krstewandcasserole"] + 1
+            )
+        elif(mid_ct=="족발/보쌈"):
+            reviewdata.update(
+                krporkfeetandBossam = reviewdata[0]["krporkfeetandBossam"] + 1
+            )
+        elif(mid_ct=="해산물"):
+            reviewdata.update(
+                krseafood = reviewdata[0]["krseafood"] + 1
+            )
+        elif(mid_ct=="면요리"):
+            reviewdata.update(
+                krnoodles = reviewdata[0]["krnoodles"] + 1
+            )
+        elif(mid_ct=="가정식"):
+            reviewdata.update(
+                krhomecooking = reviewdata[0]["krhomecooking"] + 1
+            )
+        elif(mid_ct=="치킨"):
+            reviewdata.update(
+                krchicken = reviewdata[0]["krchicken"] + 1
+            )
+        elif(mid_ct=="한식"):
+            reviewdata.update(
+                krfood = reviewdata[0]["krfood"] + 1
+            )
+    elif(main_ct=="분식"):
+        reviewdata.update(
+            bunsick = reviewdata[0]["bunsick"] + 1
+        )
+    elif(main_ct=="일식"):
+        if(mid_ct=="튀김"):
+            reviewdata.update(
+                jpfriedfood = reviewdata[0]["jpfriedfood"] + 1
+            )
+        elif(mid_ct=="회"):
+            reviewdata.update(
+                jpsashimi = reviewdata[0]["jpsashimi"] + 1
+            )
+        elif(mid_ct=="가정식"):
+            reviewdata.update(
+                jphomecooking = reviewdata[0]["jphomecooking"] + 1
+            )
+        elif(mid_ct=="어패류"):
+            reviewdata.update(
+                jpseafood = reviewdata[0]["jpseafood"] + 1
+            )
+        elif(mid_ct=="면요리"):
+            reviewdata.update(
+                jpnoodles = reviewdata[0]["jpnoodles"] + 1
+            )
+        elif(mid_ct=="일식"):
+            reviewdata.update(
+                jpfood = reviewdata[0]["jpfood"] + 1
+            )
+    elif(main_ct=="카페"):
+        if(mid_ct=="음료"):
+            reviewdata.update(
+                cddrink = reviewdata[0]["cddrink"] + 1
+            )
+        elif(mid_ct=="카페"):
+            reviewdata.update(
+                cdcafe = reviewdata[0]["cdcafe"] + 1
+            )
+        elif(mid_ct=="디저트"):
+            reviewdata.update(
+                cddessert = reviewdata[0]["cddessert"] + 1
+            )
+    elif(main_ct=="중식"):
+        if(mid_ct=="면요리"):
+            reviewdata.update(
+                chnoodles = reviewdata[0]["chnoodles"] + 1
+            )
+        elif(mid_ct=="튀김요리"):
+            reviewdata.update(
+                chfriedfood = reviewdata[0]["chfriedfood"] + 1
+            )
+        elif(mid_ct=="구이요리"):
+            reviewdata.update(
+                chbbq = reviewdata[0]["chbbq"] + 1
+            )
+        elif(mid_ct=="해외요리"):
+            reviewdata.update(
+                chfood = reviewdata[0]["chfood"] + 1
+            )
+    elif(main_ct=="양식"):
+        if(mid_ct=="면요리"):
+            reviewdata.update(
+                wenoodles = reviewdata[0]["wenoodles"] + 1
+            )
+        elif(mid_ct=="피자"):
+            reviewdata.update(
+                wepizza = reviewdata[0]["wepizza"] + 1
+            )
+        elif(mid_ct=="샐러드"):
+            reviewdata.update(
+                wesalad = reviewdata[0]["wesalad"] + 1
+            )
+        elif(mid_ct=="해외요리"):
+            reviewdata.update(
+                wefood = reviewdata[0]["wefood"] + 1
+            )
+    elif(main_ct=="술집"):
+        if(mid_ct=="술집"):
+            reviewdata.update(
+                brbar = reviewdata[0]["brbar"] + 1
+            )
+        elif(mid_ct=="일본선술집"):
+            reviewdata.update(
+                brjpanbar = reviewdata[0]["brjpanbar"] + 1
+            )
+    elif(main_ct=="베이커리"):
+        if(mid_ct=="빵집"):
+            reviewdata.update(
+                bkbakery = reviewdata[0]["bkbakery"] + 1
+            )
+    elif(main_ct=="패스트푸드"):
+        if(mid_ct=="햄버거"):
+            reviewdata.update(
+                fffood = reviewdata[0]["fffood"] + 1
+            )
+            
     return Response({'success': True}, status=status.HTTP_201_CREATED)
 
 
