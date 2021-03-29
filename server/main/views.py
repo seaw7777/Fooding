@@ -9,8 +9,7 @@ from rest_framework.decorators import api_view
 
 from .serializers import InfluencerSerializer
 from accounts.models import User
-
-import boto3
+# import boto3
 
 # Create your views here.
 #인플루언서(10인) 목록 불러오기
