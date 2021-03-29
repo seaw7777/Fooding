@@ -194,6 +194,7 @@ def user_info(request, id):
 
 
 # 회원별 팔로워 불러오기
+# 나를 팔로우 한사람 불러오기
 @api_view(['GET'])
 def follower_info(request, id):
     if User.objects.filter(id=id).exists():
@@ -219,6 +220,7 @@ def follower_info(request, id):
 
 
 # 회원별 팔로잉 불러오기
+# 내가 팔로우 한사람 불러우기
 @api_view(['GET'])
 def following_info(request, id):
     if User.objects.filter(id=id).exists():
@@ -255,3 +257,24 @@ def like_info(request, id):
 
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
+
+#팔로우하기
+@api_view(['GET'])
+def make_follower(request, user_id,follower_id):
+    if User.objects.filter(id=user_id).exists():
+        Follow.objects.create(
+            follow_id = follower_id,
+            following_id = user_id
+        ).save()
+        return Response({'message': '완료'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
+#언팔로우하기
+@api_view(['GET'])
+def delete_follower(request, user_id,follower_id):
+    if User.objects.filter(id=user_id).exists():
+        Follow.objects.filter(follow_id = follower_id , following_id = user_id).delete()
+        return Response({'message': '완료'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
+
