@@ -3,4 +3,6 @@ from . import views
 
 app_name = 'search'
 
-urlpatterns = []
+urlpatterns = [
+    path('searchstore/<str:store_name>/', views.searchstore),
+]
