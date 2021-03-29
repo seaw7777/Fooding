@@ -2,9 +2,9 @@ import React from 'react';
 import StoreCard from '../../../../utils/StoreCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-function AccompanyCard() {
+function AccompanyCard(props) {
   const roomNumber = [1, 2, 3, 4, 5, 6];
-
+  // console.log(props.select) 선택한 값 확인
   const renderStoreCard = roomNumber.map((number, index) => {
     return <StoreCard store={number} />;
   });

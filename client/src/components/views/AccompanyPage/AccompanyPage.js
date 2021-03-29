@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Col } from 'antd';
 import AccompanyCard from './Sections/AccompanyCard';
 
 function AccompanyPage() {
+  const [Select, setSelect] = useState('');
+
+  const SelectChoice = accompany => {
+    setSelect(accompany);
+  };
+
   return (
     <div>
       <div
@@ -19,7 +25,7 @@ function AccompanyPage() {
           </div>
           <br />
           <Row gutter={10} style={{ textAlign: 'center' }}>
-            <Col span={6}>
+            <Col span={6} onClick={() => SelectChoice('parent')}>
               <img
                 src="/images/parents.png"
                 alt="parents"
@@ -27,7 +33,7 @@ function AccompanyPage() {
               />
               <div>부모님</div>
             </Col>
-            <Col span={6}>
+            <Col span={6} onClick={() => SelectChoice('friend')}>
               <img
                 src="/images/friends.png"
                 alt="friends"
@@ -35,7 +41,7 @@ function AccompanyPage() {
               />
               <div>친구</div>
             </Col>
-            <Col span={6}>
+            <Col span={6} onClick={() => SelectChoice('children')}>
               <img
                 src="/images/toys.png"
                 alt="toys"
@@ -43,7 +49,7 @@ function AccompanyPage() {
               />
               <div>아이들</div>
             </Col>
-            <Col span={6}>
+            <Col span={6} onClick={() => SelectChoice('pet')}>
               <img
                 src="/images/pets.png"
                 alt="pets"
@@ -54,7 +60,7 @@ function AccompanyPage() {
           </Row>
         </div>
       </div>
-      <AccompanyCard />
+      <AccompanyCard select={Select} />
     </div>
   );
 }

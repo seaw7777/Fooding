@@ -151,7 +151,9 @@ function MyPage(props) {
               style={{ display: 'inline' }}
               grade={props.user.loginSuccess.grade}
             />
-            <span>{props.user.loginSuccess.nickname}</span>
+            <span style={{ marginLeft: '0.3rem' }}>
+              {props.user.loginSuccess.nickname}
+            </span>
           </Col>
         </Row>
         <Row
@@ -224,7 +226,7 @@ function MyPage(props) {
           id="uncontrolled-tab-example"
         >
           <Tab eventKey="review" title="리뷰">
-            <Row style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+            <Row style={{ marginTop: '1rem', marginBottom: '0.6rem' }}>
               <Col span={6} offset={(0, 6)}>
                 <Button
                   type="primary"
