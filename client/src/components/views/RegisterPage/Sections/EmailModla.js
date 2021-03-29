@@ -21,9 +21,13 @@ function EmailModla() {
   return (
     <div>
       <Button
-        type="primary"
         onClick={showModal}
-        style={{ display: 'flex', margin: '0px 1rem 0px 0px' }}
+        style={{
+          display: 'flex',
+          margin: '0px 1rem 0px 0px',
+          backgroundColor: '#faad14',
+          borderColor: '#faad14',
+        }}
       >
         인증하기
       </Button>
