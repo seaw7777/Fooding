@@ -117,7 +117,7 @@ def review_write(request):
     
     reviewdata = reviewcategory.objects.filter(user_id=request.data.get('user_id')).values()
 
-    if(main_ct=="카페"):
+    if(main_ct=="한식"):
         if(mid_ct=="찜/탕"):
             reviewdata.update(
                 krzzimandtang = reviewdata[0]["krzzimandtang"] + 1
@@ -253,7 +253,7 @@ def review_write(request):
             reviewdata.update(
                 fffood = reviewdata[0]["fffood"] + 1
             )
-            
+
     return Response({'success': True}, status=status.HTTP_201_CREATED)
 
 
