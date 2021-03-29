@@ -3,7 +3,6 @@ import { LOGIN_USER, REGISTER_USER, LOGOUT_USER } from './types';
 import { SERVER } from 'Config.js';
 
 export function loginUser(dataToSubmit) {
-  console.log(dataToSubmit);
   const request = axios
     .post(`${SERVER}accounts/login/`, dataToSubmit)
     .then(res => res.data)
