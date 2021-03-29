@@ -31,24 +31,24 @@ function RegisterTastePage(props) {
   };
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(props.location.state);
+    console.log(props.location.state.nickName);
 
     if (TasteLi.length > 4) {
       console.log(TasteLi);
-      // let body = {
-      //   email: props.location.state.email,
-      //   nickname: props.location.state.nickName,
-      //   password: props.location.state.password,
-      //   address: props.location.state.address,
-      //   taste: TasteLi,
-      // };
-      // dispatch(registerUser(body)).then(response => {
-      //   if (response.payload.success === 'success') {
-      //     props.history.push('/login');
-      //   } else {
-      //     alert('회원가입에 실패 했습니다.');
-      //   }
-      // });
+      let body = {
+        email: props.location.state.email,
+        nickname: props.location.state.nickname,
+        password: props.location.state.password,
+        address: props.location.state.address,
+        taste: TasteLi,
+      };
+      dispatch(registerUser(body)).then(response => {
+        if (response.payload.success === 'success') {
+          props.history.push('/login');
+        } else {
+          alert('회원가입에 실패 했습니다.');
+        }
+      });
     } else {
       alert('5개 이상 선택해주세요.');
     }
