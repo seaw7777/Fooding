@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { registerUser } from '_actions/user_actions';
+import { Link } from 'react-router-dom';
 import residences from 'utils/areaInfo';
+import NicknameObj from 'utils/NickName';
 import EmailModal from './Sections/EmailModla';
-import { Form, Input, Cascader, Select, Checkbox, Button, Steps } from 'antd';
+import { Form, Input, Cascader, Select, Button, Steps, Typography } from 'antd';
 import 'antd/dist/antd.css';
+import { ConsoleSqlOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
@@ -40,7 +41,6 @@ const tailFormItemLayout = {
 };
 
 const RegisterPage = props => {
-  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [size, setsize] = useState('middle');
   const { Step } = Steps;
@@ -49,6 +49,7 @@ const RegisterPage = props => {
   const [Password, setPassword] = useState('');
   const [ConfirmPassword, setConfirmPassword] = useState('');
   const [Address, setAddress] = useState([]);
+  const { Title } = Typography;
 
   const onFinish = values => {
     console.log('Received values of form: ', values);
@@ -63,8 +64,20 @@ const RegisterPage = props => {
   const onConfirmPasswordHandler = event => {
     setConfirmPassword(event.currentTarget.value);
   };
+  // 닉네임 랜덤으로 생성
   const onNickNameHandler = event => {
-    setNickName(event.currentTarget.value);
+    const newNickNameFirst = NicknameObj['first'];
+    let idx = Math.floor(Math.random() * 6);
+
+    let RandomeFirst =
+      newNickNameFirst[Math.floor(Math.random() * newNickNameFirst.length)];
+    const newNickNameSecond = NicknameObj['second'];
+
+    let RandomeSecond =
+      newNickNameSecond[Math.floor(Math.random() * newNickNameSecond.length)];
+    const RandomeNickname = RandomeFirst + RandomeSecond;
+    console.log(RandomeNickname);
+    setNickName(RandomeNickname);
   };
 
   const onAddressHandler = event => {
@@ -74,27 +87,7 @@ const RegisterPage = props => {
   };
 
   const handlerSubmit = event => {
-    event.preventDefault();
-    // console.log(Email, Password, NickName, ConfirmPassword, Address);
-
-    //비밀번호랑 비밀번호 확인 다를때
-    if (Password !== ConfirmPassword) {
-      return alert('비밀번호와 비밀번호 확인은 같아야 합니다.');
-    }
-
-    let body = {
-      email: Email,
-      nickname: NickName,
-      password: Password,
-      address: Address,
-    };
-    dispatch(registerUser(body)).then(response => {
-      if (response.payload.success === 'success') {
-        props.history.push('/login');
-      } else {
-        alert('회원가입에 실패 했습니다.');
-      }
-    });
+    console.log(event);
   };
 
   const prefixSelector = (
@@ -204,13 +197,11 @@ const RegisterPage = props => {
             },
           ]}
         >
-          <Input
-            value={NickName}
-            onChange={onNickNameHandler}
-            style={{ width: '65%', margin: '0.5rem' }}
-          />
+          <Title level={5}>{NickName}</Title>
         </Form.Item>
-        <Button size={size}>랜덤선택</Button>
+        <Button size={size} onClick={() => onNickNameHandler()}>
+          랜덤선택
+        </Button>
 
         <Form.Item
           name="residence"
@@ -226,30 +217,27 @@ const RegisterPage = props => {
           <Cascader onChange={onAddressHandler} options={residences} />
         </Form.Item>
 
-        <Form.Item
-          name="agreement"
-          valuePropName="checked"
-          rules={[
-            {
-              validator: (_, value) =>
-                value
-                  ? Promise.resolve()
-                  : Promise.reject(new Error('Should accept agreement')),
-            },
-          ]}
-          {...tailFormItemLayout}
-        >
-          <Checkbox>
-            I have read the <a href="">agreement</a>
-          </Checkbox>
-        </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <div style={{ display: 'flex' }}>
             <EmailModal />
-
-            <Button onClick={handlerSubmit} type="primary">
-              다음
-            </Button>
+            <Link
+              to={{
+                pathname: '/register/taste',
+                state: {
+                  email: Email,
+                  nickname: NickName,
+                  password: Password,
+                  address: Address,
+                },
+              }}
+            >
+              <Button
+                onClick={handlerSubmit}
+                style={{ backgroundColor: '#faad14', borderColor: '#faad14' }}
+              >
+                다음
+              </Button>
+            </Link>
           </div>
         </Form.Item>
       </Form>
