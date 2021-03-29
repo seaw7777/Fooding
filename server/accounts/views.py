@@ -58,7 +58,7 @@ def login(request):
 
             user = User.objects.get(email=request.data.get('username'))
 
-            return Response({'loginSuccess': True, 'id':user.id, 'email': request.data.get('username'), 'nickname': user.nickname, 'address': user.address, 'spoon_cnt': user.spoon_cnt, 'token': token}, status=status.HTTP_200_OK)
+            return Response({'loginSuccess': True, 'id':user.id, 'email': request.data.get('username'), 'nickname': user.nickname, 'address': user.address, 'spoon_cnt': user.spoon_cnt, 'grade': user.grade, 'token': token}, status=status.HTTP_200_OK)
 
         else:
             return Response({'loginSuccess': False, 'message1': '입력된 이메일 혹은 비밀번호가 틀렸습니다'})
