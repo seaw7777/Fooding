@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { registerUser } from '_actions/user_actions';
 import TasteAvatar from './Sections/TasteAvatar';
 import { Typography, Button, Steps } from 'antd';
 import 'antd/dist/antd.css';
-import { convertLegacyProps } from 'antd/lib/button/button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Sections/Register.css';
 
 function RegisterTastePage(props) {
   const { Title } = Typography;
@@ -13,15 +15,15 @@ function RegisterTastePage(props) {
 
   const [TasteLi, setTasteLi] = useState([]);
   const [TasteList, setTasteList] = useState([
-    { name: '한식', link: 'https://picsum.photos/100/100/?random' },
-    { name: '분식', link: 'https://source.unsplash.com/random' },
-    { name: '일식', link: 'https://source.unsplash.com/random' },
-    { name: '카페', link: 'https://picsum.photos/100/100/?random' },
-    { name: '중식', link: 'https://picsum.photos/100/100/?random' },
-    { name: '양식', link: 'https://picsum.photos/100/100/?random' },
-    { name: '술집', link: 'https://picsum.photos/100/100/?random' },
-    { name: '베이커리', link: 'https://picsum.photos/100/100/?random' },
-    { name: '햄버거', link: 'https://picsum.photos/100/100/?random' },
+    { name: '한식', link: '/images/taste/한식.png' },
+    { name: '분식', link: '/images/taste/분식.jpg' },
+    { name: '일식', link: '/images/taste/일식.jpg' },
+    { name: '카페', link: '/images/taste/카패.png' },
+    { name: '중식', link: '/images/taste/중식.png' },
+    { name: '양식', link: '/images/taste/양식.jpg' },
+    { name: '술집', link: '/images/taste/술집.jpg' },
+    { name: '베이커리', link: '/images/taste/베이커리.jpg' },
+    { name: '햄버거', link: '/images/taste/햄버거.jpg' },
   ]);
   //Taste Avatar에서 선택한 리스트 받아오는 함수
   const handleFilters = filters => {
@@ -69,6 +71,30 @@ function RegisterTastePage(props) {
         list={TasteList}
         handleFilters={filters => handleFilters(filters)}
       />
+      <Link
+        to={{
+          pathname: '/register',
+          state: {
+            email: props.location.state.email,
+            nickname: props.location.state.nickname,
+            password: props.location.state.password,
+            address: props.location.state.address,
+          },
+        }}
+      >
+        <Button
+          type="primary"
+          value="defalut"
+          style={{
+            display: 'flex',
+            margin: '2rem auto',
+            background: 'orange*5',
+            borderColor: 'orange-5',
+          }}
+        >
+          뒤로가기
+        </Button>
+      </Link>
       <a href={`/`}>
         <Button
           type="primary"
