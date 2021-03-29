@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'reviews',  # 리뷰
     'search',  # 검색
     'stores',  # 가게상세
+    'recommend', # 유저 추천
 
     'rest_framework',
     'django_extensions',

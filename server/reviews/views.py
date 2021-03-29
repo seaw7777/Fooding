@@ -22,6 +22,7 @@ from reviews import serializers
 @api_view(['GET'])
 def review_info(request, id):
     if User.objects.filter(id=id).exists():
+        print("확인용")
         review = Review.objects.filter(user_id=id)
         
         review_data = []
