@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Input } from 'antd';
-import ImageUploader from 'react-images-upload';
+// import ImageUploader from 'react-images-upload';
 
 function ReviewPage() {
   const { TextArea } = Input;
@@ -20,13 +20,13 @@ function ReviewPage() {
         />
       </div>
       <div>
-        <ImageUploader
+        {/* <ImageUploader
           withIcon={true}
           buttonText="사진 업로드"
           // onChange={this.onDrop}
           imgExtension={['.jpg', '.gif', '.png', '.gif']}
           maxFileSize={5242880}
-        />
+        /> */}
       </div>
     </div>
   );
