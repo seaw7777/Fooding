@@ -149,9 +149,9 @@ JWT_AUTH = {'JWT_ALLOW_REFRESH': True, }
 STATIC_URL = '/static/'
 
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = (
-    'http://j4d107.p.ssafy.io:3001',  # React 도메인
-    'http://j4d107.p.ssafy.io:8000',  # Django 도메인
+    'http://j4d107.p.ssafy.io:3001/',  # React 도메인
+    'http://j4d107.p.ssafy.io:8000/',  # Django 도메인
 )
