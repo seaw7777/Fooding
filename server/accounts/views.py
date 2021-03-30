@@ -278,3 +278,14 @@ def delete_follower(request, user_id,follower_id):
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
 
+
+# 팔로우 체크
+@api_view(['GET'])
+def check_follow(request, user_id, follower_id):
+    if User.objects.filter(id=user_id).exists():
+        if Follow.objects.filter(follow_id = follower_id, following_id = user_id).exists():
+            return Response({'message': '완료'}, status.HTTP_200_OK)
+        else:
+            return Response({'message': '팔로우 되어 있지 않습니다.'}, status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
