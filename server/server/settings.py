@@ -69,8 +69,8 @@ ROOT_URLCONF = 'server.urls'
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',  # React 도메인
-    'http://localhost:8000',  # Django 도메인
+    'http://j4d107.p.ssafy.io:3001',  # React 도메인
+    'http://j4d107.p.ssafy.io:8000',  # Django 도메인
 )
 
 TEMPLATES = [
