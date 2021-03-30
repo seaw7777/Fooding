@@ -11,8 +11,8 @@ pipeline {
         stage('Docker build') {
             agent any
             steps {
-                sh 'docker build -t testfront:latest /var/jenkins_home/workspace/wtest/client'
-                sh 'docker build -t testback:latest /var/jenkins_home/workspace/wtest/server'
+                sh 'docker build -t testfront:latest /var/jenkins_home/workspace/fooding/client'
+                sh 'docker build -t testback:latest /var/jenkins_home/workspace/fooding/server'
             }
         }
         stage('Docker run') {
