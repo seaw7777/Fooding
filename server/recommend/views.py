@@ -203,8 +203,8 @@ def recommendforyou(request,id):
     return JsonResponse(recommend_follower,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
 
 #가게추천 연산해서 리턴하기
-@api_view(['GET'])
-def recommendforStore(request,id):
+@api_view(['POST'])
+def recommendforStore(request):
     if User.objects.filter(id=id).exists():
         follower_id = Follow.objects.filter(follow_id=id)
         my_interest = reviewcategory.objects.get(user_id = id)

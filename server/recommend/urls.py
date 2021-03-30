@@ -5,6 +5,6 @@ app_name = 'recommend'
 
 urlpatterns = [
     path('recommendforyou/<int:id>/', views.recommendforyou),
-    path('recommenduser',views.test),
-    path('recommendforStore/<int:id>/',views.recommendforStore)
+    path('recommenduser/',views.test),
+    path('recommendforStore/',views.recommendforStore)
 ]
