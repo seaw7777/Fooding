@@ -42,7 +42,7 @@ function MainPage(props) {
       <MainPageBar address={Address} />
       <div>
         <Title level={4}>뜨고 있는 인기 푸더!!</Title>
-        <Text strong>이 지역 인기 푸더를 팔로잉하고 소식을 받아보세요!</Text>
+        <Text strong>인기 푸더를 팔로잉하고 소식을 받아보세요!</Text>
       </div>
       <div
         style={{
