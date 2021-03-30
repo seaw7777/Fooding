@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { LOGIN_USER, REGISTER_USER, LOGOUT_USER } from './types';
+import {
+  LOGIN_USER,
+  REGISTER_USER,
+  LOGOUT_USER,
+  CHANGE_USER_ADDRESS,
+} from './types';
 import { SERVER } from 'Config.js';
 
 export function loginUser(dataToSubmit) {
@@ -26,3 +31,11 @@ export function registerUser(dataToSubmit) {
 export const logoutUser = () => ({
   type: LOGOUT_USER,
 });
+
+export function changeUserInfo(address) {
+  console.log(address);
+  return {
+    type: CHANGE_USER_ADDRESS,
+    payload: address,
+  };
+}
