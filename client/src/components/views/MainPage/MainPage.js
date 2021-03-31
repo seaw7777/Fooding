@@ -46,13 +46,20 @@ function MainPage(props) {
     dispatch(changeUserInfo(ad));
     // list
     // 주소를 한꺼번에 말고 나눠서 보내기
-    const recommend = StoreRecommendInfo({
+    const body = {
       user_id: props.user.loginSuccess.id,
       lat: lat,
       lng: lng,
       address: ad,
       region_name: region_name,
-    });
+    };
+    StoreRecommendInfo(body)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const renderStoreCard = Stores.map((store, index) => {
@@ -61,13 +68,13 @@ function MainPage(props) {
   return (
     <div>
       <MainPageBar change={handlerAddress} address={Address} />
-      <div>
-        <Title level={4}>뜨고 있는 인기 푸더!!</Title>
+      <div style={{ margin: '1rem' }}>
+        <Title level={4}>뜨고 있는 인기 FOODER!!</Title>
         <Text strong>인기 푸더를 팔로잉하고 소식을 받아보세요!</Text>
       </div>
       <div
         style={{
-          height: 500,
+          height: 480,
           overflow: 'auto',
           display: 'flex',
           flexDirection: 'column',
