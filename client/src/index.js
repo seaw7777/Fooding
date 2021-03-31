@@ -9,12 +9,22 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import configureStore from './_reducer/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import './index.css';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 const { store, persistor } = configureStore();
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: 'Jal_Onuel',
+  },
+});
 
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <App />
+      <MuiThemeProvider theme={theme}>
+        <App />
+      </MuiThemeProvider>
     </PersistGate>
   </Provider>,
   document.getElementById('root'),

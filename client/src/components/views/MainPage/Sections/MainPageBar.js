@@ -17,7 +17,7 @@ const postCodeStyle = {
 };
 const { kakao } = window;
 function MainPageBar(props, { change }) {
-  const [lan, setlan] = useState('');
+  const [lat, setlat] = useState('');
   const [lng, setlng] = useState('');
   console.log(props.address);
   const [Address, setAddress] = useState('');
@@ -29,11 +29,11 @@ function MainPageBar(props, { change }) {
     var geocoder = new kakao.maps.services.Geocoder();
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
-        setlan(position.coords.latitude); // 위도
+        setlat(position.coords.latitude); // 위도
         setlng(position.coords.longitude); // 경도
       });
     }
-    var coord = new kakao.maps.LatLng(lan, lng);
+    var coord = new kakao.maps.LatLng(lat, lng);
     geocoder.coord2Address(
       coord.getLng(),
       coord.getLat(),
@@ -41,7 +41,13 @@ function MainPageBar(props, { change }) {
         if (status === kakao.maps.services.Status.OK) {
           setAddress(result[0].address.address_name);
           console.log(result);
-          props.change(result[0].address.address_name);
+          const region_name = [
+            result[0].address.region_1depth_name,
+            result[0].address.region_2depth_name,
+            result[0].address.region_3depth_name,
+          ];
+          props.change(result[0].address.address_name, lat, lng, region_name);
+          // props.change(result[0].address.address_name);
         }
       },
     );
@@ -52,7 +58,19 @@ function MainPageBar(props, { change }) {
   };
 
   const handleComplete = data => {
+    var geocoder = new kakao.maps.services.Geocoder();
     let fullAddress = data.address;
+    const region_name = [data.sido, data.sigungu, data.roadname];
+
+    var callback = function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        // console.log(result[0].road_address.x); // lat
+        // console.log(result[0].road_address.y); // lng
+        setlat(result[0].road_address.x); // 위도
+        setlng(result[0].road_address.y); //경도
+      }
+    };
+    geocoder.addressSearch(fullAddress, callback);
 
     // console.log(data.address);
     // if (data.addressType === 'R') {
@@ -68,7 +86,7 @@ function MainPageBar(props, { change }) {
     setIsZoneCode(data.zonecode);
     setAddress(fullAddress);
     setIsPostOpen(!IsPostOpen);
-    props.change(fullAddress);
+    props.change(fullAddress, lat, lng, region_name);
   };
   return (
     <div

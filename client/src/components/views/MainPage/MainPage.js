@@ -21,31 +21,6 @@ function MainPage(props) {
   const { Title, Text } = Typography;
 
   useEffect(() => {
-    setAddress(props.user.loginSuccess.address);
-  });
-
-  //   useEffect(() => {
-  //     var geocoder = new kakao.maps.services.Geocoder();
-  //     if (navigator.geolocation) {
-  //       navigator.geolocation.getCurrentPosition(function (position) {
-  //         setlan(position.coords.latitude); // 위도
-  //         setlng(position.coords.longitude); // 경도
-  //       });
-  //     }
-  //     var coord = new kakao.maps.LatLng(lan, lng);
-  //     geocoder.coord2Address(
-  //       coord.getLng(),
-  //       coord.getLat(),
-  //       function (result, status) {
-  //         if (status === kakao.maps.services.Status.OK) {
-  //           setAddress(result[0].address.address_name);
-  //           console.log(result);
-  //         }
-  //       },
-  //     );
-  //   }, []);
-
-  useEffect(() => {
     const MainData = async () => {
       try {
         // redux에 저장된 user id 사용하기
@@ -59,20 +34,25 @@ function MainPage(props) {
       }
     };
     MainData();
+    // setAddress(props.user.loginSuccess.address);
   }, []);
 
-  const handlerAddress = (ad, lat, lng) => {
+  useEffect(() => {
+    setAddress(props.user.loginSuccess.address);
+  });
+
+  const handlerAddress = (ad, lat, lng, region_name) => {
     setAddress(ad);
     dispatch(changeUserInfo(ad));
-    console.log('!!!!!!!!');
+    // list
+    // 주소를 한꺼번에 말고 나눠서 보내기
     const recommend = StoreRecommendInfo({
       user_id: props.user.loginSuccess.id,
       lat: lat,
       lng: lng,
       address: ad,
+      region_name: region_name,
     });
-    console.log(recommend);
-    // 새로운 주소에 맞게끔, user_id, 위도, 경도, 주소 다 보내줘야함
   };
 
   const renderStoreCard = Stores.map((store, index) => {
