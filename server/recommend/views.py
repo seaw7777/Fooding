@@ -1,7 +1,7 @@
 from django.shortcuts import render
-# from numpy import dot
-# import numpy as np
-# from numpy.linalg import norm
+from numpy import dot
+import numpy as np
+from numpy.linalg import norm
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
@@ -18,7 +18,6 @@ from accounts.models import User
 from .models import reviewcategory
 
 # Create your views here.
-
 # 리뷰 카테고리 테이블 넣기
 def insert_data(data,user_id):
     if reviewcategory.objects.filter(user_id=user_id).exists() :
@@ -61,6 +60,7 @@ def insert_data(data,user_id):
         ).save()
     pass
 
+
 def calcos(myinfo,info_list):
     index = [0]*34
     A={}
@@ -83,6 +83,7 @@ def calcos(myinfo,info_list):
             A[key] = value
     dummy = sorted(A.items(),key=lambda x:x[1],reverse=True)
     return dummy
+
 
 def categorysearch(my_interest):
     dic = []
@@ -154,6 +155,8 @@ def categorysearch(my_interest):
     print("확인")
     print(dic)
     return dic
+
+
 @api_view(['GET'])
 def test(request):
     review = Review.objects.all().order_by('user_id').values()
@@ -181,6 +184,7 @@ def test(request):
     insert_data(data, user_id)
     return Response({'message':'성공'},status=status.HTTP_200_OK)
 
+
 #추천인 연산해서 리턴하기
 @api_view(['GET'])
 def recommendforyou(request,id):
@@ -201,6 +205,7 @@ def recommendforyou(request,id):
             "spoon_cnt": user.spoon_cnt,
         })
     return JsonResponse(recommend_follower,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
+
 
 #가게추천 연산해서 리턴하기
 @api_view(['POST'])
