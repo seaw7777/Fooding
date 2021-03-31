@@ -29,7 +29,7 @@ function Footer() {
             style={{
               paddingTop: '0',
               textAlign: 'center',
-              fontSize: '23px',
+              fontSize: '18px',
               marginBottom: '0',
               padding: '0.3rem',
             }}

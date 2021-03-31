@@ -7,7 +7,11 @@ function RecommendFooder(props) {
   const { Meta } = Card;
   return (
     <div
-      style={{ width: '250px', height: '200px', margin: '2rem  auto 3.5rem' }}
+      style={{
+        width: '250px',
+        height: '200px',
+        margin: '0.25rem  auto 3.5rem',
+      }}
     >
       <Carousel autoplay>
         {props.list.map((fooder, index) => (
