@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import Auth from 'hoc/auth';
 /// Pages for product
 import LoginPage from './components/views/LoginPage/LoginPage';
@@ -26,6 +26,9 @@ function App() {
         <>
           <div style={{ paddingTop: '0', minHeight: 'calc(98vh - 45px)' }}>
             <NavBarPage />
+            <Route exact path="/">
+              <Redirect to="/main" />
+            </Route>
             <Route exact path="/main" component={Auth(MainPage, true)} />
             {/* 로그인, 회원가입 하단바가 안보여야함 */}
 

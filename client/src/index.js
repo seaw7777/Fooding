@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
@@ -11,8 +10,8 @@ import configureStore from './_reducer/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import './index.css';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { Route } from 'react-router-dom';
 const { store, persistor } = configureStore();
-
 const theme = createMuiTheme({
   typography: {
     fontFamily: 'Jal_Onuel',
