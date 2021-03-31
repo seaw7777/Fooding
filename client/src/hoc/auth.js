@@ -14,7 +14,7 @@ export default function (SpecificComponent, option) {
       //Loggined in Status
     } else {
       if (option === false) {
-        props.history.push('/');
+        props.history.push('/main');
       }
     }
 
