@@ -5,9 +5,12 @@ import { Tabs, Tab, Nav } from 'react-bootstrap';
 import FooderList from './Sections/FooderList';
 import StoreCard from 'utils/StoreCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { fetchSearchStore } from '_api/Search';
 
 function SearchPage() {
+  const [SearchValue, setSearchValue] = useState('');
   const [InputValue, setInputValue] = useState('푸더의 이름을 검색해주세요.');
+
   const [Stores, setStores] = useState([
     { store_name: 'abc', review_cnt: 0, id: 2 },
     { store_name: 'def', review_cnt: 0, id: 3 },
@@ -31,6 +34,7 @@ function SearchPage() {
 
   const showFooderPageButton = () => {
     let val = 'fooder';
+    setSearchValue('');
     showFooderInput(val);
     setshowFooderPage(true);
     setshowStoreCardPage(false);
@@ -45,8 +49,9 @@ function SearchPage() {
     });
   };
 
-  const showStoreCardPageButton = () => {
+  const showStoreCardPageButton = event => {
     let val = 'store';
+    setSearchValue('');
     showFooderInput(val);
     setshowFooderPage(false);
     setshowStoreCardPage(true);
@@ -65,9 +70,9 @@ function SearchPage() {
   const showFooderInput = val => {
     console.log(val);
     if (val === 'fooder') {
-      setInputValue('푸더의 이름을 입력해주세요.');
+      setInputValue('푸더의 이름을 검색해주세요.');
     } else {
-      setInputValue('가게 이름을 입력해주세요');
+      setInputValue('가게 이름을 검색해주세요.');
     }
   };
 
@@ -91,6 +96,35 @@ function SearchPage() {
     );
   };
 
+  const EnterSearchKeyword = event => {
+    console.log(event.currentTarget.value);
+    console.log(event.key);
+    if (InputValue === '가게 이름을 검색해주세요.') {
+      console.log('store' + SearchValue);
+      fetchSearchStore(SearchValue)
+        .then(res => setStores(res.data))
+        .catch(err => console.log(err));
+      setSearchValue('');
+      return <Input value="" />;
+    } else if (InputValue === '푸더의 이름을 검색해주세요.') {
+      console.log('fooder' + SearchValue);
+      setSearchValue('');
+    }
+  };
+
+  const handleSearchValue = event => {
+    let keyword = event.currentTarget.value;
+    console.log(keyword);
+    if (event.key !== 'Enter' && InputValue === '가게 이름을 검색해주세요.') {
+      setSearchValue(keyword);
+    } else if (
+      event.key !== 'Enter' &&
+      InputValue === '푸더의 이름을 검색해주세요.'
+    ) {
+      setSearchValue(keyword);
+    }
+  };
+
   return (
     <div>
       <div
@@ -103,8 +137,11 @@ function SearchPage() {
         }}
       >
         <Input
-          size="large"
+          id="input"
           placeholder={InputValue}
+          onChange={handleSearchValue}
+          onPressEnter={EnterSearchKeyword}
+          value={SearchValue}
           style={{ height: '50px', width: '85%' }}
           prefix={<SearchOutlined />}
         />

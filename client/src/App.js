@@ -29,6 +29,7 @@ function App() {
             <Route exact path="/">
               <Redirect to="/main" />
             </Route>
+
             <Route exact path="/main" component={Auth(MainPage, true)} />
             {/* 로그인, 회원가입 하단바가 안보여야함 */}
 
