@@ -33,7 +33,7 @@ function LoginPage(props) {
       .then(res => {
         if (res.payload.loginSuccess) {
           window.localStorage.setItem('token', res.payload.token);
-          props.history.push('/');
+          props.history.push('/main');
         } else {
           if (res.payload.message1) {
             alert('비밀번호가 틀렸습니다.');

@@ -8,6 +8,8 @@ import {
   FcConferenceCall,
   FcVoicePresentation,
 } from 'react-icons/fc';
+import './Footer.css';
+import { red } from '@material-ui/core/colors';
 
 function Footer() {
   const activeStyle = {
@@ -19,71 +21,52 @@ function Footer() {
 
     if (user.loginSuccess) {
       return (
-        <div style={{ backgroundColor: '#ffe7ba' }}>
+        <div
+          style={{ backgroundColor: '#FDF5E6', borderTop: 'solid 1px orange' }}
+        >
           <Row
+            className="menu"
             style={{
               paddingTop: '0',
               textAlign: 'center',
               fontSize: '23px',
               marginBottom: '0',
+              padding: '0.3rem',
             }}
           >
-            <Col span={6}>
-              <NavLink to="/" activeStyle={activeStyle}>
-                <FcHome />
-                <p
-                  style={{
-                    color: 'black',
-                    fontSize: '12px',
-                    marginBottom: '8px',
-                  }}
-                >
-                  홈
-                </p>
+            <Col
+              span={6}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <NavLink to="/main" activeStyle={activeStyle}>
+                <div className="tab-overlay"></div>
+                <FcHome size={35} />
+                {/* <p>홈</p> */}
               </NavLink>
             </Col>
             <Col span={6}>
-              <Link to="/search" activeStyle={activeStyle}>
-                <a href="" style={{ stextDecoration: 'none' }}>
-                  <FcSearch />
-                  <p
-                    style={{
-                      color: 'black',
-                      fontSize: '12px',
-                      marginBottom: '8px',
-                    }}
-                  >
-                    검색
-                  </p>
-                </a>
-              </Link>
+              <NavLink to="/search" activeStyle={activeStyle}>
+                <div className="tab-overlay"></div>
+                <FcSearch />
+                <p>검색</p>
+              </NavLink>
             </Col>
             <Col span={6}>
               <NavLink to="/accompany" activeStyle={activeStyle}>
+                <div className="tab-overlay"></div>
                 <FcConferenceCall />
-                <p
-                  style={{
-                    color: 'black',
-                    fontSize: '12px',
-                    marginBottom: '8px',
-                  }}
-                >
-                  동행자
-                </p>
+                <p>동행자</p>
               </NavLink>
             </Col>
             <Col span={6}>
               <NavLink to="/mypage" activeStyle={activeStyle}>
+                <div className="tab-overlay"></div>
                 <FcVoicePresentation />
-                <p
-                  style={{
-                    color: 'black',
-                    fontSize: '12px',
-                    marginBottom: '8px',
-                  }}
-                >
-                  마이페이지
-                </p>
+                <p>마이페이지</p>
               </NavLink>
             </Col>
           </Row>

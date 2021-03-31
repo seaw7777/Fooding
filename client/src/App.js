@@ -26,7 +26,7 @@ function App() {
         <>
           <div style={{ paddingTop: '0', minHeight: 'calc(98vh - 45px)' }}>
             <NavBarPage />
-            <Route exact path="/" component={Auth(MainPage, true)} />
+            <Route exact path="/main" component={Auth(MainPage, true)} />
             {/* 로그인, 회원가입 하단바가 안보여야함 */}
 
             <Route exact path="/login" component={Auth(LoginPage, false)} />
