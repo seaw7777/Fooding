@@ -210,6 +210,7 @@ def recommendforyou(request,id):
 #가게추천 연산해서 리턴하기
 @api_view(['POST'])
 def recommendforStore(request):
+    id = request.data.get("user_id")
     if User.objects.filter(id=id).exists():
         follower_id = Follow.objects.filter(follow_id=id)
         my_interest = reviewcategory.objects.get(user_id = id)
