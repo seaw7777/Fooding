@@ -5,7 +5,7 @@ import { Typography } from 'antd';
 import MainPageBar from './Sections/MainPageBar';
 import RecommendFooder from './Sections/RecommendFooder';
 import StoreCard from 'utils/StoreCard';
-import { fetchStoresMainPage } from '_api/Stores';
+import { fetchStoresMainPage, StoreRecommendInfo } from '_api/Stores';
 import { fetchInfluencer } from '_api/Main';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { changeUserInfo } from '../../../_actions/user_actions';
@@ -61,9 +61,18 @@ function MainPage(props) {
     MainData();
   }, []);
 
-  const handlerAddress = ad => {
+  const handlerAddress = (ad, lat, lng) => {
     setAddress(ad);
     dispatch(changeUserInfo(ad));
+    console.log('!!!!!!!!');
+    const recommend = StoreRecommendInfo({
+      user_id: props.user.loginSuccess.id,
+      lat: lat,
+      lng: lng,
+      address: ad,
+    });
+    console.log(recommend);
+    // 새로운 주소에 맞게끔, user_id, 위도, 경도, 주소 다 보내줘야함
   };
 
   const renderStoreCard = Stores.map((store, index) => {

@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Avatar, Badge, Button } from 'antd';
+import { BsCheck } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
 import { fetchUserReview } from '../../../_api/Review';
-import { fetchUserFollow, fetchUserFollowing } from '../../../_api/User';
-import { UserOutlined, EditOutlined } from '@ant-design/icons';
+import {
+  fetchUserFollowCheck,
+  fetchUserFollow,
+  fetchUserFollowing,
+  fetchDeleteUserFollow,
+  fetchMakeUserFollow,
+} from '../../../_api/User';
+import { UserOutlined, EditOutlined, CheckOutlined } from '@ant-design/icons';
 import Grade from '../../../utils/Grade';
 import FooderReviewItems from './Sections/FooderReviewItems';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -18,9 +25,21 @@ function FooderPage(props) {
   const [userReviewInfo, setuserReviewInfo] = useState([]);
   const [userFollowerInfo, setuserFollowerInfo] = useState([]);
   const [userFollowingInfo, setuserFollowingInfo] = useState([]);
+  const [followCheck, setfollowCheck] = useState(false);
   useEffect(() => {
     const MainData = async () => {
       try {
+        const followCheck = await fetchUserFollowCheck(
+          props.user.loginSuccess.id,
+          props.match.params.userId,
+        );
+        setfollowCheck(true);
+      } catch (err) {
+        setfollowCheck(false);
+      }
+      try {
+        // follow 되어있는지 아닌지 확인하기
+        // setFollowCheck()
         // redux에 저장된 user id 사용하기
         const review = await fetchUserReview(props.match.params.userId);
         setuserReviewInfo(review.data);
@@ -31,11 +50,12 @@ function FooderPage(props) {
         const following = await fetchUserFollowing(props.match.params.userId);
         setuserFollowingInfo(following.data);
       } catch (err) {
-        console.log(err);
+        console.log(err.message);
+        console.log('??????????????????');
       }
     };
     MainData();
-  }, []);
+  }, [followCheck]);
 
   const renderReviewCards = userReviewInfo.map((review, index) => {
     return (
@@ -45,8 +65,26 @@ function FooderPage(props) {
     );
   });
 
-  const renderFollow = () => {
-    console.log('???');
+  const renderDeleteFollow = () => {
+    fetchDeleteUserFollow(props.user.loginSuccess.id, props.match.params.userId)
+      .then(res => {
+        console.log(res);
+        setfollowCheck(false);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const renderMakeFollow = () => {
+    fetchMakeUserFollow(props.user.loginSuccess.id, props.match.params.userId)
+      .then(res => {
+        console.log(res);
+        setfollowCheck(true);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
@@ -84,14 +122,26 @@ function FooderPage(props) {
         </Row>
         <Row style={{ justifyContent: 'center', paddingBottom: '0.5rem' }}>
           {/* 팔로우 되어있는지 아닌지 확인 해야함 */}
-          <Button
-            type="danger"
-            shape="round"
-            size={'small'}
-            onClick={renderFollow}
-          >
-            팔로우
-          </Button>
+          {followCheck ? (
+            <Button
+              style={{ color: 'red', borderColor: 'red' }}
+              shape="round"
+              size={'small'}
+              onClick={renderDeleteFollow}
+            >
+              팔로잉
+              <BsCheck />
+            </Button>
+          ) : (
+            <Button
+              type="danger"
+              shape="round"
+              size={'small'}
+              onClick={renderMakeFollow}
+            >
+              팔로우
+            </Button>
+          )}
         </Row>
         <Row className="mypagetag" style={{ textAlign: 'center' }}>
           <Col span={8}>
