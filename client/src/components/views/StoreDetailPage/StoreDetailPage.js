@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ImageSlider from 'utils/ImageSlider';
 import ReviewCard from 'utils/ReviewCard';
 import StoreMenu from './Sections/StoreMenu';
-import { Typography } from 'antd';
-import { StarFilled, PhoneFilled, CompassTwoTone } from '@ant-design/icons';
+import { Typography, Button } from 'antd';
+import {
+  StarFilled,
+  PhoneFilled,
+  CompassTwoTone,
+  ProfileFilled,
+} from '@ant-design/icons';
 import { Tabs, Tab } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Sections/StoreDetailPage.css';
@@ -16,6 +23,8 @@ function StoreDetailPage(props) {
   const { Title, Text } = Typography;
   const [StoreInfo, setStoreInfo] = useState([]);
   const storeId = props.match.params.StoreId;
+  const user = useSelector(state => state.user);
+
   // const { StoreId } = useParams();
   // console.log(useParams());
   const [StoreLocation, setStoreLocation] = useState([]);
@@ -27,11 +36,9 @@ function StoreDetailPage(props) {
     const StoreInfo = async () => {
       try {
         const response = await StoreDetailInfo(storeId);
-        // console.log(response.data);
         setStoreInfo(response.data);
         const res = await fetchStoreReview('2');
         setReviews(res.data);
-        // console.log(res.data);
         const ress = await StoreMenuInfo(storeId);
         console.log(ress.data);
         setMenus(ress.data);
@@ -74,20 +81,52 @@ function StoreDetailPage(props) {
 
   const renderReviewCard = () => {
     return (
-      <div
-        style={{
-          height: '280px',
-          overflow: 'auto',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <InfiniteScroll dataLength={Reviews.length}>
-          {Reviews.map((review, index) => (
-            <ReviewCard review={review}></ReviewCard>
-          ))}
-        </InfiniteScroll>
+      <div>
+        <Link
+          to={{
+            pathname: '/review/check-receipt',
+            state: {
+              store_id: storeId,
+              user_id: user.loginSuccess.id,
+            },
+          }}
+        >
+          <Button
+            shape="round"
+            style={{
+              margin: '5px auto',
+              backgroundColor: '#F4A460',
+              borderColor: '#F4A460',
+              lineHeight: 'center',
+            }}
+            icon={
+              <ProfileFilled
+                style={{
+                  fontSize: '20px',
+                  color: 'black',
+                }}
+              />
+            }
+            size={'large'}
+          >
+            리뷰 작성
+          </Button>
+        </Link>
+        <div
+          style={{
+            height: '235px',
+            overflow: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <InfiniteScroll dataLength={Reviews.length}>
+            {Reviews.map((review, index) => (
+              <ReviewCard review={review}></ReviewCard>
+            ))}
+          </InfiniteScroll>
+        </div>
       </div>
     );
   };
