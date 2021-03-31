@@ -8,3 +8,9 @@ export function fetchStoreReview(store_id) {
 export function fetchUserReview(user_id) {
   return axios.get(`${SERVER}reviews/reviewInfo/${user_id}`);
 }
+
+export function postUserReview(review) {
+  return axios
+    .post(`${SERVER}reviews/review_write/`, review)
+    .then(response => response.data);
+}

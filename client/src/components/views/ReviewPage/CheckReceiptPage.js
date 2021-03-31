@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 import ImageUploader from 'react-images-upload';
 
-function CheckReceiptPage() {
+function CheckReceiptPage(props) {
   const [picture, setpicture] = useState([]);
   const [ocr, setOcr] = useState('Recognizing...');
   const [Next, setNext] = useState(false);
@@ -45,7 +45,15 @@ function CheckReceiptPage() {
         maxFileSize={5242880}
       />
       {Next ? (
-        <Link to="/review/post">
+        <Link
+          to={{
+            pathname: '/review/post',
+            state: {
+              store_id: props.location.state.store_id,
+              user_id: props.location.state.user_id,
+            },
+          }}
+        >
           <Button>다음</Button>
         </Link>
       ) : (

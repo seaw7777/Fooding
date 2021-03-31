@@ -1,0 +1,17 @@
+@import '~antd/dist/antd.css';
+@import '~bootstrap/dist/css/bootstrap.css';
+
+#accompany {
+  border:rgb(248, 123, 7) solid 2px;
+  background-color: rgb(248, 123, 7);
+  color:white;
+  border-radius: 30%;
+  box-sizing: content-box;
+  padding:0.2rem;
+  margin:0.5rem;;
+}
+
+#accompany-text{
+  color:white;
+  margin:0%
+}
