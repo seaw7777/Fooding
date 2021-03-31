@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from numpy import dot
-import numpy as np
-from numpy.linalg import norm
+# from numpy import dot
+# import numpy as np
+# from numpy.linalg import norm
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
@@ -18,6 +18,7 @@ from accounts.models import User
 from .models import reviewcategory
 
 # Create your views here.
+
 # 리뷰 카테고리 테이블 넣기
 def insert_data(data,user_id):
     if reviewcategory.objects.filter(user_id=user_id).exists() :
@@ -60,7 +61,6 @@ def insert_data(data,user_id):
         ).save()
     pass
 
-
 def calcos(myinfo,info_list):
     index = [0]*34
     A={}
@@ -83,7 +83,6 @@ def calcos(myinfo,info_list):
             A[key] = value
     dummy = sorted(A.items(),key=lambda x:x[1],reverse=True)
     return dummy
-
 
 def categorysearch(my_interest):
     dic = []
@@ -155,8 +154,6 @@ def categorysearch(my_interest):
     print("확인")
     print(dic)
     return dic
-
-
 @api_view(['GET'])
 def test(request):
     review = Review.objects.all().order_by('user_id').values()
@@ -184,7 +181,6 @@ def test(request):
     insert_data(data, user_id)
     return Response({'message':'성공'},status=status.HTTP_200_OK)
 
-
 #추천인 연산해서 리턴하기
 @api_view(['GET'])
 def recommendforyou(request,id):
@@ -206,21 +202,24 @@ def recommendforyou(request,id):
         })
     return JsonResponse(recommend_follower,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
 
-
 #가게추천 연산해서 리턴하기
 @api_view(['POST'])
 def recommendforStore(request):
     id = request.data.get("user_id")
+    # print(id)
     if User.objects.filter(id=id).exists():
-        follower_id = Follow.objects.filter(follow_id=id)
+        # print(id)
+        follower_id = Follow.objects.filter(following_id=id)
         my_interest = reviewcategory.objects.get(user_id = id)
-        print(my_interest.cddrink)
+        # print(my_interest.cddrink)
+        # for i in follower_id:
+        #     print(i.follow_id)
         my_category = categorysearch(my_interest)
-        print(my_category)
+        # print(my_category)
         follower = []
 
         for f in follower_id:
-            fw = User.objects.get(id=f.following_id)
+            fw = User.objects.get(id=f.follow_id)
 
             follower.append({
                 "id": fw.id,
@@ -233,11 +232,12 @@ def recommendforStore(request):
         review = []
         for r in follower:
             rv = Review.objects.filter(id=r['id']).values()
-            print(rv)
+            # print(rv)
             for st in rv:
                 string = Store.objects.get(id=st['store_id'])
                 for j in my_category:
                     if(j == (string.main_category+string.middle_category)):
+                        print("진입")
                         store.append({
                             "id": string.id,
                             "store_name": string.store_name,
@@ -251,6 +251,9 @@ def recommendforStore(request):
                             "review_cnt" : string.review_cnt,
                             "star" : string.star
                         })
+        # print("스토어 정보")
+        # for i in store:
+        #     print(i['store_name'])
         return JsonResponse(store,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
