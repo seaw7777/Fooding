@@ -37,12 +37,7 @@ function StoreDetailPage(props) {
       try {
         const response = await StoreDetailInfo(storeId);
         setStoreInfo(response.data);
-<<<<<<< HEAD
         const res = await fetchStoreReview(storeId);
-=======
-        console.log(response.data);
-        const res = await fetchStoreReview('2');
->>>>>>> style/storedetail_footer
         setReviews(res.data);
         const ress = await StoreMenuInfo(storeId);
         console.log(ress.data);
@@ -150,16 +145,12 @@ function StoreDetailPage(props) {
           }}
         >
           <img
-<<<<<<< HEAD
-            style={{ borderRadius: '50%', width: '50px' }}
-=======
             style={{
               borderRadius: '30%',
               width: '75px',
               height: '55px',
               border: 'solid 2px #FF4500',
             }}
->>>>>>> style/storedetail_footer
             src={'/images/Fooding/로고 이미지.png'}
           />
           <div>

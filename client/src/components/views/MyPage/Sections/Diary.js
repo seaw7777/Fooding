@@ -8,11 +8,7 @@ function Diary(props) {
   const renderTimeLine = props.review.map((rv, index) => {
     return (
       <Timeline.Item color="red" style={{ marginTop: '0.1rem' }} key={index}>
-<<<<<<< HEAD
         {rv.store_name} &nbsp;&nbsp;&nbsp;{rv.write_date.substring(0, 10)}
-=======
-        {rv.store_name} &nbsp;&nbsp;&nbsp;{rv.write_date.split(0, 10)}
->>>>>>> style/storedetail_footer
       </Timeline.Item>
     );
   });
