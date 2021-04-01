@@ -1,21 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Input, Button } from 'antd';
 import { ContainerFilled, SearchOutlined } from '@ant-design/icons';
 import { Tabs, Tab, Nav } from 'react-bootstrap';
 import FooderList from './Sections/FooderList';
 import StoreCard from 'utils/StoreCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { fetchSearchStore } from '_api/Search';
+import { fetchSearchStore, fetchSearchFooder } from '_api/Search';
 
-function SearchPage() {
+function SearchPage(props) {
+  const userId = props.user.loginSuccess.id;
   const [SearchValue, setSearchValue] = useState('');
   const [InputValue, setInputValue] = useState('푸더의 이름을 검색해주세요.');
-
-  const [Stores, setStores] = useState([
-    { store_name: 'abc', review_cnt: 0, id: 2 },
-    { store_name: 'def', review_cnt: 0, id: 3 },
-    { store_name: 'ghi', review_cnt: 0, id: 4 },
-  ]);
+  const [Stores, setStores] = useState([]);
+  const [Fooders, setFooders] = useState([]);
   const [showFooderPage, setshowFooderPage] = useState(true);
   const [showStoreCardPage, setshowStoreCardPage] = useState(false);
   const [FooderButtonStyle, setFooderButtonStyle] = useState({
@@ -27,11 +24,12 @@ function SearchPage() {
     backgroundColor: 'white',
     color: '#faad14',
   });
-  const [FollowingList, setFollowingList] = useState([
-    { nickname: 'fooder1' },
-    { nickname: 'fooder2' },
-  ]);
-
+  const [FollowingList, setFollowingList] = useState([]);
+  useEffect(() => {
+    fetchSearchFooder(userId)
+      .then(res => setFooders(res.data))
+      .catch(err => console.log(err));
+  }, []);
   const showFooderPageButton = () => {
     let val = 'fooder';
     setSearchValue('');
@@ -100,21 +98,26 @@ function SearchPage() {
     console.log(event.currentTarget.value);
     console.log(event.key);
     if (InputValue === '가게 이름을 검색해주세요.') {
-      console.log('store' + SearchValue);
       fetchSearchStore(SearchValue)
         .then(res => setStores(res.data))
         .catch(err => console.log(err));
       setSearchValue('');
       return <Input value="" />;
     } else if (InputValue === '푸더의 이름을 검색해주세요.') {
-      console.log('fooder' + SearchValue);
+      console.log(Fooders);
+      const find = Fooders.filter(
+        fooder =>
+          fooder.nickname.includes(SearchValue) ||
+          fooder.nickname.toLowerCase().includes(SearchValue),
+      );
+      setFollowingList(find);
+      console.log(FollowingList);
       setSearchValue('');
     }
   };
 
   const handleSearchValue = event => {
     let keyword = event.currentTarget.value;
-    console.log(keyword);
     if (event.key !== 'Enter' && InputValue === '가게 이름을 검색해주세요.') {
       setSearchValue(keyword);
     } else if (
