@@ -138,9 +138,7 @@ function StoreDetailPage(props) {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <img
             style={{ borderRadius: '50%', width: '50px' }}
-            src={
-              'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
-            }
+            src={'/images/Fooding/로고 이미지.png'}
           />
           <div>
             <Title level={4}>{StoreInfo.store_name}</Title>
