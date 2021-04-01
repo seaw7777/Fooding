@@ -14,3 +14,13 @@ def searchstore(request,store_name):
     serializer = StoreSerializer(store_list, many=True)
     return Response(serializer.data ,status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+def influencer_list(request):  #id로 회원 취향 비슷한 인플루언서 추천?
+    influencer = User.objects.filter().order_by('-spoon_cnt')
+    dummy = []
+    for i in influencer:
+        if(i.spoon_cnt >= 100):
+            dummy.append(i)
+    serializer = InfluencerSerializer(dummy, many=True)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)

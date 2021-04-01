@@ -1,7 +1,7 @@
 from django.shortcuts import render
-# from numpy import dot
-# import numpy as np
-# from numpy.linalg import norm
+from numpy import dot
+import numpy as np
+from numpy.linalg import norm
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response

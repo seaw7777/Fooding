@@ -5,4 +5,5 @@ app_name = 'search'
 
 urlpatterns = [
     path('searchstore/<str:store_name>/', views.searchstore),
+    path('influencerList/', views.influencer_list),
 ]
