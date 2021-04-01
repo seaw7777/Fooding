@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from accounts.models import User
+from accounts.serializers import UserSerializer
 # Create your views here.
 @api_view(['GET'])
 def searchstore(request,store_name):
@@ -15,12 +16,12 @@ def searchstore(request,store_name):
     return Response(serializer.data ,status=status.HTTP_200_OK)
 
 @api_view(['GET'])
-def influencer_list(request,id):  #id로 회원 취향 비슷한 인플루언서 추천?
-    influencer = User.objects.exclude(user_id = id).order_by('-spoon_cnt')
+def influencer_list(request,id):  #랭크높은 푸더들 추천
+    influencer = User.objects.exclude(id = id).order_by('-spoon_cnt')
     dummy = []
     for i in influencer:
         if(i.spoon_cnt >= 100):
             dummy.append(i)
-    serializer = InfluencerSerializer(dummy, many=True)
-
+    
+    serializer = UserSerializer(dummy,many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
