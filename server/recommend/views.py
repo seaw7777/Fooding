@@ -182,8 +182,8 @@ def test(request):
     #                 break
     # insert_data(data, user_id)
     
-    data = Store.objects.filter()
-    print(data[0].id)
+    data = list(Store.objects.filter())
+    # print(data.id)
     for i in data:
         print(i.id)
     return Response({'message':'성공'},status=status.HTTP_200_OK)
@@ -214,6 +214,7 @@ def recommenduser(request,id):
             "spoon_cnt": user.spoon_cnt,
             "grade" : user.grade,
         })
+
     return JsonResponse(recommend_follower,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
 
 #가게추천 연산해서 리턴하기
@@ -229,7 +230,6 @@ def recommendforStore(request):
 
         for f in follower_id:
             fw = User.objects.get(id=f.follow_id)
-
             follower.append({
                 "id": fw.id,
                 "nickname": fw.nickname,
@@ -239,6 +239,7 @@ def recommendforStore(request):
             })
         store = []
         review = []
+
         for r in follower:
             rv = Review.objects.filter(id=r['id']).values()
             for st in rv:
@@ -258,6 +259,7 @@ def recommendforStore(request):
                             "review_cnt" : string.review_cnt,
                             "star" : string.star
                         })
+        
         return JsonResponse(store,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
