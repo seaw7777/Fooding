@@ -5,7 +5,7 @@ from .models import Store, Menu
 class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Store
-        fields = ('id', 'store_name', 'area', 'tel', 'address', 'lat', 'lng', 'main_category', 'middle_category', 'star', 'review_cnt')
+        fields = ('id', 'store_name', 'area', 'tel', 'address', 'lat', 'lng', 'main_category', 'middle_category', 'star', 'review_cnt','parents','friend','children','pet')
 
 
 class MenuSerializer(serializers.ModelSerializer):

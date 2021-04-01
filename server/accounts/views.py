@@ -7,8 +7,10 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+from stores.serializers import StoreSerializer
 from .serializers import FollowSerializer, UserSerializer, LikeSerializer
 from .models import Follow, Like, User, Wish
+from stores.models import Store
 from recommend.models import reviewcategory
 from server.settings import SECRET_KEY
 
@@ -313,3 +315,38 @@ def delete_wish(request, user_id,store_id):
         return Response({'message': '완료'}, status=status.HTTP_200_OK)
     else:
         return Response({'message': '찜 정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
+
+#찜한 가게 불러오기
+@api_view(['GET'])
+def select_wish(request, user_id):
+    if User.objects.filter(id=user_id).exists():
+        store = []
+        store_id_list = Wish.objects.filter(user_id =user_id)
+        dummy = []
+        
+        for i in store_id_list:
+            # print(i.store_id)
+            du = Store.objects.get(id=i.store_id)
+            # print(du)
+            store.append({                    
+                            "id" : du.id,
+                            "store_name": du.store_name,
+                            "area" : du.area,
+                            "tel" : du.tel,
+                            "address" : du.address,
+                            "lat" : du.lat,
+                            "lng" : du.lng,
+                            "main_category" : du.main_category,
+                            "middle_category" : du.middle_category,
+                            "review_cnt" : du.review_cnt,
+                            "star" : du.star,
+                            "pet" : du.pet,
+                            "children" : du.children,
+                            "parents" :du.parents,
+                            "friend" : du.friend
+            })
+        # print(store)
+        
+        return JsonResponse(store,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
+    else:
+        return Response({'message': '잘못된 계정 접근 입니다.'}, status=status.HTTP_400_BAD_REQUEST)
