@@ -37,7 +37,12 @@ function StoreDetailPage(props) {
       try {
         const response = await StoreDetailInfo(storeId);
         setStoreInfo(response.data);
+<<<<<<< HEAD
         const res = await fetchStoreReview(storeId);
+=======
+        console.log(response.data);
+        const res = await fetchStoreReview('2');
+>>>>>>> style/storedetail_footer
         setReviews(res.data);
         const ress = await StoreMenuInfo(storeId);
         console.log(ress.data);
@@ -135,30 +140,47 @@ function StoreDetailPage(props) {
     <div>
       <ImageSlider images={Images} />
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '90%',
+            margin: '0.5rem auto',
+          }}
+        >
           <img
+<<<<<<< HEAD
             style={{ borderRadius: '50%', width: '50px' }}
+=======
+            style={{
+              borderRadius: '30%',
+              width: '75px',
+              height: '55px',
+              border: 'solid 2px #FF4500',
+            }}
+>>>>>>> style/storedetail_footer
             src={'/images/Fooding/로고 이미지.png'}
           />
           <div>
             <Title level={4}>{StoreInfo.store_name}</Title>
-            <Text>{StoreInfo.review_cnt}</Text>
           </div>
           <Text mark>{StoreInfo.main_category}</Text>
+          <Text id="store_rating">{StoreInfo.star}</Text>
           <StarFilled style={{ fontSize: '50px', color: '#faad14' }} />
         </div>
         <div
           style={{
-            border: 'solid 1px #faad14',
+            border: 'solid 1px #FF4500',
             padding: '1rem',
             width: '90%',
-            margin: 'auto',
+            margin: '0rem auto 0.5rem',
           }}
         >
-          <PhoneFilled />
+          <PhoneFilled style={{ marginRight: '1rem' }} />
           <Text>{StoreInfo.tel}</Text>
           <br />
-          <CompassTwoTone />
+          <CompassTwoTone style={{ marginRight: '1rem' }} />
           <Text>{StoreInfo.address}</Text>
         </div>
 

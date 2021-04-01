@@ -41,3 +41,7 @@
    z-index: 2;
    text-align: center;
 }
+
+#store_rating {
+  transform: translateX(67px);
+}
