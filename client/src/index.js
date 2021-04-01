@@ -9,8 +9,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import configureStore from './_reducer/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import './index.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { Route } from 'react-router-dom';
+
 const { store, persistor } = configureStore();
 const theme = createMuiTheme({
   typography: {

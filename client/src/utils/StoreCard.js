@@ -1,23 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Row, Col, Card, Button, Container, Image } from 'react-bootstrap';
-import { StarFilled } from '@ant-design/icons';
+import { StarFilled, StarOutlined } from '@ant-design/icons';
+import { fetchLikeStore, fetchDeleteStore } from '../_api/User';
 
 function StoreCard(props) {
+  const [checkStar, setcheckStar] = useState(false);
+  const likeStoreHandler = () => {
+    if (checkStar === false) {
+      setcheckStar(true);
+      fetchLikeStore(props.user, props.store.id)
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      props.onRemove(props.store.id);
+    } else {
+      setcheckStar(false);
+      fetchDeleteStore(props.user, props.store.id)
+        .then(res => {
+          console.log(res.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <div>
       <Card style={{ width: '18rem', margin: '1rem auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div
+          style={{
+            display: 'flex',
+            margin: '0.5rem',
+          }}
+        >
           <Image
             src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
             roundedCircle
             style={{ width: '50px', height: '50px' }}
           />
-
-          <div>
-            <Card.Title>{props.store.store_name}</Card.Title>
-            <Card.Text>{props.store.review_cnt}</Card.Text>
+          <div style={{ marginLeft: '0.8rem', width: '100%' }}>
+            <Card.Title style={{ fontSize: '18px', margin: '0.3rem' }}>
+              {props.store.store_name}
+            </Card.Title>
+            <Card.Text
+              style={{
+                marginRight: '0.4rem',
+                marginLeft: '0.4rem',
+                fontSize: '12px',
+              }}
+            >
+              리뷰 개수 : {props.store.review_cnt}
+            </Card.Text>
           </div>
-          <StarFilled style={{ fontSize: '50px', color: '#faad14' }} />
+          <div>
+            {checkStar ? (
+              <StarFilled
+                style={{ fontSize: '28px', color: '#faad14' }}
+                onClick={likeStoreHandler}
+              />
+            ) : (
+              <StarOutlined
+                style={{ fontSize: '28px', color: '#faad14' }}
+                onClick={likeStoreHandler}
+              />
+            )}
+          </div>
         </div>
         <a href={`/store/${props.store.id}`}>
           <Card.Img
@@ -26,7 +76,7 @@ function StoreCard(props) {
           />
         </a>
         <Card.Body style={{ textAlign: 'center' }}>
-          <Card.Text>리뷰내용</Card.Text>
+          <Card.Text>{props.store.address}</Card.Text>
         </Card.Body>
       </Card>
     </div>

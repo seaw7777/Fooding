@@ -4,6 +4,7 @@ import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 
 function ReviewCard(props) {
+  console.log(props.review);
   const renderReviewTitle = () => {
     if (props.review.store_name === undefined) {
       return (
@@ -17,6 +18,7 @@ function ReviewCard(props) {
   };
 
   const rednerReviewText = () => {
+    // let date = props.review.write_date.slice(0, 10);
     if (props.review.nickname !== undefined) {
       return <Card.Text>{props.review.write_date.slice(0, 10)}</Card.Text>;
     } else {

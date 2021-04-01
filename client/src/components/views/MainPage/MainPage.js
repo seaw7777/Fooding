@@ -9,7 +9,7 @@ import { fetchStoresMainPage, StoreRecommendInfo } from '_api/Stores';
 import { fetchInfluencer } from '_api/Recommend';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { changeUserInfo } from '../../../_actions/user_actions';
-
+import { FcFlashOn } from 'react-icons/fc';
 const { kakao } = window;
 
 function MainPage(props) {
@@ -24,7 +24,7 @@ function MainPage(props) {
     const MainData = async () => {
       try {
         // redux에 저장된 user id 사용하기
-        const response = await fetchInfluencer('1');
+        const response = await fetchInfluencer(props.user.loginSuccess.id);
         setFooders(response.data);
 
         const res = await fetchStoresMainPage();
@@ -55,34 +55,53 @@ function MainPage(props) {
     };
     StoreRecommendInfo(body)
       .then(res => {
-        console.log(res);
+        console.log('???????');
+        console.log(res.data);
+        // 지역 정보 보냈을 때 데이터가 아직 안넘어온 거 같은데
+        setStores(res.data);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
+  const onRemove = id => {
+    setStores(Stores.filter(store => store.id != id));
+  };
+
   const renderStoreCard = Stores.map((store, index) => {
-    return <StoreCard store={store} key={index} />;
+    return (
+      <StoreCard
+        store={store}
+        key={index}
+        user={props.user.loginSuccess.id}
+        onRemove={onRemove}
+      />
+    );
   });
   return (
     <div>
       <MainPageBar change={handlerAddress} address={Address} />
-      <div style={{ margin: '1rem' }}>
-        <Title level={4}>뜨고 있는 인기 FOODER!!</Title>
-        <Text strong>인기 푸더를 팔로잉하고 소식을 받아보세요!</Text>
-      </div>
       <div
         style={{
-          height: 480,
+          height: 550,
           overflow: 'auto',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-        <InfiniteScroll dataLength={'10'}>
+        <Title level={4} style={{ margin: '0.5rem' }}>
+          뜨고 있는 인기 FOODER
+          <FcFlashOn />
+        </Title>
+
+        <InfiniteScroll dataLength={'10'} style={{ width: '420' }}>
           <RecommendFooder list={Fooders} />
+          <Title level={4} style={{ textAlign: 'center', marginTop: '1rem' }}>
+            맛집 추천
+            <FcFlashOn />
+          </Title>
           {renderStoreCard}
         </InfiniteScroll>
       </div>

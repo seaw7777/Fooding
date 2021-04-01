@@ -37,8 +37,7 @@ function StoreDetailPage(props) {
       try {
         const response = await StoreDetailInfo(storeId);
         setStoreInfo(response.data);
-        console.log(response.data);
-        const res = await fetchStoreReview('2');
+        const res = await fetchStoreReview(storeId);
         setReviews(res.data);
         const ress = await StoreMenuInfo(storeId);
         console.log(ress.data);

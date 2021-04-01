@@ -1,7 +1,7 @@
 from django.shortcuts import render
-# from numpy import dot
-# import numpy as np
-# from numpy.linalg import norm
+from numpy import dot
+import numpy as np
+from numpy.linalg import norm
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
@@ -9,11 +9,9 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from reviews.models import Review
 from stores.models import Store
-from accounts.models import Follow
+from accounts.models import Follow,User,Wish
 
 # from .serializers import RecommendSerializer
-
-from accounts.models import User
 
 from .models import reviewcategory
 
@@ -59,12 +57,12 @@ def insert_data(data,user_id):
             bkbakery=data[30],
             fffood=data[31]
         ).save()
-    pass
 
 def calcos(myinfo,info_list):
     index = [0]*34
     A={}
     result = {}
+    returnresult = []
     for i , (key, value) in enumerate(myinfo[0].items()):
         index[i] = value
     del index[0]
@@ -82,11 +80,15 @@ def calcos(myinfo,info_list):
         if value != 0:
             A[key] = value
     dummy = sorted(A.items(),key=lambda x:x[1],reverse=True)
-    return dummy
+    # print("확인")
+    for i in dummy:
+        # print(i[0])
+        returnresult.append(i[0])
+    return returnresult
 
 def categorysearch(my_interest):
     dic = []
-    print(my_interest)
+    # print(my_interest)
     if(my_interest.krzzimandtang != 0):
         dic.append("한식찜/탕")
     if(my_interest.krbbq  != 0):
@@ -151,55 +153,68 @@ def categorysearch(my_interest):
         dic.append("빵집빵집")
     if(my_interest.fffood != 0):
         dic.append("패스트푸드햄버거")
-    print("확인")
-    print(dic)
+    # print("확인")
+    # print(dic)
     return dic
 @api_view(['GET'])
 def test(request):
-    review = Review.objects.all().order_by('user_id').values()
-    dic = ["한식찜/탕","한식고기집","한식국밥","한식전골/찌개","한식족발/보쌈","한식해산물",
-           "한식면요리","한식가정식","한식치킨","한식한식","분식분식","일식튀김","일식회","일식가정식","일식어패류","일식면요리","일식일식",
-           "중식면요리","중식튀김요리","중식구이요리","중식중식","양식면요리","양식피자","양식샐러드","양식해외요리","술집술집","술집일본선술집",
-           "빵집빵집","패스트푸드햄버거","카페음료","카페카페","카페디저트"]
-    data = [0]*32
-    print(len(dic),len(data))
-    # print(review)
-    # print(len(review))
-    user_id = review[0]['user_id']
-    for i in range(len(review)):
-        if user_id != review[i]['user_id']:
-            insert_data(data,user_id)
-            data = [0] * 32
-            user_id = review[i]['user_id']
-        store = Store.objects.filter(id__in=[review[i]['store_id']]).values('main_category','middle_category')
-        for j in range(len(store)):
-            string = store[j]['main_category']+store[j]['middle_category']
-            for p in range(len(dic)):
-                if dic[p] == string:
-                    data[p]+=1
-                    break
-    insert_data(data, user_id)
+    # review = Review.objects.all().order_by('user_id').values()
+    # dic = ["한식찜/탕","한식고기집","한식국밥","한식전골/찌개","한식족발/보쌈","한식해산물",
+    #        "한식면요리","한식가정식","한식치킨","한식한식","분식분식","일식튀김","일식회","일식가정식","일식어패류","일식면요리","일식일식",
+    #        "중식면요리","중식튀김요리","중식구이요리","중식중식","양식면요리","양식피자","양식샐러드","양식해외요리","술집술집","술집일본선술집",
+    #        "빵집빵집","패스트푸드햄버거","카페음료","카페카페","카페디저트"]
+    # data = [0]*32
+    # print(len(dic),len(data))
+    # # print(review)
+    # # print(len(review))
+    # user_id = review[0]['user_id']
+    # for i in range(len(review)):
+    #     if user_id != review[i]['user_id']:
+    #         insert_data(data,user_id)
+    #         data = [0] * 32
+    #         user_id = review[i]['user_id']
+    #     store = Store.objects.filter(id__in=[review[i]['store_id']]).values('main_category','middle_category')
+    #     for j in range(len(store)):
+    #         string = store[j]['main_category']+store[j]['middle_category']
+    #         for p in range(len(dic)):
+    #             if dic[p] == string:
+    #                 data[p]+=1
+    #                 break
+    # insert_data(data, user_id)
+    
+    data = list(Store.objects.filter())
+    # print(data.id)
+    for i in data:
+        print(i.id)
     return Response({'message':'성공'},status=status.HTTP_200_OK)
 
 #추천인 연산해서 리턴하기
 @api_view(['GET'])
-def recommendforyou(request,id):
-    print(id)
+def recommenduser(request,id):
     info_list = list(reviewcategory.objects.exclude(user_id = id).values())
     myinfo = reviewcategory.objects.filter(user_id = id).values()
     result_list = calcos(myinfo,info_list)
-    for i in result_list:
-        print(i[0])
+    follower_list = Follow.objects.filter(following_id = id).values('follow_id')
+
+    print(result_list , len(result_list))
+    print(follower_list , len(follower_list))
+    for i in follower_list:
+        try:
+            result_list.remove(i['follow_id'])
+        except ValueError:
+            pass
     recommend_follower =[]
     for i in result_list:
-        user = User.objects.get(id=i[0])
+        user = User.objects.get(id=i)
         recommend_follower.append({
             "id": user.id,
             "nickname": user.nickname,
             "email": user.email,
             "address": user.address,
             "spoon_cnt": user.spoon_cnt,
+            "grade" : user.grade,
         })
+
     return JsonResponse(recommend_follower,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
 
 #가게추천 연산해서 리턴하기
@@ -207,44 +222,50 @@ def recommendforyou(request,id):
 def recommendforStore(request):
     id = request.data.get("user_id")
     region_name = request.data.get('region_name')
-    print(region_name)
-    # print(id)
     if User.objects.filter(id=id).exists():
-        # print(id)
+        
         follower_id = Follow.objects.filter(following_id=id)
         my_interest = reviewcategory.objects.get(user_id = id)
-        # print(my_interest.cddrink)
-        # for i in follower_id:
-        #     print(i.follow_id)
         my_category = categorysearch(my_interest)
-        # print(my_category)
-        follower = []
+        wish_store = Wish.objects.filter(user_id = id)
 
+        follower = []
+        store = []
+        dummy_store = []
+        dummy_store2 = []
+        review = []
+
+        #팔로우 한 사람들 id 받아오기
         for f in follower_id:
             fw = User.objects.get(id=f.follow_id)
+            follower.append(fw.id)
 
-            follower.append({
-                "id": fw.id,
-                "nickname": fw.nickname,
-                "email": fw.email,
-                "address": fw.address,
-                "spoon_cnt": fw.spoon_cnt,
-            })
-        store = []
-        review = []
-        print(region_name[1])
-        # if(region_name[1] in "청송군"):
-        #     print("1")
-        for r in follower:
-            rv = Review.objects.filter(id=r['id']).values()
-            # print(rv)
+        #팔로우 된 사람들이 쓴 리뷰중 사용자에게 맞는 음식점 목록 불러오기
+        for fwid in follower:
+            rv = Review.objects.filter(id=fwid).values()
             for st in rv:
                 string = Store.objects.get(id=st['store_id'])
-                print(string.id)
                 for j in my_category:
                     if(j == (string.main_category+string.middle_category) and region_name[0] in string.address or region_name[1] in string.address):
-                        print("진입")
-                        store.append({
+                        dummy_store.append(string.id)
+
+        #중복제거
+        for i in dummy_store:
+            print(i)
+            if i not in dummy_store2:
+                dummy_store2.append(i)
+
+        # 좋아요된 가게제거
+        for i in wish_store:
+            try:
+                dummy_store2.remove(i.store_id)
+            except ValueError:
+                pass
+
+        # 가게 정보 입력
+        for i in dummy_store2:
+            string = Store.objects.get(id=i)
+            store.append({
                             "id": string.id,
                             "store_name": string.store_name,
                             "area" : string.area,
@@ -257,7 +278,8 @@ def recommendforStore(request):
                             "review_cnt" : string.review_cnt,
                             "star" : string.star
                         })
-        print("스토어 정보")
+
+
         return JsonResponse(store,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
