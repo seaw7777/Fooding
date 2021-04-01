@@ -9,11 +9,9 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from reviews.models import Review
 from stores.models import Store
-from accounts.models import Follow
+from accounts.models import Follow,User
 
 # from .serializers import RecommendSerializer
-
-from accounts.models import User
 
 from .models import reviewcategory
 
@@ -64,6 +62,7 @@ def calcos(myinfo,info_list):
     index = [0]*34
     A={}
     result = {}
+    returnresult = []
     for i , (key, value) in enumerate(myinfo[0].items()):
         index[i] = value
     del index[0]
@@ -81,11 +80,15 @@ def calcos(myinfo,info_list):
         if value != 0:
             A[key] = value
     dummy = sorted(A.items(),key=lambda x:x[1],reverse=True)
-    return dummy
+    # print("확인")
+    for i in dummy:
+        # print(i[0])
+        returnresult.append(i[0])
+    return returnresult
 
 def categorysearch(my_interest):
     dic = []
-    print(my_interest)
+    # print(my_interest)
     if(my_interest.krzzimandtang != 0):
         dic.append("한식찜/탕")
     if(my_interest.krbbq  != 0):
@@ -150,8 +153,8 @@ def categorysearch(my_interest):
         dic.append("빵집빵집")
     if(my_interest.fffood != 0):
         dic.append("패스트푸드햄버거")
-    print("확인")
-    print(dic)
+    # print("확인")
+    # print(dic)
     return dic
 @api_view(['GET'])
 def test(request):
@@ -178,20 +181,31 @@ def test(request):
     #                 data[p]+=1
     #                 break
     # insert_data(data, user_id)
+    
+    data = Store.objects.filter()
+    print(data[0].id)
+    for i in data:
+        print(i.id)
     return Response({'message':'성공'},status=status.HTTP_200_OK)
 
 #추천인 연산해서 리턴하기
 @api_view(['GET'])
 def recommenduser(request,id):
-    print(id)
     info_list = list(reviewcategory.objects.exclude(user_id = id).values())
     myinfo = reviewcategory.objects.filter(user_id = id).values()
     result_list = calcos(myinfo,info_list)
-    for i in result_list:
-        print(i[0])
+    follower_list = Follow.objects.filter(following_id = id).values('follow_id')
+
+    print(result_list , len(result_list))
+    print(follower_list , len(follower_list))
+    for i in follower_list:
+        try:
+            result_list.remove(i['follow_id'])
+        except ValueError:
+            pass
     recommend_follower =[]
     for i in result_list:
-        user = User.objects.get(id=i[0])
+        user = User.objects.get(id=i)
         recommend_follower.append({
             "id": user.id,
             "nickname": user.nickname,
@@ -207,17 +221,10 @@ def recommenduser(request,id):
 def recommendforStore(request):
     id = request.data.get("user_id")
     region_name = request.data.get('region_name')
-    print(region_name)
-    # print(id)
     if User.objects.filter(id=id).exists():
-        # print(id)
         follower_id = Follow.objects.filter(following_id=id)
         my_interest = reviewcategory.objects.get(user_id = id)
-        # print(my_interest.cddrink)
-        # for i in follower_id:
-        #     print(i.follow_id)
         my_category = categorysearch(my_interest)
-        # print(my_category)
         follower = []
 
         for f in follower_id:
@@ -232,18 +239,12 @@ def recommendforStore(request):
             })
         store = []
         review = []
-        print(region_name[1])
-        # if(region_name[1] in "청송군"):
-        #     print("1")
         for r in follower:
             rv = Review.objects.filter(id=r['id']).values()
-            # print(rv)
             for st in rv:
                 string = Store.objects.get(id=st['store_id'])
-                print(string.id)
                 for j in my_category:
                     if(j == (string.main_category+string.middle_category) and region_name[0] in string.address or region_name[1] in string.address):
-                        print("진입")
                         store.append({
                             "id": string.id,
                             "store_name": string.store_name,
@@ -257,7 +258,6 @@ def recommendforStore(request):
                             "review_cnt" : string.review_cnt,
                             "star" : string.star
                         })
-        print("스토어 정보")
         return JsonResponse(store,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
