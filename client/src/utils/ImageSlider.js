@@ -9,9 +9,7 @@ function ImageSlider(props) {
           <div key={index}>
             <img
               style={{ width: '100%', maxHeight: '150px' }}
-              src={
-                'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
-              }
+              src={'/images/Fooding/가게 이미지.png'}
             />
           </div>
         ))}
