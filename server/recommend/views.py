@@ -59,7 +59,6 @@ def insert_data(data,user_id):
             bkbakery=data[30],
             fffood=data[31]
         ).save()
-    pass
 
 def calcos(myinfo,info_list):
     index = [0]*34
@@ -183,7 +182,7 @@ def test(request):
 
 #추천인 연산해서 리턴하기
 @api_view(['GET'])
-def recommendforyou(request,id):
+def recommenduser(request,id):
     print(id)
     info_list = list(reviewcategory.objects.exclude(user_id = id).values())
     myinfo = reviewcategory.objects.filter(user_id = id).values()
