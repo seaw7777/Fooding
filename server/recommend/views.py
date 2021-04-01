@@ -206,6 +206,8 @@ def recommendforyou(request,id):
 @api_view(['POST'])
 def recommendforStore(request):
     id = request.data.get("user_id")
+    region_name = request.data.get('region_name')
+    print(region_name)
     # print(id)
     if User.objects.filter(id=id).exists():
         # print(id)
@@ -230,13 +232,17 @@ def recommendforStore(request):
             })
         store = []
         review = []
+        print(region_name[1])
+        # if(region_name[1] in "청송군"):
+        #     print("1")
         for r in follower:
             rv = Review.objects.filter(id=r['id']).values()
             # print(rv)
             for st in rv:
                 string = Store.objects.get(id=st['store_id'])
+                print(string.id)
                 for j in my_category:
-                    if(j == (string.main_category+string.middle_category)):
+                    if(j == (string.main_category+string.middle_category) and region_name[0] in string.address or region_name[1] in string.address):
                         print("진입")
                         store.append({
                             "id": string.id,
@@ -251,9 +257,7 @@ def recommendforStore(request):
                             "review_cnt" : string.review_cnt,
                             "star" : string.star
                         })
-        # print("스토어 정보")
-        # for i in store:
-        #     print(i['store_name'])
+        print("스토어 정보")
         return JsonResponse(store,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)

@@ -15,10 +15,13 @@ from accounts.models import User
 # Create your views here.
 #인플루언서(10인) 목록 불러오기
 @api_view(['GET'])
-def influencer_list(request, id):  #id로 회원 취향 비슷한 인플루언서 추천?
-    influencer = User.objects.all().order_by('-spoon_cnt')[:10]
-
-    serializer = InfluencerSerializer(influencer, many=True)
+def influencer_list(request):  #id로 회원 취향 비슷한 인플루언서 추천?
+    influencer = User.objects.filter().order_by('-spoon_cnt')
+    dummy = []
+    for i in influencer:
+        if(i.spoon_cnt >= 100):
+            dummy.append(i)
+    serializer = InfluencerSerializer(dummy, many=True)
 
     return Response(serializer.data, status=status.HTTP_200_OK)
 
