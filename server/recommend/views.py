@@ -223,7 +223,7 @@ def recommendforStore(request):
     id = request.data.get("user_id")
     region_name = request.data.get('region_name')
     if User.objects.filter(id=id).exists():
-        
+
         follower_id = Follow.objects.filter(following_id=id)
         my_interest = reviewcategory.objects.get(user_id = id)
         my_category = categorysearch(my_interest)
@@ -276,7 +276,11 @@ def recommendforStore(request):
                             "main_category" : string.main_category,
                             "middle_category" : string.middle_category,
                             "review_cnt" : string.review_cnt,
-                            "star" : string.star
+                            "star" : string.star,
+                            "pet" : string.pet,
+                            "children" : string.children,
+                            "parents" : string.parents,
+                            "friend" : string.friend
                         })
 
 
