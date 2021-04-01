@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from reviews.models import Review
 from stores.models import Store
-from accounts.models import Follow,User
+from accounts.models import Follow,User,Wish
 
 # from .serializers import RecommendSerializer
 
@@ -223,30 +223,49 @@ def recommendforStore(request):
     id = request.data.get("user_id")
     region_name = request.data.get('region_name')
     if User.objects.filter(id=id).exists():
+        
         follower_id = Follow.objects.filter(following_id=id)
         my_interest = reviewcategory.objects.get(user_id = id)
         my_category = categorysearch(my_interest)
-        follower = []
+        wish_store = Wish.objects.filter(user_id = id)
 
-        for f in follower_id:
-            fw = User.objects.get(id=f.follow_id)
-            follower.append({
-                "id": fw.id,
-                "nickname": fw.nickname,
-                "email": fw.email,
-                "address": fw.address,
-                "spoon_cnt": fw.spoon_cnt,
-            })
+        follower = []
         store = []
+        dummy_store = []
+        dummy_store2 = []
         review = []
 
-        for r in follower:
-            rv = Review.objects.filter(id=r['id']).values()
+        #팔로우 한 사람들 id 받아오기
+        for f in follower_id:
+            fw = User.objects.get(id=f.follow_id)
+            follower.append(fw.id)
+
+        #팔로우 된 사람들이 쓴 리뷰중 사용자에게 맞는 음식점 목록 불러오기
+        for fwid in follower:
+            rv = Review.objects.filter(id=fwid).values()
             for st in rv:
                 string = Store.objects.get(id=st['store_id'])
                 for j in my_category:
                     if(j == (string.main_category+string.middle_category) and region_name[0] in string.address or region_name[1] in string.address):
-                        store.append({
+                        dummy_store.append(string.id)
+
+        #중복제거
+        for i in dummy_store:
+            print(i)
+            if i not in dummy_store2:
+                dummy_store2.append(i)
+
+        # 좋아요된 가게제거
+        for i in wish_store:
+            try:
+                dummy_store2.remove(i.store_id)
+            except ValueError:
+                pass
+
+        # 가게 정보 입력
+        for i in dummy_store2:
+            string = Store.objects.get(id=i)
+            store.append({
                             "id": string.id,
                             "store_name": string.store_name,
                             "area" : string.area,
@@ -259,7 +278,8 @@ def recommendforStore(request):
                             "review_cnt" : string.review_cnt,
                             "star" : string.star
                         })
-        
+
+
         return JsonResponse(store,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
