@@ -155,29 +155,29 @@ def categorysearch(my_interest):
     return dic
 @api_view(['GET'])
 def test(request):
-    review = Review.objects.all().order_by('user_id').values()
-    dic = ["한식찜/탕","한식고기집","한식국밥","한식전골/찌개","한식족발/보쌈","한식해산물",
-           "한식면요리","한식가정식","한식치킨","한식한식","분식분식","일식튀김","일식회","일식가정식","일식어패류","일식면요리","일식일식",
-           "중식면요리","중식튀김요리","중식구이요리","중식중식","양식면요리","양식피자","양식샐러드","양식해외요리","술집술집","술집일본선술집",
-           "빵집빵집","패스트푸드햄버거","카페음료","카페카페","카페디저트"]
-    data = [0]*32
-    print(len(dic),len(data))
-    # print(review)
-    # print(len(review))
-    user_id = review[0]['user_id']
-    for i in range(len(review)):
-        if user_id != review[i]['user_id']:
-            insert_data(data,user_id)
-            data = [0] * 32
-            user_id = review[i]['user_id']
-        store = Store.objects.filter(id__in=[review[i]['store_id']]).values('main_category','middle_category')
-        for j in range(len(store)):
-            string = store[j]['main_category']+store[j]['middle_category']
-            for p in range(len(dic)):
-                if dic[p] == string:
-                    data[p]+=1
-                    break
-    insert_data(data, user_id)
+    # review = Review.objects.all().order_by('user_id').values()
+    # dic = ["한식찜/탕","한식고기집","한식국밥","한식전골/찌개","한식족발/보쌈","한식해산물",
+    #        "한식면요리","한식가정식","한식치킨","한식한식","분식분식","일식튀김","일식회","일식가정식","일식어패류","일식면요리","일식일식",
+    #        "중식면요리","중식튀김요리","중식구이요리","중식중식","양식면요리","양식피자","양식샐러드","양식해외요리","술집술집","술집일본선술집",
+    #        "빵집빵집","패스트푸드햄버거","카페음료","카페카페","카페디저트"]
+    # data = [0]*32
+    # print(len(dic),len(data))
+    # # print(review)
+    # # print(len(review))
+    # user_id = review[0]['user_id']
+    # for i in range(len(review)):
+    #     if user_id != review[i]['user_id']:
+    #         insert_data(data,user_id)
+    #         data = [0] * 32
+    #         user_id = review[i]['user_id']
+    #     store = Store.objects.filter(id__in=[review[i]['store_id']]).values('main_category','middle_category')
+    #     for j in range(len(store)):
+    #         string = store[j]['main_category']+store[j]['middle_category']
+    #         for p in range(len(dic)):
+    #             if dic[p] == string:
+    #                 data[p]+=1
+    #                 break
+    # insert_data(data, user_id)
     return Response({'message':'성공'},status=status.HTTP_200_OK)
 
 #추천인 연산해서 리턴하기
@@ -198,6 +198,7 @@ def recommenduser(request,id):
             "email": user.email,
             "address": user.address,
             "spoon_cnt": user.spoon_cnt,
+            "grade" : user.grade,
         })
     return JsonResponse(recommend_follower,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
 
