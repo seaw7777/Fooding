@@ -31,3 +31,10 @@ class User(models.Model):
     class Meta:
         managed = False
         db_table = 'User'
+
+class Wish(models.Model):
+    user_id = models.IntegerField(blank=True, null=True)
+    store_id = models.IntegerField(blank=True, null=True)
+    class Meta:
+        managed = False
+        db_table = 'Wish'
