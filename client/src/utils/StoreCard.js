@@ -6,18 +6,34 @@ function StoreCard(props) {
   return (
     <div>
       <Card style={{ width: '18rem', margin: '1rem auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div
+          style={{
+            display: 'flex',
+            margin: '0.5rem',
+          }}
+        >
           <Image
             src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
             roundedCircle
             style={{ width: '50px', height: '50px' }}
           />
-
-          <div>
-            <Card.Title>{props.store.store_name}</Card.Title>
-            <Card.Text>{props.store.review_cnt}</Card.Text>
+          <div style={{ marginLeft: '1rem' }}>
+            <Card.Title style={{ fontSize: '18px', margin: '0.3rem' }}>
+              {props.store.store_name}
+            </Card.Title>
+            <Card.Text style={{ marginRight: '0.4rem', marginLeft: '0.4rem' }}>
+              {props.store.review_cnt}
+            </Card.Text>
           </div>
-          <StarFilled style={{ fontSize: '50px', color: '#faad14' }} />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-end',
+              width: '100%',
+            }}
+          >
+            <StarFilled style={{ fontSize: '28px', color: '#faad14' }} />
+          </div>
         </div>
         <a href={`/store/${props.store.id}`}>
           <Card.Img

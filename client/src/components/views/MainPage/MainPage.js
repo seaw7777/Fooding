@@ -9,7 +9,7 @@ import { fetchStoresMainPage, StoreRecommendInfo } from '_api/Stores';
 import { fetchInfluencer } from '_api/Recommend';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { changeUserInfo } from '../../../_actions/user_actions';
-
+import { FcFlashOn } from 'react-icons/fc';
 const { kakao } = window;
 
 function MainPage(props) {
@@ -55,7 +55,9 @@ function MainPage(props) {
     };
     StoreRecommendInfo(body)
       .then(res => {
-        console.log(res);
+        console.log('???????');
+        console.log(res.data);
+        setStores(res.data);
       })
       .catch(err => {
         console.log(err);
@@ -69,8 +71,10 @@ function MainPage(props) {
     <div>
       <MainPageBar change={handlerAddress} address={Address} />
       <div style={{ margin: '1rem' }}>
-        <Title level={4}>뜨고 있는 인기 FOODER!!</Title>
-        <Text strong>인기 푸더를 팔로잉하고 소식을 받아보세요!</Text>
+        <Title level={4}>
+          뜨고 있는 인기 FOODER
+          <FcFlashOn />
+        </Title>
       </div>
       <div
         style={{
