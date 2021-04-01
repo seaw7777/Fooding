@@ -18,7 +18,7 @@ function ReviewCard(props) {
 
   const rednerReviewText = () => {
     if (props.review.nickname !== undefined) {
-      return <Card.Text>{props.review.write_date.substring(0, 10)}</Card.Text>;
+      // return <Card.Text>{props.review.write_date.split(0, 10)}</Card.Text>;
     } else {
       return (
         <Card.Title style={{ fontSize: '15px' }}>

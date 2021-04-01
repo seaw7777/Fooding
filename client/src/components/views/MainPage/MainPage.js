@@ -6,7 +6,7 @@ import MainPageBar from './Sections/MainPageBar';
 import RecommendFooder from './Sections/RecommendFooder';
 import StoreCard from 'utils/StoreCard';
 import { fetchStoresMainPage, StoreRecommendInfo } from '_api/Stores';
-import { fetchInfluencer } from '_api/Main';
+import { fetchInfluencer } from '_api/Recommend';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { changeUserInfo } from '../../../_actions/user_actions';
 

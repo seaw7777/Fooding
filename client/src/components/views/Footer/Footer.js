@@ -34,6 +34,7 @@ function Footer() {
               padding: '0.3rem',
             }}
           >
+            <div className="tab-overlay"></div>
             <Col
               span={6}
               style={{
@@ -42,31 +43,31 @@ function Footer() {
                 alignItems: 'center',
               }}
             >
-              <NavLink to="/main" activeStyle={activeStyle}>
-                <div className="tab-overlay"></div>
+              <NavLink to="/main" activeStyle={activeStyle} id="tab-1">
+                {/* <div className="tab-overlay" id="tab-1"></div> */}
                 <FcHome size={35} />
-                {/* <p>홈</p> */}
+                <p>홈</p>
               </NavLink>
             </Col>
             <Col span={6}>
               <NavLink to="/search" activeStyle={activeStyle}>
-                <div className="tab-overlay"></div>
+                {/* <div className="tab-overlay" id="tab-2"></div> */}
                 <FcSearch />
-                <p>검색</p>
+                <p id="tab-2">검색</p>
               </NavLink>
             </Col>
             <Col span={6}>
               <NavLink to="/accompany" activeStyle={activeStyle}>
-                <div className="tab-overlay"></div>
+                {/* <div className="tab-overlay" id="tab-3"></div> */}
                 <FcConferenceCall />
-                <p>동행자</p>
+                <p id="tab-3">동행자</p>
               </NavLink>
             </Col>
             <Col span={6}>
               <NavLink to="/mypage" activeStyle={activeStyle}>
-                <div className="tab-overlay"></div>
+                {/* <div className="tab-overlay" id="tab-4"></div> */}
                 <FcVoicePresentation />
-                <p>마이페이지</p>
+                <p id="tab-4">마이페이지</p>
               </NavLink>
             </Col>
           </Row>
