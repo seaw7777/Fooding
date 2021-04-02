@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render
 
 from rest_framework import viewsets
@@ -7,17 +8,45 @@ from rest_framework.decorators import api_view
 
 from .serializers import StoreSerializer, MenuSerializer
 from .models import Store, Menu
+from accounts.models import Wish
 
 
 # Create your views here.
 #가게상세정보 불러오기
 @api_view(['GET'])
-def store_detail(request, id):
-    store = Store.objects.get(id=id)
+def store_detail(request, store_id, user_id):
+    store = Store.objects.get(id=store_id)
 
-    serializer = StoreSerializer(store)
+    stores = []
 
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    if Wish.objects.filter(store_id=store_id, user_id=user_id):
+        stores.append({
+            "store_name" : store.store_name,
+            "area" : store.area,
+            "tel" : store.tel,
+            "address" : store.address,
+            "lat" : store.lat,
+            "lng" : store.lng,
+            "main_category" : store.main_category,
+            "middle_category" : store.middle_category,
+            "review_cnt" : store.review_cnt,
+            "isWish" : True,
+        })
+    else:
+        stores.append({
+            "store_name" : store.store_name,
+            "area" : store.area,
+            "tel" : store.tel,
+            "address" : store.address,
+            "lat" : store.lat,
+            "lng" : store.lng,
+            "main_category" : store.main_category,
+            "middle_category" : store.middle_category,
+            "review_cnt" : store.review_cnt,
+            "isWish" : False,
+        })
+
+    return JsonResponse(stores, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
 
 
 #가게메뉴 불러오기
