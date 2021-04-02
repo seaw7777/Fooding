@@ -11,6 +11,7 @@ urlpatterns = [
     path('followingInfo/<int:id>/', views.following_info),
     path('likeInfo/<int:id>/', views.like_info),
     path('change_pw/', views.change_pw),
+    path('change_address/', views.change_address),
     path('make_follower/<int:user_id>&&<int:follower_id>/', views.make_follower),
     path('delete_follower/<int:user_id>&&<int:follower_id>/', views.delete_follower),
     path('check_follow/<int:user_id>&&<int:follower_id>/', views.check_follow),

@@ -10,7 +10,7 @@ from django.http import JsonResponse
 from reviews.models import Review
 from stores.models import Store
 from accounts.models import Follow,User,Wish
-
+import random
 # from .serializers import RecommendSerializer
 
 from .models import reviewcategory
@@ -59,30 +59,43 @@ def insert_data(data,user_id):
         ).save()
 
 def calcos(myinfo,info_list):
+
     index = [0]*34
     A={}
     result = {}
     returnresult = []
+
+
     for i , (key, value) in enumerate(myinfo[0].items()):
         index[i] = value
+
+    # 필요없는 데이터 제거
     del index[0]
     del index[0]
     for i in range(len(info_list)):
         B = [0]*34
         for j ,(key,value) in enumerate(info_list[i].items()):
             B[j] = value
+
+        # 필요없는 데이터 제거
         del B[0]
         del B[0]
+        
+        # 빅데이터 분석
         re = dot(index, B) / (norm(index) * norm(B))
-        str = info_list[i]['user_id']
-        result[str] = re
+        strindex = info_list[i]['user_id']
+        result[strindex] = re
+
+    # 연관성 0 인 사람을 제외하고 전부다 리스트 삽입
     for key,value in result.items():
         if value != 0:
             A[key] = value
+
+    # 연관성 가장 높은순으로 정렬
     dummy = sorted(A.items(),key=lambda x:x[1],reverse=True)
-    # print("확인")
+
+    # 분석 결과 값에서 id만 추출하여 리턴
     for i in dummy:
-        # print(i[0])
         returnresult.append(i[0])
     return returnresult
 
@@ -153,9 +166,8 @@ def categorysearch(my_interest):
         dic.append("빵집빵집")
     if(my_interest.fffood != 0):
         dic.append("패스트푸드햄버거")
-    # print("확인")
-    # print(dic)
     return dic
+
 @api_view(['GET'])
 def test(request):
     # review = Review.objects.all().order_by('user_id').values()
@@ -182,10 +194,15 @@ def test(request):
     #                 break
     # insert_data(data, user_id)
     
-    data = list(Store.objects.filter())
+    # data = Store.objects.all()
     # print(data.id)
-    for i in data:
-        print(i.id)
+    # ran_num = random.randint(0,1000)
+    # for i in data:
+    #     i.parents = random.randint(0,1000)
+    #     i.friend = random.randint(0,1000)
+    #     i.children = random.randint(0,1000)
+    #     i.pet = random.randint(0,1000)
+    #     i.save()
     return Response({'message':'성공'},status=status.HTTP_200_OK)
 
 #추천인 연산해서 리턴하기
@@ -196,14 +213,16 @@ def recommenduser(request,id):
     result_list = calcos(myinfo,info_list)
     follower_list = Follow.objects.filter(following_id = id).values('follow_id')
 
-    print(result_list , len(result_list))
-    print(follower_list , len(follower_list))
+    recommend_follower =[]
+    
+    # 추천인에 팔로우 한사람은 안뜨게 제거
     for i in follower_list:
         try:
             result_list.remove(i['follow_id'])
         except ValueError:
             pass
-    recommend_follower =[]
+    
+    # 정보 넣어서 리턴
     for i in result_list:
         user = User.objects.get(id=i)
         recommend_follower.append({
@@ -218,13 +237,15 @@ def recommenduser(request,id):
     return JsonResponse(recommend_follower,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
 
 #가게추천 연산해서 리턴하기
-@api_view(['POST'])
-def recommendforStore(request):
-    id = request.data.get("user_id")
-    region_name = request.data.get('region_name')
+@api_view(['GET'])
+def recommendStore(request,id):
     if User.objects.filter(id=id).exists():
 
+        region_name = User.objects.filter(id=id).values('address')
+        region_name = region_name[0]['address'].split()
+        
         follower_id = Follow.objects.filter(following_id=id)
+        
         my_interest = reviewcategory.objects.get(user_id = id)
         my_category = categorysearch(my_interest)
         wish_store = Wish.objects.filter(user_id = id)
@@ -288,4 +309,12 @@ def recommendforStore(request):
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
 
-    
+# 동행자 가게 추천
+@api_view(['POST'])
+def recommendcompanion(request):
+    id = request.get.data('user_id')
+    if User.objects.get(id = id).exists():
+        user = User.objects.get(id = id)
+        
+    else:
+    return
