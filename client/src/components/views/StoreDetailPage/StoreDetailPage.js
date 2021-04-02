@@ -133,17 +133,22 @@ function StoreDetailPage(props) {
         </Link>
         <div
           style={{
-            height: '235px',
+            height: '220px',
             overflow: 'auto',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <InfiniteScroll dataLength={Reviews.length}>
-            {Reviews.map((review, index) => (
-              <ReviewCard review={review} key={index}></ReviewCard>
-            ))}
+          <InfiniteScroll
+            dataLength={Reviews.length}
+            style={{ height: '220px' }}
+          >
+            <div style={{ height: '220px' }}>
+              {Reviews.map((review, index) => (
+                <ReviewCard review={review}></ReviewCard>
+              ))}
+            </div>
           </InfiniteScroll>
         </div>
       </div>
