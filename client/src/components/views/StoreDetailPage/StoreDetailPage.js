@@ -5,18 +5,14 @@ import ImageSlider from 'utils/ImageSlider';
 import ReviewCard from 'utils/ReviewCard';
 import StoreMenu from './Sections/StoreMenu';
 import { Typography, Button } from 'antd';
-import {
-  StarFilled,
-  PhoneFilled,
-  CompassTwoTone,
-  ProfileFilled,
-} from '@ant-design/icons';
+import { PhoneFilled, CompassTwoTone, ProfileFilled } from '@ant-design/icons';
 import { Tabs, Tab } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Sections/StoreDetailPage.css';
 import { StoreDetailInfo, StoreMenuInfo } from '_api/Stores';
 import { fetchStoreReview } from '_api/Review';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Rating from '@material-ui/lab/Rating';
 
 function StoreDetailPage(props) {
   const [Images, setImages] = useState([1, 2]);
@@ -154,11 +150,27 @@ function StoreDetailPage(props) {
             src={'/images/Fooding/로고 이미지.png'}
           />
           <div>
-            <Title level={4}>{StoreInfo.store_name}</Title>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-space',
+                alignItems: 'center',
+                marginLeft: '0.5em',
+              }}
+            >
+              <Title level={4}>{StoreInfo.store_name}</Title>
+              <Text style={{ marginLeft: '0.5em' }} mark>
+                {StoreInfo.main_category}
+              </Text>
+            </div>
+            <Rating
+              style={{ marginLeft: '0.5em' }}
+              name="read-only"
+              value={StoreInfo.star}
+              readOnly
+            />
           </div>
-          <Text mark>{StoreInfo.main_category}</Text>
-          <Text id="store_rating">{StoreInfo.star}</Text>
-          <StarFilled style={{ fontSize: '50px', color: '#faad14' }} />
+          <p> 여기에 하트</p>
         </div>
         <div
           style={{
