@@ -38,7 +38,9 @@ pipeline {
                 | xargs -r docker rmi'
                 // docker container 실행
                 sh 'docker run -d --name testfront -p 80:80 testfront:latest'
-                sh 'docker run -d --name testback -p 8000:8000 testback:latest'
+                sh 'docker run \
+                -v img-vol:/img \
+                -d --name testback -p 8000:8000 testback:latest'
             }
         }
     }
