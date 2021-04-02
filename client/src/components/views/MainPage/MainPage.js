@@ -66,6 +66,7 @@ function MainPage(props) {
   };
 
   const onRemove = id => {
+    console.log(id);
     setStores(Stores.filter(store => store.id != id));
   };
 
