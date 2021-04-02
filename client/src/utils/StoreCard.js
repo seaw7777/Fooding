@@ -2,22 +2,14 @@ import React, { useState } from 'react';
 import { Row, Col, Card, Button, Container, Image } from 'react-bootstrap';
 import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { fetchLikeStore, fetchDeleteStore } from '../_api/User';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
 function StoreCard(props) {
-  const [checkStar, setcheckStar] = useState(false);
-  const likeStoreHandler = () => {
-    if (checkStar === false) {
+  const [checkLike, setcheckLike] = useState(props.like);
+  const dislikeStoreHandler = () => {
+    if (checkLike === true) {
+      setcheckLike(false);
       props.onRemove(props.store.id);
-      setcheckStar(true);
-      fetchLikeStore(props.user, props.store.id)
-        .then(res => {
-          console.log(res.data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    } else {
-      setcheckStar(false);
       fetchDeleteStore(props.user, props.store.id)
         .then(res => {
           console.log(res.data);
@@ -25,6 +17,7 @@ function StoreCard(props) {
         .catch(err => {
           console.log(err);
         });
+      setcheckLike(true);
     }
   };
   return (
@@ -56,15 +49,10 @@ function StoreCard(props) {
             </Card.Text>
           </div>
           <div>
-            {checkStar ? (
-              <StarFilled
+            {checkLike && (
+              <AiFillHeart
                 style={{ fontSize: '28px', color: '#faad14' }}
-                onClick={likeStoreHandler}
-              />
-            ) : (
-              <StarOutlined
-                style={{ fontSize: '28px', color: '#faad14' }}
-                onClick={likeStoreHandler}
+                onClick={dislikeStoreHandler}
               />
             )}
           </div>

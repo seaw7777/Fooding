@@ -32,3 +32,7 @@ export function fetchLikeStore(user_id, store_id) {
 export function fetchDeleteStore(user_id, store_id) {
   return axios.get(`${SERVER}accounts/delete_wish/${user_id}&&${store_id}/`);
 }
+
+export function fetchMyLikePlace(user_id) {
+  return axios.get(`${SERVER}accounts/select_wish/${user_id}/`);
+}
