@@ -6,6 +6,7 @@ import FollowingList from './Sections/FollowingList';
 import user_reducer from '_reducer/user_reducer';
 import axios from 'axios';
 import { SERVER } from '../../../Config.js';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 function FollowPage(props) {
   const [followList, setfollowList] = useState([]);
@@ -82,9 +83,19 @@ function FollowPage(props) {
           팔로잉
         </Button>
       </div>
-      <div style={{ marginTop: '2rem' }}>
-        {showFollowList && <FollowList followList={followList} />}
-        {showFollowingList && <FollowingList followingList={followingList} />}
+      <div
+        style={{
+          marginTop: '1rem',
+          height: 450,
+          overflow: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <InfiniteScroll dataLength={'10'} style={{ width: '420' }}>
+          {showFollowList && <FollowList followList={followList} />}
+          {showFollowingList && <FollowingList followingList={followingList} />}
+        </InfiniteScroll>
       </div>
     </div>
   );

@@ -53,6 +53,9 @@ function MainPage(props) {
       address: ad,
       region_name: region_name,
     };
+    // 주소바꾼다는 API
+
+    // GET 아이디만 보내면 된다.
     StoreRecommendInfo(body)
       .then(res => {
         console.log('???????');
