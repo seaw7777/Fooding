@@ -27,12 +27,13 @@ function StoreDetailPage(props) {
   const [Reviews, setReviews] = useState([]);
   const [Menus, setMenus] = useState([]);
   const { kakao } = window;
-
+  const userid = props.user.loginSuccess.id;
   useEffect(() => {
     const StoreInfo = async () => {
       try {
-        const response = await StoreDetailInfo(storeId);
-        setStoreInfo(response.data);
+        const response = await StoreDetailInfo(storeId, userid);
+
+        setStoreInfo(response.data[0]);
         const res = await fetchStoreReview(storeId);
         setReviews(res.data);
         const ress = await StoreMenuInfo(storeId);
@@ -41,7 +42,10 @@ function StoreDetailPage(props) {
 
         const container = document.getElementById('myMap');
         const options = {
-          center: new kakao.maps.LatLng(response.data.lat, response.data.lng),
+          center: new kakao.maps.LatLng(
+            response.data[0].lat,
+            response.data[0].lng,
+          ),
           level: 3,
         };
         const map = new kakao.maps.Map(container, options);
@@ -56,8 +60,8 @@ function StoreDetailPage(props) {
             imageOption,
           ),
           markerPosition = new kakao.maps.LatLng(
-            response.data.lat,
-            response.data.lng,
+            response.data[0].lat,
+            response.data[0].lng,
           ); // 마커가 표시될 위치입니다
 
         // 마커를 생성합니다
@@ -110,17 +114,22 @@ function StoreDetailPage(props) {
         </Link>
         <div
           style={{
-            height: '235px',
+            height: '220px',
             overflow: 'auto',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <InfiniteScroll dataLength={Reviews.length}>
-            {Reviews.map((review, index) => (
-              <ReviewCard review={review}></ReviewCard>
-            ))}
+          <InfiniteScroll
+            dataLength={Reviews.length}
+            style={{ height: '220px' }}
+          >
+            <div style={{ height: '220px' }}>
+              {Reviews.map((review, index) => (
+                <ReviewCard review={review}></ReviewCard>
+              ))}
+            </div>
           </InfiniteScroll>
         </div>
       </div>
