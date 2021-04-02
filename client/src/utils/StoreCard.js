@@ -7,6 +7,7 @@ function StoreCard(props) {
   const [checkStar, setcheckStar] = useState(false);
   const likeStoreHandler = () => {
     if (checkStar === false) {
+      props.onRemove(props.store.id);
       setcheckStar(true);
       fetchLikeStore(props.user, props.store.id)
         .then(res => {
@@ -15,7 +16,6 @@ function StoreCard(props) {
         .catch(err => {
           console.log(err);
         });
-      props.onRemove(props.store.id);
     } else {
       setcheckStar(false);
       fetchDeleteStore(props.user, props.store.id)
