@@ -181,6 +181,22 @@ def change_pw(request):
     
     return Response({'success': 'success'}, status=status.HTTP_202_ACCEPTED)
 
+# 주소지 변경
+@api_view(['POST'])
+def change_address(request):
+    # print(request.data.get('user_id'))
+    region_list = request.data.get('region_name')
+    change_address_name = region_list[0] + " " + region_list[1]
+    
+    user = User.objects.get(id=request.data.get('user_id'))
+    
+    # print(user)
+    user.address = change_address_name
+    user.save()
+    # user.update(address = change_address_name)
+    
+    return Response({'success': 'success'}, status=status.HTTP_200_ACCEPTED)
+    
 # 회원별 회원정보 불러오기
 @api_view(['GET'])
 def user_info(request, id):
@@ -325,8 +341,9 @@ def select_wish(request, user_id):
         
         for i in store_id_list:
             # print(i.store_id)
+            print(i.store_id)
             du = Store.objects.get(id=i.store_id)
-            # print(du)
+            # print("아이디 : ",du.friend)
             store.append({                    
                             "id" : du.id,
                             "store_name": du.store_name,
@@ -344,7 +361,8 @@ def select_wish(request, user_id):
                             "parents" :du.parents,
                             "friend" : du.friend
             })
-        # print(store)
+            print("진입")
+        print(store)
         
         return JsonResponse(store,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
     else:
