@@ -308,7 +308,7 @@ def make_wish(request, user_id, store_id):
 # 찜 취소
 @api_view(['GET'])
 def delete_wish(request, user_id,store_id):
-    if Wish.objects.filter(id=user_id, store_id = store_id).exists():
+    if Wish.objects.filter(user_id=user_id, store_id = store_id).exists():
         Wish.objects.filter(store_id = store_id , user_id = user_id).delete()
         return Response({'message': '완료'}, status=status.HTTP_200_OK)
     else:
