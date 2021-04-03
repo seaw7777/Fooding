@@ -316,5 +316,5 @@ def recommendcompanion(request):
     if User.objects.get(id = id).exists():
         user = User.objects.get(id = id)
         
-    else:
-    return
+    # else:
+    # return
