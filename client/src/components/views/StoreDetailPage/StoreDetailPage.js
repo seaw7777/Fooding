@@ -5,18 +5,16 @@ import ImageSlider from 'utils/ImageSlider';
 import ReviewCard from 'utils/ReviewCard';
 import StoreMenu from './Sections/StoreMenu';
 import { Typography, Button } from 'antd';
-import {
-  StarFilled,
-  PhoneFilled,
-  CompassTwoTone,
-  ProfileFilled,
-} from '@ant-design/icons';
+import { PhoneFilled, CompassTwoTone, ProfileFilled } from '@ant-design/icons';
 import { Tabs, Tab } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Sections/StoreDetailPage.css';
 import { StoreDetailInfo, StoreMenuInfo } from '_api/Stores';
 import { fetchStoreReview } from '_api/Review';
+import { fetchLikeStore, fetchDeleteStore } from '_api/User';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Rating from '@material-ui/lab/Rating';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
 function StoreDetailPage(props) {
   const [Images, setImages] = useState([1, 2]);
@@ -24,28 +22,33 @@ function StoreDetailPage(props) {
   const [StoreInfo, setStoreInfo] = useState([]);
   const storeId = props.match.params.StoreId;
   const user = useSelector(state => state.user);
-
-  // const { StoreId } = useParams();
-  // console.log(useParams());
   const [StoreLocation, setStoreLocation] = useState([]);
   const [Reviews, setReviews] = useState([]);
   const [Menus, setMenus] = useState([]);
   const { kakao } = window;
+  const [likeStoreCheck, setlikeStoreCheck] = useState(false);
 
   useEffect(() => {
-    const StoreInfo = async () => {
+    const StoreAllInfo = async () => {
       try {
-        const response = await StoreDetailInfo(storeId);
-        setStoreInfo(response.data);
-        const res = await fetchStoreReview('2');
+        const response = await StoreDetailInfo(
+          storeId,
+          props.user.loginSuccess.id,
+        );
+
+        setStoreInfo(response.data[0]);
+        setlikeStoreCheck(response.data[0].isWish);
+        const res = await fetchStoreReview(storeId);
         setReviews(res.data);
         const ress = await StoreMenuInfo(storeId);
-        console.log(ress.data);
         setMenus(ress.data);
 
         const container = document.getElementById('myMap');
         const options = {
-          center: new kakao.maps.LatLng(response.data.lat, response.data.lng),
+          center: new kakao.maps.LatLng(
+            response.data[0].lat,
+            response.data[0].lng,
+          ),
           level: 3,
         };
         const map = new kakao.maps.Map(container, options);
@@ -60,8 +63,8 @@ function StoreDetailPage(props) {
             imageOption,
           ),
           markerPosition = new kakao.maps.LatLng(
-            response.data.lat,
-            response.data.lng,
+            response.data[0].lat,
+            response.data[0].lng,
           ); // 마커가 표시될 위치입니다
 
         // 마커를 생성합니다
@@ -76,8 +79,24 @@ function StoreDetailPage(props) {
         console.log(err);
       }
     };
-    StoreInfo();
+    StoreAllInfo();
   }, []);
+
+  const likeStoreHandler = () => {
+    setlikeStoreCheck(true);
+    fetchLikeStore(props.user.loginSuccess.id, storeId).then(res => {
+      console.log(res.data);
+    });
+    console.log(likeStoreCheck);
+  };
+
+  const dislikeStoreHandler = () => {
+    setlikeStoreCheck(false);
+    fetchDeleteStore(props.user.loginSuccess.id, storeId).then(res => {
+      console.log(res.data);
+    });
+    console.log(likeStoreCheck);
+  };
 
   const renderReviewCard = () => {
     return (
@@ -114,17 +133,22 @@ function StoreDetailPage(props) {
         </Link>
         <div
           style={{
-            height: '235px',
+            height: '220px',
             overflow: 'auto',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <InfiniteScroll dataLength={Reviews.length}>
-            {Reviews.map((review, index) => (
-              <ReviewCard review={review}></ReviewCard>
-            ))}
+          <InfiniteScroll
+            dataLength={Reviews.length}
+            style={{ height: '220px' }}
+          >
+            <div style={{ height: '220px' }}>
+              {Reviews.map((review, index) => (
+                <ReviewCard review={review}></ReviewCard>
+              ))}
+            </div>
           </InfiniteScroll>
         </div>
       </div>
@@ -135,32 +159,78 @@ function StoreDetailPage(props) {
     <div>
       <ImageSlider images={Images} />
       <div>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '90%',
+            margin: '0.5rem auto',
+          }}
+        >
           <img
-            style={{ borderRadius: '50%', width: '50px' }}
-            src={
-              'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'
-            }
+            style={{
+              borderRadius: '30%',
+              width: '75px',
+              height: '55px',
+              border: 'solid 2px #FF4500',
+            }}
+            src={'/images/Fooding/로고 이미지.png'}
           />
           <div>
-            <Title level={4}>{StoreInfo.store_name}</Title>
-            <Text>{StoreInfo.review_cnt}</Text>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-space',
+                alignItems: 'center',
+
+                marginTop: '0.5rem',
+              }}
+            >
+              <Title level={5}>{StoreInfo.store_name}</Title>
+              <Text
+                style={{ marginLeft: '0.5em', marginBottom: '0.5rem' }}
+                mark
+              >
+                {StoreInfo.main_category}
+              </Text>
+            </div>
+            <Rating name="read-only" value={StoreInfo.star} readOnly />
           </div>
-          <Text mark>{StoreInfo.main_category}</Text>
-          <StarFilled style={{ fontSize: '50px', color: '#faad14' }} />
+          <div>
+            {likeStoreCheck ? (
+              <AiFillHeart
+                style={{
+                  fontSize: '25px',
+                  marginBottom: '2.5rem',
+                  color: 'red',
+                }}
+                onClick={dislikeStoreHandler}
+              />
+            ) : (
+              <AiOutlineHeart
+                style={{
+                  fontSize: '25px',
+                  marginBottom: '2.5rem',
+                  color: 'red',
+                }}
+                onClick={likeStoreHandler}
+              />
+            )}
+          </div>
         </div>
         <div
           style={{
-            border: 'solid 1px #faad14',
+            border: 'solid 1px #FF4500',
             padding: '1rem',
             width: '90%',
-            margin: 'auto',
+            margin: '0rem auto 0.5rem',
           }}
         >
-          <PhoneFilled />
+          <PhoneFilled style={{ marginRight: '1rem' }} />
           <Text>{StoreInfo.tel}</Text>
           <br />
-          <CompassTwoTone />
+          <CompassTwoTone style={{ marginRight: '1rem' }} />
           <Text>{StoreInfo.address}</Text>
         </div>
 

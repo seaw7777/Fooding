@@ -10,7 +10,12 @@ import ReviewCard from '../../../utils/ReviewCard';
 import Diary from './Sections/Diary';
 import Grade from '../../../utils/Grade';
 import { fetchUserReview } from '../../../_api/Review';
-import { fetchUserFollow, fetchUserFollowing } from '../../../_api/User';
+import {
+  fetchUserFollow,
+  fetchUserFollowing,
+  fetchMyLikePlace,
+} from '../../../_api/User';
+import StoreCard from '../../../utils/StoreCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -38,6 +43,7 @@ function MyPage(props) {
   const [myReview, setmyReview] = useState([]);
   const [userFollowerInfo, setuserFollowerInfo] = useState([]);
   const [userFollowingInfo, setuserFollowingInfo] = useState([]);
+  const [userLikePlace, setuserLikePlace] = useState([]);
 
   useEffect(() => {
     const MainData = async () => {
@@ -52,6 +58,10 @@ function MyPage(props) {
 
         const following = await fetchUserFollowing(props.user.loginSuccess.id);
         setuserFollowingInfo(following.data);
+
+        const likePlace = await fetchMyLikePlace(props.user.loginSuccess.id);
+        setuserLikePlace(likePlace.data);
+        console.log(likePlace.data);
       } catch (err) {
         console.log(err);
       }
@@ -86,6 +96,22 @@ function MyPage(props) {
 
   const renderReviewCards = myReview.map((review, index) => {
     return <ReviewCard review={review} key={index} />;
+  });
+
+  const onRemove = id => {
+    setuserLikePlace(userLikePlace.filter(store => store.id != id));
+  };
+
+  const renderLikePlace = userLikePlace.map((store, index) => {
+    return (
+      <StoreCard
+        store={store}
+        key={index}
+        like={true}
+        user={props.user.loginSuccess.id}
+        onRemove={onRemove}
+      />
+    );
   });
 
   const renderLogout = () => {
@@ -267,7 +293,21 @@ function MyPage(props) {
               </div>
             )}
           </Tab>
-          <Tab eventKey="likePlace" title="찜한 장소"></Tab>
+          <Tab eventKey="likePlace" title="찜한 장소">
+            <div
+              style={{
+                height: 350,
+                overflow: 'auto',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <InfiniteScroll dataLength={userLikePlace.length}>
+                {renderLikePlace}
+              </InfiniteScroll>
+            </div>
+          </Tab>
         </Tabs>
       </div>
     </div>

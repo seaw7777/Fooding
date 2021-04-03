@@ -312,20 +312,21 @@ def check_follow(request, user_id, follower_id):
 # 찜 하기
 @api_view(['GET'])
 def make_wish(request, user_id, store_id):
-    if User.objects.filter(id=user_id).exists():
+    if Wish.objects.filter(user_id=user_id, store_id=store_id).exists():
+        return Response({'message': '이미 등록 된 가게입니다.'}, status=status.HTTP_400_BAD_REQUEST)
+    else:
         Wish.objects.create(
             user_id = user_id,
             store_id = store_id,
         ).save()
         return Response({'message': '완료'}, status=status.HTTP_200_OK)
-    else:
-        return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
+        
 
 
 # 찜 취소
 @api_view(['GET'])
 def delete_wish(request, user_id,store_id):
-    if Wish.objects.filter(id=user_id, store_id = store_id).exists():
+    if Wish.objects.filter(user_id=user_id, store_id = store_id).exists():
         Wish.objects.filter(store_id = store_id , user_id = user_id).delete()
         return Response({'message': '완료'}, status=status.HTTP_200_OK)
     else:

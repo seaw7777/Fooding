@@ -5,7 +5,7 @@ import { UserOutlined, CloseCircleOutlined } from '@ant-design/icons';
 function FooderList(props) {
   const renderFollowList = () =>
     props.followingList.map((follow, index) => (
-      <Row style={{ marginBottom: '1rem' }} key={index}>
+      <Row style={{ margin: '1rem 2.5rem' }} key={index}>
         <Col>
           <Avatar size="large" icon={<UserOutlined />} />
         </Col>

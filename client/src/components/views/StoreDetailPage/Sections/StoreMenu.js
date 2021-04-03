@@ -24,7 +24,7 @@ function StoreMenu(props) {
       <InfiniteScroll
         dataLength={Menus.length}
         style={{
-          width: '360px',
+          width: '340px',
           backgroundSize: '100%',
           backgroundImage: `URL('/images/menu.png')`,
         }}

@@ -1,64 +1,80 @@
 import React from 'react';
 import { Card, Avatar, Carousel, Button } from 'antd';
 import { Link } from 'react-router-dom';
-
+import Slider from 'react-slick';
+import { UserOutlined } from '@ant-design/icons';
+const settings = {
+  // dots: true,
+  infinite: true,
+  // speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 4,
+};
 function RecommendFooder(props) {
-  console.log(props.list);
   const { Meta } = Card;
   return (
     <div
       style={{
-        width: '250px',
-        height: '200px',
-        margin: '0.25rem  auto 3.5rem',
+        width: '400px',
+        height: '100px',
+        padding: '0.8rem',
       }}
     >
-      <Carousel autoplay>
+      {/* <Carousel autoplay> */}
+      <Slider {...settings}>
         {props.list.map((fooder, index) => (
-          <div key={index} style={{ height: '100px', width: '150px' }}>
-            <Card
-              hoverable
-              cover={
-                <img
-                  alt="example"
-                  src={fooder.img}
-                  style={{ width: '250px', height: '150px' }}
-                />
-              }
+          <div
+            key={index}
+            style={{
+              height: '50px',
+              width: '50px',
+            }}
+          >
+            <Link
+              to={{
+                pathname: `/fooder/${fooder.id}`,
+                state: {
+                  username: fooder.nickname,
+                  spoon_cnt: fooder.spoon_cnt,
+                  grade: fooder.grade,
+                },
+              }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Link
-                  to={{
-                    pathname: `/fooder/${fooder.id}`,
-                    state: {
-                      username: fooder.nickname,
-                      spoon_cnt: fooder.spoon_cnt,
-                      grade: fooder.grade,
-                    },
+              <div>
+                <img
+                  src="./images/cat.jpg"
+                  style={{
+                    margin: '0',
+                    width: '50px',
+                    height: '50px',
+                    borderRadius: '50%',
+                    border: 'solid green',
+                    marginLeft: '1.4rem',
                   }}
-                >
-                  {/* <Link to={`/fooder/${fooder.id}`}> */}
-                  <Meta
-                    avatar={
-                      <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                    }
-                    title={fooder.nickname}
-                    style={{ height: '50px' }}
-                  />
-                </Link>
-                <Button
+                />
+              </div>
+              <div
+                style={{
+                  marginTop: '0.5rem',
+                  textAlign: 'center',
+                  color: 'black',
+                }}
+              >
+                {fooder.nickname}
+              </div>
+            </Link>
+            {/* <Button
                   type="primary"
                   shape="round"
                   size={'small'}
                   style={{ backgroundColor: '#faad14', borderColor: '#faad14' }}
                 >
                   팔로우
-                </Button>
-              </div>
-            </Card>
+                </Button> */}
           </div>
         ))}
-      </Carousel>
+      </Slider>
+      {/* </Carousel> */}
     </div>
   );
 }

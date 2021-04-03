@@ -3,6 +3,7 @@ import { createWorker } from 'tesseract.js';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 import ImageUploader from 'react-images-upload';
+import Column from 'antd/lib/table/Column';
 
 function CheckReceiptPage(props) {
   const [picture, setpicture] = useState([]);
@@ -36,32 +37,50 @@ function CheckReceiptPage(props) {
 
   return (
     <div>
-      <h3 style={{ textAlign: 'center' }}>{ocr}</h3>
-      <ImageUploader
-        withIcon={true}
-        buttonText="Choose images"
-        onChange={onDrop}
-        imgExtension={['.jpg', '.gif', '.png', '.gif']}
-        maxFileSize={5242880}
-      />
-      {Next ? (
-        <Link
-          to={{
-            pathname: '/review/post',
-            state: {
-              store_id: props.location.state.store_id,
-              user_id: props.location.state.user_id,
-            },
-          }}
-        >
-          <Button>다음</Button>
-        </Link>
-      ) : (
-        <Link to="/review/post">
-          <Button disabled>다음</Button>
-        </Link>
-      )}
-      <Button onClick={doOCR}>인증</Button>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          marginTop: '20%',
+        }}
+      >
+        <h3 style={{ textAlign: 'center' }}>{ocr}</h3>
+        <ImageUploader
+          withIcon={true}
+          buttonText="영수증 등록"
+          onChange={onDrop}
+          imgExtension={['.jpg', '.gif', '.png', '.gif']}
+          maxFileSize={5242880}
+          label="인증할 영수증을 선택하세요."
+        />
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {Next ? (
+          <Link
+            to={{
+              pathname: '/review/post',
+              state: {
+                store_id: props.location.state.store_id,
+                user_id: props.location.state.user_id,
+              },
+            }}
+          >
+            <Button>다음</Button>
+          </Link>
+        ) : (
+          <Link to="/review/post">
+            <Button disabled>다음</Button>
+          </Link>
+        )}
+        {Next ? (
+          <Button onClick={doOCR} disabled>
+            인증
+          </Button>
+        ) : (
+          <Button onClick={doOCR}>인증</Button>
+        )}
+      </div>
     </div>
   );
 }
