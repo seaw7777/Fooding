@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from numpy import dot
+import json
 import numpy as np
+import pandas as pd
 from numpy.linalg import norm
 from rest_framework import viewsets
 from rest_framework import status
@@ -167,6 +169,12 @@ def categorysearch(my_interest):
     if(my_interest.fffood != 0):
         dic.append("패스트푸드햄버거")
     return dic
+def region_index(region_name):
+    dummy = {'경북' : '경상북도','경남':'경상남도','충북':'충청북도','충남':'충청남도','전북':'전라북도','전남':'전라남도', '경기' :'경기도','강원':'강원도'}
+    returnindex = []
+    returnindex.append(region_name)
+    returnindex.append(dummy[region_name])
+    return returnindex
 
 @api_view(['GET'])
 def test(request):
@@ -255,24 +263,38 @@ def recommendStore(request,id):
         dummy_store = []
         dummy_store2 = []
         review = []
+        flag = False
+        search_index = []
 
         #팔로우 한 사람들 id 받아오기
         for f in follower_id:
             fw = User.objects.get(id=f.follow_id)
             follower.append(fw.id)
+        if(region_name[0] in ("서울","부산","대구","인천","광주","울산","대전","제주","세종")):
+            flag = True
+        else:
+            search_index = region_index(region_name[0])
 
+        if(flag == True):
         #팔로우 된 사람들이 쓴 리뷰중 사용자에게 맞는 음식점 목록 불러오기
-        for fwid in follower:
-            rv = Review.objects.filter(id=fwid).values()
-            for st in rv:
-                string = Store.objects.get(id=st['store_id'])
-                for j in my_category:
-                    if(j == (string.main_category+string.middle_category) and region_name[0] in string.address or region_name[1] in string.address):
-                        dummy_store.append(string.id)
-
+            for fwid in follower:
+                rv = Review.objects.filter(id=fwid).values()
+                for st in rv:
+                    string = Store.objects.get(id=st['store_id'])
+                    for j in my_category:
+                        if(j == (string.main_category+string.middle_category) and region_name[0] in string.address):
+                            dummy_store.append(string.id)
+        else:
+            for fwid in follower:
+                rv = Review.objects.filter(id=fwid).values()
+                for st in rv:
+                    string = Store.objects.get(id=st['store_id'])
+                    for j in my_category:
+                        if(j == (string.main_category+string.middle_category) and region_name[1] in string.address):
+                            if(search_index[0] in string.address or search_index[1] in string.address):
+                                dummy_store.append(string.id)
         #중복제거
         for i in dummy_store:
-            print(i)
             if i not in dummy_store2:
                 dummy_store2.append(i)
 
@@ -312,9 +334,32 @@ def recommendStore(request,id):
 # 동행자 가게 추천
 @api_view(['POST'])
 def recommendcompanion(request):
-    id = request.get.data('user_id')
-    if User.objects.get(id = id).exists():
-        user = User.objects.get(id = id)
+    # id = request.data.get('user_id')
+    # companion = request.data.get('companion')
+    id = 43
+    companion = "pet"
+    print(companion)
+    if User.objects.filter(id = id).exists():
         
-    # else:
-    # return
+        user = User.objects.get(id = id)
+        region_name = user.address
+        region_name = region_name.split()
+                
+        if(region_name[0] in ("서울","부산","대구","인천","광주","울산","대전","제주","세종")):
+            dataframe = pd.DataFrame(list(Store.objects.filter(address__contains = region_name[0]).values()))
+        else:
+            search_index = region_index(region_name[0])
+            dataframe = pd.DataFrame(list(Store.objects.filter(address__contains = search_index[0]).values() | Store.objects.filter(address__contains = search_index[1]).values()))
+        
+        pd.set_option('display.max_rows', None)
+        
+        df_store = dataframe[dataframe['address'].str.contains(region_name[1])]
+        
+        df_sort = df_store.sort_values(by=companion, ascending=False).head(200)
+        
+        js = df_sort.to_json(orient = 'records' ,force_ascii = False)
+        print(js)
+        # return Response(js,status=status.HTTP_200_OK)
+        return JsonResponse(json.loads(js),safe = False ,status=status.HTTP_200_OK)
+    else:
+        return Response({'message':'실패'},status=status.HTTP_400_BAD_REQUEST)
