@@ -287,7 +287,7 @@ def recommendStore(request,id):
                             "star" : string.star,
                             "pet" : string.pet,
                             "children" : string.children,
-                            "parents" : string.parents,
+                            "parent" : string.parent,
                             "friend" : string.friend
                         })
 
