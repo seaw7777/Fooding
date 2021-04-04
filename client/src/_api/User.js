@@ -24,3 +24,15 @@ export function fetchDeleteUserFollow(my_id, follow_id) {
 export function fetchMakeUserFollow(my_id, follow_id) {
   return axios.get(`${SERVER}accounts/make_follower/${my_id}&&${follow_id}`);
 }
+
+export function fetchLikeStore(user_id, store_id) {
+  return axios.get(`${SERVER}accounts/make_wish/${user_id}&&${store_id}/`);
+}
+
+export function fetchDeleteStore(user_id, store_id) {
+  return axios.get(`${SERVER}accounts/delete_wish/${user_id}&&${store_id}/`);
+}
+
+export function fetchMyLikePlace(user_id) {
+  return axios.get(`${SERVER}accounts/select_wish/${user_id}/`);
+}

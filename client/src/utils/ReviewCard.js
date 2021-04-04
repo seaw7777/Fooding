@@ -20,7 +20,7 @@ function ReviewCard(props) {
   const rednerReviewText = () => {
     // let date = props.review.write_date.slice(0, 10);
     if (props.review.nickname !== undefined) {
-      // return <Card.Text>{props.review.write_date.split(0, 10)}</Card.Text>;
+      return <Card.Text>{props.review.write_date.slice(0, 10)}</Card.Text>;
     } else {
       return (
         <Card.Title style={{ fontSize: '15px' }}>
@@ -36,12 +36,17 @@ function ReviewCard(props) {
           <Card.Img
             style={{ width: '22rem', height: '8rem' }}
             variant="top"
-            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+            src="/images/Fooding/리뷰 이미지1.png"
           />
           <Card.Body>
             {renderReviewTitle()}
             {rednerReviewText()}
-            <Box component="fieldset" mb={2} borderColor="transparent">
+            <Box
+              component="fieldset"
+              mb={2}
+              borderColor="transparent"
+              style={{ marginBottom: '0' }}
+            >
               <Rating name="read-only" value={props.review.star} readOnly />
             </Box>
           </Card.Body>

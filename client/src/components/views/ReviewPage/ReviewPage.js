@@ -6,6 +6,7 @@ import { Input, Button } from 'antd';
 import ImageUploader from 'react-images-upload';
 import './Review.css';
 import { postUserReview } from '_api/Review';
+import { wait } from '@testing-library/dom';
 
 function ReviewPage(props) {
   const { TextArea } = Input;
@@ -17,18 +18,22 @@ function ReviewPage(props) {
   let today = new Date();
   let year = today.getFullYear();
   let month = today.getMonth();
-  console.log(month.length);
   let day = today.getDay();
 
-  const handleAccompany = value => {
+  const handleAccompany = (id, value) => {
+    console.log(id.slice(0, 10));
+    console.log(value);
+    let tagBtn = document.getElementById(id.slice(0, 10));
+    let tagText = document.getElementById(id);
+    console.log(tagBtn);
+    tagBtn.style.backgroundColor = 'white';
+    tagText.style.color = 'black';
     setAccompany(value);
   };
   const handleContent = event => {
     setContents(event.currentTarget.value);
   };
-  const handleReview = () => {
-    // console.log(year + '-' + month + '-' + day);
-    // console.log(Contents);
+  const handleReview = event => {
     let body = {
       user_id: user_id,
       store_id: parseInt(store_id),
@@ -42,14 +47,23 @@ function ReviewPage(props) {
         (day < 10 ? '0' + day : day),
       // Companion: Accompany,
     };
-    console.log(body);
     postUserReview(body)
       .then(res => {
         console.log(res);
+        let ele = event.target;
+        ele.classList.add('onclic');
+        setTimeout(function changeclass() {
+          ele.classList.remove('onclic');
+          setTimeout(ele.classList.add('validate'));
+        }, 2250);
+        setTimeout(ele.classList.remove('validate'), 1250);
       })
       .catch(err => {
         console.log(err);
       });
+    setTimeout(() => {
+      props.history.push('/main');
+    }, 3500);
   };
 
   return (
@@ -71,6 +85,9 @@ function ReviewPage(props) {
           />
         </Box>
       </div>
+      <div style={{ fontSize: '20px', textAlign: 'center' }}>
+        동행자를 선택해주세요.(1명)
+      </div>
       <div
         style={{
           display: 'flex',
@@ -78,28 +95,40 @@ function ReviewPage(props) {
           alignItems: 'center',
         }}
       >
-        <span id="accompany">
-          <p id="accompany-text" onClick={() => handleAccompany('부모님')}>
+        <span id="accompany1">
+          <p
+            id="accompany1-text"
+            onClick={event => handleAccompany(event.target.id, '부모님')}
+          >
             # 부모님
           </p>
         </span>
-        <span id="accompany">
-          <p id="accompany-text" onClick={() => handleAccompany('친구')}>
+        <span id="accompany2">
+          <p
+            id="accompany2-text"
+            onClick={event => handleAccompany(event.target.id, '친구')}
+          >
             # 친구
           </p>
         </span>
-        <span id="accompany">
-          <p id="accompany-text" onClick={() => handleAccompany('아이들')}>
+        <span id="accompany3">
+          <p
+            id="accompany3-text"
+            onClick={event => handleAccompany(event.target.id, '아이들')}
+          >
             # 아이들
           </p>
         </span>
-        <span id="accompany">
-          <p id="accompany-text" onClick={() => handleAccompany('반려동물')}>
+        <span id="accompany4">
+          <p
+            id="accompany4-text"
+            onClick={event => handleAccompany(event.target.id, '반려동물')}
+          >
             # 반려동물
           </p>
         </span>
       </div>
-      <div style={{ width: '90%', margin: '3rem auto' }}>
+      <div style={{ width: '90%', margin: '2rem auto' }}>
         <TextArea
           showCount
           maxLength={500}
@@ -111,13 +140,15 @@ function ReviewPage(props) {
       <div>
         <ImageUploader
           withIcon={true}
-          buttonText="사진 업로드"
-          // onChange={this.onDrop}
+          buttonText="사진 등록"
           imgExtension={['.jpg', '.gif', '.png', '.gif']}
           maxFileSize={5242880}
+          label="리뷰 사진을 등록하세요."
         />
       </div>
-      <Button onClick={handleReview}>완료</Button>
+      <div id="container">
+        <button id="button" onClick={handleReview}></button>
+      </div>
     </div>
   );
 }
