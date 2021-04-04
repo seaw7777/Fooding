@@ -1,0 +1,8 @@
+@import '~antd/dist/antd.css';
+@import '~bootstrap/dist/css/bootstrap.css';
+
+.ant-input-affix-wrapper {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}

@@ -6,6 +6,7 @@ import FooderList from './Sections/FooderList';
 import StoreCard from 'utils/StoreCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { fetchSearchStore, fetchSearchFooder } from '_api/Search';
+import './Sections/SearchPage.css';
 
 function SearchPage(props) {
   const userId = props.user.loginSuccess.id;
@@ -146,7 +147,11 @@ function SearchPage(props) {
           onChange={handleSearchValue}
           onPressEnter={EnterSearchKeyword}
           value={SearchValue}
-          style={{ height: '50px', width: '85%' }}
+          shape="round"
+          style={{
+            height: '50px',
+            width: '85%',
+          }}
           prefix={<SearchOutlined />}
         />
       </div>
