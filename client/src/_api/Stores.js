@@ -4,6 +4,7 @@ import { SERVER } from 'Config.js';
 export function fetchStoresMainPage() {
   return axios.get(`${SERVER}stores/list`);
 }
+
 export function StoreDetailInfo(store_id, user_id) {
   return axios.get(`${SERVER}stores/detail/${store_id}&&${user_id}/`);
 }

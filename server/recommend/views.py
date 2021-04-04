@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from numpy import dot
+import json
 import numpy as np
+import pandas as pd
 from numpy.linalg import norm
 from rest_framework import viewsets
 from rest_framework import status
@@ -10,7 +12,7 @@ from django.http import JsonResponse
 from reviews.models import Review
 from stores.models import Store
 from accounts.models import Follow,User,Wish
-
+import random
 # from .serializers import RecommendSerializer
 
 from .models import reviewcategory
@@ -59,30 +61,43 @@ def insert_data(data,user_id):
         ).save()
 
 def calcos(myinfo,info_list):
+
     index = [0]*34
     A={}
     result = {}
     returnresult = []
+
+
     for i , (key, value) in enumerate(myinfo[0].items()):
         index[i] = value
+
+    # 필요없는 데이터 제거
     del index[0]
     del index[0]
     for i in range(len(info_list)):
         B = [0]*34
         for j ,(key,value) in enumerate(info_list[i].items()):
             B[j] = value
+
+        # 필요없는 데이터 제거
         del B[0]
         del B[0]
+        
+        # 빅데이터 분석
         re = dot(index, B) / (norm(index) * norm(B))
-        str = info_list[i]['user_id']
-        result[str] = re
+        strindex = info_list[i]['user_id']
+        result[strindex] = re
+
+    # 연관성 0 인 사람을 제외하고 전부다 리스트 삽입
     for key,value in result.items():
         if value != 0:
             A[key] = value
+
+    # 연관성 가장 높은순으로 정렬
     dummy = sorted(A.items(),key=lambda x:x[1],reverse=True)
-    # print("확인")
+
+    # 분석 결과 값에서 id만 추출하여 리턴
     for i in dummy:
-        # print(i[0])
         returnresult.append(i[0])
     return returnresult
 
@@ -153,40 +168,14 @@ def categorysearch(my_interest):
         dic.append("빵집빵집")
     if(my_interest.fffood != 0):
         dic.append("패스트푸드햄버거")
-    # print("확인")
-    # print(dic)
     return dic
-@api_view(['GET'])
-def test(request):
-    # review = Review.objects.all().order_by('user_id').values()
-    # dic = ["한식찜/탕","한식고기집","한식국밥","한식전골/찌개","한식족발/보쌈","한식해산물",
-    #        "한식면요리","한식가정식","한식치킨","한식한식","분식분식","일식튀김","일식회","일식가정식","일식어패류","일식면요리","일식일식",
-    #        "중식면요리","중식튀김요리","중식구이요리","중식중식","양식면요리","양식피자","양식샐러드","양식해외요리","술집술집","술집일본선술집",
-    #        "빵집빵집","패스트푸드햄버거","카페음료","카페카페","카페디저트"]
-    # data = [0]*32
-    # print(len(dic),len(data))
-    # # print(review)
-    # # print(len(review))
-    # user_id = review[0]['user_id']
-    # for i in range(len(review)):
-    #     if user_id != review[i]['user_id']:
-    #         insert_data(data,user_id)
-    #         data = [0] * 32
-    #         user_id = review[i]['user_id']
-    #     store = Store.objects.filter(id__in=[review[i]['store_id']]).values('main_category','middle_category')
-    #     for j in range(len(store)):
-    #         string = store[j]['main_category']+store[j]['middle_category']
-    #         for p in range(len(dic)):
-    #             if dic[p] == string:
-    #                 data[p]+=1
-    #                 break
-    # insert_data(data, user_id)
-    
-    data = list(Store.objects.filter())
-    # print(data.id)
-    for i in data:
-        print(i.id)
-    return Response({'message':'성공'},status=status.HTTP_200_OK)
+
+def region_index(region_name):
+    dummy = {'경북' : '경상북도','경남':'경상남도','충북':'충청북도','충남':'충청남도','전북':'전라북도','전남':'전라남도', '경기' :'경기도','강원':'강원도'}
+    returnindex = []
+    returnindex.append(region_name)
+    returnindex.append(dummy[region_name])
+    return returnindex
 
 #추천인 연산해서 리턴하기
 @api_view(['GET'])
@@ -196,14 +185,16 @@ def recommenduser(request,id):
     result_list = calcos(myinfo,info_list)
     follower_list = Follow.objects.filter(following_id = id).values('follow_id')
 
-    print(result_list , len(result_list))
-    print(follower_list , len(follower_list))
+    recommend_follower =[]
+    
+    # 추천인에 팔로우 한사람은 안뜨게 제거
     for i in follower_list:
         try:
             result_list.remove(i['follow_id'])
         except ValueError:
             pass
-    recommend_follower =[]
+    
+    # 정보 넣어서 리턴
     for i in result_list:
         user = User.objects.get(id=i)
         recommend_follower.append({
@@ -218,13 +209,15 @@ def recommenduser(request,id):
     return JsonResponse(recommend_follower,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
 
 #가게추천 연산해서 리턴하기
-@api_view(['POST'])
-def recommendforStore(request):
-    id = request.data.get("user_id")
-    region_name = request.data.get('region_name')
+@api_view(['GET'])
+def recommendStore(request,id):
     if User.objects.filter(id=id).exists():
 
+        region_name = User.objects.filter(id=id).values('address')
+        region_name = region_name[0]['address'].split()
+        
         follower_id = Follow.objects.filter(following_id=id)
+        
         my_interest = reviewcategory.objects.get(user_id = id)
         my_category = categorysearch(my_interest)
         wish_store = Wish.objects.filter(user_id = id)
@@ -234,24 +227,39 @@ def recommendforStore(request):
         dummy_store = []
         dummy_store2 = []
         review = []
+        flag = False
+        search_index = []
 
         #팔로우 한 사람들 id 받아오기
         for f in follower_id:
             fw = User.objects.get(id=f.follow_id)
             follower.append(fw.id)
-
+        if(region_name[0] in ("서울","부산","대구","인천","광주","울산","대전","제주","세종")):
+            flag = True
+        else:
+            search_index = region_index(region_name[0])
         #팔로우 된 사람들이 쓴 리뷰중 사용자에게 맞는 음식점 목록 불러오기
-        for fwid in follower:
-            rv = Review.objects.filter(id=fwid).values()
-            for st in rv:
-                string = Store.objects.get(id=st['store_id'])
-                for j in my_category:
-                    if(j == (string.main_category+string.middle_category) and region_name[0] in string.address or region_name[1] in string.address):
-                        dummy_store.append(string.id)
-
+        #특별시 및 광역시 와 각종 도를 구분하여 검색
+        if(flag == True):
+        
+            for fwid in follower:
+                rv = Review.objects.filter(id=fwid).values()
+                for st in rv:
+                    string = Store.objects.get(id=st['store_id'])
+                    for j in my_category:
+                        if(j == (string.main_category+string.middle_category) and region_name[0] in string.address):
+                            dummy_store.append(string.id)
+        else:
+            for fwid in follower:
+                rv = Review.objects.filter(id=fwid).values()
+                for st in rv:
+                    string = Store.objects.get(id=st['store_id'])
+                    for j in my_category:
+                        if(j == (string.main_category+string.middle_category) and region_name[1] in string.address):
+                            if(search_index[0] in string.address or search_index[1] in string.address):
+                                dummy_store.append(string.id)
         #중복제거
         for i in dummy_store:
-            print(i)
             if i not in dummy_store2:
                 dummy_store2.append(i)
 
@@ -279,7 +287,7 @@ def recommendforStore(request):
                             "star" : string.star,
                             "pet" : string.pet,
                             "children" : string.children,
-                            "parents" : string.parents,
+                            "parent" : string.parent,
                             "friend" : string.friend
                         })
 
@@ -288,4 +296,32 @@ def recommendforStore(request):
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
 
-    
+# 동행자 가게 추천
+@api_view(['POST'])
+def recommendcompanion(request):
+    id = request.data.get('user_id')
+    companion = request.data.get('companion')
+    if User.objects.filter(id = id).exists():
+        
+        user = User.objects.get(id = id)
+        region_name = user.address
+        region_name = region_name.split()
+                
+        if(region_name[0] in ("서울","부산","대구","인천","광주","울산","대전","제주","세종")):
+            dataframe = pd.DataFrame(list(Store.objects.filter(address__contains = region_name[0]).values()))
+        else:
+            search_index = region_index(region_name[0])
+            dataframe = pd.DataFrame(list(Store.objects.filter(address__contains = search_index[0]).values() | Store.objects.filter(address__contains = search_index[1]).values()))
+        
+        pd.set_option('display.max_rows', None)
+        
+        df_store = dataframe[dataframe['address'].str.contains(region_name[1])]
+        
+        df_sort = df_store.sort_values(by=companion, ascending=False).head(200)
+        
+        js = df_sort.to_json(orient = 'records' ,force_ascii = False)
+        
+        
+        return JsonResponse(json.loads(js),safe = False ,status=status.HTTP_200_OK)
+    else:
+        return Response({'message':'실패'},status=status.HTTP_400_BAD_REQUEST)

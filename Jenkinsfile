@@ -37,8 +37,14 @@ pipeline {
                 sh 'docker images -f "dangling=true" -q \
                 | xargs -r docker rmi'
                 // docker container 실행
-                sh 'docker run -d --name testfront -p 80:80 testfront:latest'
-                sh 'docker run -d --name testback -p 8000:8000 testback:latest'
+                sh 'docker run -d --name testfront \
+                -p 80:80 \
+                -p 443:443 \
+                -v /home/ubuntu/sslkey/:/var/jenkins_home/workspace/fooding/sslkey/ \
+                testfront:latest'
+                sh 'docker run \
+                -v img-vol:/img \
+                -d --name testback -p 8000:8000 testback:latest'
             }
         }
     }

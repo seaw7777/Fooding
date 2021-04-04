@@ -12,7 +12,7 @@ class Store(models.Model):
     middle_category = models.CharField(max_length=100, blank=True, null=True)
     star = models.IntegerField(blank=True, null=True)
     review_cnt = models.IntegerField(blank=True, null=True)
-    parents = models.IntegerField(blank=True, null=True)
+    parent = models.IntegerField(blank=True, null=True)
     friend = models.IntegerField(blank=True, null=True)
     children = models.IntegerField(blank=True, null=True)
     pet = models.IntegerField(blank=True, null=True)
