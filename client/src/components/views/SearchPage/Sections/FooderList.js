@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Avatar } from 'antd';
 import { UserOutlined, CloseCircleOutlined } from '@ant-design/icons';
-import { faPager } from '@fortawesome/free-solid-svg-icons';
 
 function FooderList(props) {
   const renderFollowList = () =>
