@@ -10,7 +10,7 @@ import {
   fetchDeleteUserFollow,
   fetchMakeUserFollow,
 } from '../../../_api/User';
-import { UserOutlined, EditOutlined, CheckOutlined } from '@ant-design/icons';
+import { UserOutlined, EditOutlined } from '@ant-design/icons';
 import Grade from '../../../utils/Grade';
 import FooderReviewItems from './Sections/FooderReviewItems';
 import InfiniteScroll from 'react-infinite-scroll-component';

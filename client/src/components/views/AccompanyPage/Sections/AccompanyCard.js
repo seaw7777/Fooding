@@ -3,7 +3,6 @@ import StoreCard from 'utils/StoreCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 function AccompanyCard(props) {
-  console.log(props.select);
   const Stores = props.select;
 
   const renderStoreCard = Stores.map((store, index) => {

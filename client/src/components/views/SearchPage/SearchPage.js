@@ -99,12 +99,13 @@ function SearchPage(props) {
     console.log(event.key);
     if (InputValue === '가게 이름을 검색해주세요.') {
       fetchSearchStore(SearchValue)
-        .then(res => setStores(res.data))
+        .then(res => {
+          setStores(res.data);
+        })
         .catch(err => console.log(err));
       setSearchValue('');
       return <Input value="" />;
     } else if (InputValue === '푸더의 이름을 검색해주세요.') {
-      console.log(Fooders);
       const find = Fooders.filter(
         fooder =>
           fooder.nickname.includes(SearchValue) ||
