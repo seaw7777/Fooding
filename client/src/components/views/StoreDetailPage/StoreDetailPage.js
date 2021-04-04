@@ -209,7 +209,7 @@ function StoreDetailPage(props) {
               ></div>
             </Tab>
             <Tab eventKey="storeReview" title="리뷰">
-              {renderReviewCard()}
+              <div>{renderReviewCard()}</div>
             </Tab>
             <Tab eventKey="storeMenu" title="메뉴">
               {Menus.length > 0 ? (
