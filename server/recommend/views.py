@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from numpy import dot
+import json
 import numpy as np
 import pandas as pd
 from numpy.linalg import norm
@@ -333,8 +334,10 @@ def recommendStore(request,id):
 # 동행자 가게 추천
 @api_view(['POST'])
 def recommendcompanion(request):
-    id = request.data.get('user_id')
-    companion = request.data.get('companion')
+    # id = request.data.get('user_id')
+    # companion = request.data.get('companion')
+    id = 43
+    companion = "pet"
     print(companion)
     if User.objects.filter(id = id).exists():
         
@@ -347,14 +350,16 @@ def recommendcompanion(request):
         else:
             search_index = region_index(region_name[0])
             dataframe = pd.DataFrame(list(Store.objects.filter(address__contains = search_index[0]).values() | Store.objects.filter(address__contains = search_index[1]).values()))
-        # pd.set_option('display.max_columns', None)
+        
         pd.set_option('display.max_rows', None)
-        # datafarame.query('address.str.contains("경북")')
-        # print(dataframe)
-        df_sort = dataframe.sort_values(by=companion, ascending=False)
-        print(df_sort.head())
         
-        return Response({'message':'성공'},status=status.HTTP_200_OK)
+        df_store = dataframe[dataframe['address'].str.contains(region_name[1])]
+        
+        df_sort = df_store.sort_values(by=companion, ascending=False).head(200)
+        
+        js = df_sort.to_json(orient = 'records' ,force_ascii = False)
+        print(js)
+        # return Response(js,status=status.HTTP_200_OK)
+        return JsonResponse(json.loads(js),safe = False ,status=status.HTTP_200_OK)
     else:
-        
-        return Response({'message':'성공'},status=status.HTTP_200_OK)
+        return Response({'message':'실패'},status=status.HTTP_400_BAD_REQUEST)
