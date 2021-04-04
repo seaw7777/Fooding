@@ -42,5 +42,6 @@ urlpatterns = [
     path('reviews/', include('reviews.urls')),
     path('recommend/', include('recommend.urls')),
     path('search/', include('search.urls')),
-    path('stores/', include('stores.urls'))
+    path('stores/', include('stores.urls')),
+    path('filemanaged/',include('filemanaged.urls'))
 ]

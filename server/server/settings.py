@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'search',  # 검색
     'stores',  # 가게상세
     'recommend',  # 유저 추천
-
+    'filemanaged', # 파일 관리자
+    
     'rest_framework',
     'corsheaders',
 
