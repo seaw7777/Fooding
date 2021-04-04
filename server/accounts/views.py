@@ -186,7 +186,8 @@ def change_pw(request):
 def change_address(request):
     # print(request.data.get('user_id'))
     region_list = request.data.get('region_name')
-    change_address_name = region_list[0] + " " + region_list[1]
+    for i in region_list:
+        change_address_name = change_address_name + region_list + " "
     
     user = User.objects.get(id=request.data.get('user_id'))
     
