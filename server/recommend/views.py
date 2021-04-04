@@ -169,49 +169,13 @@ def categorysearch(my_interest):
     if(my_interest.fffood != 0):
         dic.append("패스트푸드햄버거")
     return dic
+
 def region_index(region_name):
     dummy = {'경북' : '경상북도','경남':'경상남도','충북':'충청북도','충남':'충청남도','전북':'전라북도','전남':'전라남도', '경기' :'경기도','강원':'강원도'}
     returnindex = []
     returnindex.append(region_name)
     returnindex.append(dummy[region_name])
     return returnindex
-
-@api_view(['GET'])
-def test(request):
-    # review = Review.objects.all().order_by('user_id').values()
-    # dic = ["한식찜/탕","한식고기집","한식국밥","한식전골/찌개","한식족발/보쌈","한식해산물",
-    #        "한식면요리","한식가정식","한식치킨","한식한식","분식분식","일식튀김","일식회","일식가정식","일식어패류","일식면요리","일식일식",
-    #        "중식면요리","중식튀김요리","중식구이요리","중식중식","양식면요리","양식피자","양식샐러드","양식해외요리","술집술집","술집일본선술집",
-    #        "빵집빵집","패스트푸드햄버거","카페음료","카페카페","카페디저트"]
-    # data = [0]*32
-    # print(len(dic),len(data))
-    # # print(review)
-    # # print(len(review))
-    # user_id = review[0]['user_id']
-    # for i in range(len(review)):
-    #     if user_id != review[i]['user_id']:
-    #         insert_data(data,user_id)
-    #         data = [0] * 32
-    #         user_id = review[i]['user_id']
-    #     store = Store.objects.filter(id__in=[review[i]['store_id']]).values('main_category','middle_category')
-    #     for j in range(len(store)):
-    #         string = store[j]['main_category']+store[j]['middle_category']
-    #         for p in range(len(dic)):
-    #             if dic[p] == string:
-    #                 data[p]+=1
-    #                 break
-    # insert_data(data, user_id)
-    
-    # data = Store.objects.all()
-    # print(data.id)
-    # ran_num = random.randint(0,1000)
-    # for i in data:
-    #     i.parents = random.randint(0,1000)
-    #     i.friend = random.randint(0,1000)
-    #     i.children = random.randint(0,1000)
-    #     i.pet = random.randint(0,1000)
-    #     i.save()
-    return Response({'message':'성공'},status=status.HTTP_200_OK)
 
 #추천인 연산해서 리턴하기
 @api_view(['GET'])
@@ -274,9 +238,10 @@ def recommendStore(request,id):
             flag = True
         else:
             search_index = region_index(region_name[0])
-
-        if(flag == True):
         #팔로우 된 사람들이 쓴 리뷰중 사용자에게 맞는 음식점 목록 불러오기
+        #특별시 및 광역시 와 각종 도를 구분하여 검색
+        if(flag == True):
+        
             for fwid in follower:
                 rv = Review.objects.filter(id=fwid).values()
                 for st in rv:
@@ -334,11 +299,8 @@ def recommendStore(request,id):
 # 동행자 가게 추천
 @api_view(['POST'])
 def recommendcompanion(request):
-    # id = request.data.get('user_id')
-    # companion = request.data.get('companion')
-    id = 43
-    companion = "pet"
-    print(companion)
+    id = request.data.get('user_id')
+    companion = request.data.get('companion')
     if User.objects.filter(id = id).exists():
         
         user = User.objects.get(id = id)
@@ -358,8 +320,8 @@ def recommendcompanion(request):
         df_sort = df_store.sort_values(by=companion, ascending=False).head(200)
         
         js = df_sort.to_json(orient = 'records' ,force_ascii = False)
-        print(js)
-        # return Response(js,status=status.HTTP_200_OK)
+        
+        
         return JsonResponse(json.loads(js),safe = False ,status=status.HTTP_200_OK)
     else:
         return Response({'message':'실패'},status=status.HTTP_400_BAD_REQUEST)
