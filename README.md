@@ -1,11 +1,14 @@
 <p align="center">
 <img src="images/logo.png">
 </p>
-
-<h2 align="center"> Tech Stack </h2>
+<h1> Fooding   ![Generic badge](https://img.shields.io/badge/version-1.1.1-green.svg)</h1>
+<h2 align="center"> Tech Stack </h2> 
 
 <p align="center">
 <img src="https://img.shields.io/badge/Python-3766AB?style=flat-square&logo=Python&logoColor=white" margin="3px">
+<img src="https://img.shields.io/apm/v/npm.svg?color=red&label=Python&logo=Python&logoColor=blue&style=social">
+<img src="https://img.shields.io/apm/v/npm.svg?color=blue&label=Python&logo=Python&logoColor=blue">
+
 <img src="https://img.shields.io/badge/Django-092E20?style=flat-square&logo=Django&logoColor=white" >
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white" >
 </p>
@@ -29,17 +32,39 @@
 
 # Install
 
-> Install Info
+## Django
+#### 가상환경 생성
+```
+    python -m venv venv
+    python manage.py migrate
+```
+#### 가상환경 진입
+```
+    source venv/Scripts/activate
+```
+#### 패키지 설치
+```
+    pip install -r requirements.txt
+```
+#### DB 설계
+```
+    python manage.py migrate
+```
+#### Django 실행
+```
+    python manage.py runserver
+```
 
+## React
+#### 패키지 설치
+```
+    npm i
+```
+#### 패키지 실행
+```
+    npm run start
+```
 
-# 배포
-
-> 배포 Info
-
-
-# DB & Settings
-
-> DB & Settings Info
 
 
 # Project Construction
@@ -99,17 +124,29 @@ img
 * 작성한 리뷰의 다이어리 형식과 상세 정보 조회 가능
 * 찜한 장소에 대한 조회 가능
 
-# SUB1 D107 
 
-# 역할 분담
+
+# 세부 기획
+
+### ERD
+
+<img src="images/ERD.png">
+
+
+### DB Table
+
+<img src="images/DB.png">
+
+### Wire Frame
+
+<img src="images/WireFrame1.png">
+
+<img src="images/WireFrame2.png">
+
+<img src="images/WireFrame3.png">
+
+
+# 팀원 소개 및 역할
 
 <img src="images/TeamInfo.png">
 
-
-
-
-- 정예림 : 팀장 , 프론트 엔드
-- 이주이 : 프론트 엔드
-- 조희은 : 백 엔드, 배포
-- 조현철 : 빅데이터
-- 윤준오 : 백 엔드, 빅데이터
