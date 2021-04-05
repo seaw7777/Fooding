@@ -184,11 +184,12 @@ def change_pw(request):
 # 주소지 변경
 @api_view(['POST'])
 def change_address(request):
-    # print(request.data.get('user_id'))
+    print(request.data.get('user_id'))
     region_list = request.data.get('region_name')
+    change_address_name = ""
     for i in region_list:
-        change_address_name = change_address_name + region_list + " "
-    
+        change_address_name = change_address_name + i + " "
+    print(change_address_name)
     user = User.objects.get(id=request.data.get('user_id'))
     
     # print(user)
@@ -196,7 +197,7 @@ def change_address(request):
     user.save()
     # user.update(address = change_address_name)
     
-    return Response({'success': 'success'}, status=status.HTTP_200_ACCEPTED)
+    return Response({'success': 'success'}, status=status.HTTP_200_OK)
     
 # 회원별 회원정보 불러오기
 @api_view(['GET'])
