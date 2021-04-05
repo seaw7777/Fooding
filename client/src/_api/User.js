@@ -36,3 +36,6 @@ export function fetchDeleteStore(user_id, store_id) {
 export function fetchMyLikePlace(user_id) {
   return axios.get(`${SERVER}accounts/select_wish/${user_id}/`);
 }
+export function updateUserPassword(body) {
+  return axios.post(`${SERVER}accounts/change_pw/`, body);
+}
