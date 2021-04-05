@@ -11,6 +11,6 @@ export function StoreDetailInfo(store_id, user_id) {
 export function StoreMenuInfo(store_id) {
   return axios.get(`${SERVER}stores/menu/${store_id}`);
 }
-export function StoreRecommendInfo(body) {
-  return axios.post(`${SERVER}recommend/recommendstore/`, body);
+export function ChangeUserAddress(body) {
+  return axios.post(`${SERVER}accounts/change_address/`, body);
 }
