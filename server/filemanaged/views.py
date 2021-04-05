@@ -14,20 +14,27 @@ from django.views import View
 from .serializers import uploadImage
 
 # Create your views here.
-class fileUp(viewsets.GenericViewSet, View):
-    @swagger_auto_schema(request_body=uploadImage)
-    def fileupload(request):
-        file = request.FILES.getlist('files')
-        print(request.method)
-        # print(request.FILES)
-        # user_id = request.data.get('user_id')
-        # print(user_id)
-        for i in file:
-        #     print(i)
-            # i.save('test.png',content,save=True)       
-            path = default_storage.save('./media', ContentFile(i.read()))
-            # os.renames(i , "C:/SSAFY/IMG/test.png")
-            # tmp_file = os.path.join(settings.MEDIA_ROOT, path)
-            
+@api_view(['POST'])
+def fileupload(request):
+    file = request.FILES.getlist('files')
+    print(request.method)
+    # print(request.FILES)
+    # user_id = request.data.get('user_id')
+    # print(user_id)
+    index = 0
+    for i in file:
+        print(i)
+        
+        i.name = str(index) + "test.png" 
+        index+=1
+        # i.save('test.png',content,save=True)       
+        path = default_storage.save(i.name, i)
+        print(path)
+        print(type(i))
+        print(type(i.read()))
+        print(type(str((i.read()))))
+        # os.renames(i , "C:/SSAFY/IMG/test.png")
+        # tmp_file = os.path.join(settings.MEDIA_ROOT, path)
+        
 
         return Response(status=status.HTTP_200_OK)
