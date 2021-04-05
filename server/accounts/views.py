@@ -177,7 +177,8 @@ def login(request):
 @api_view(['POST'])
 def change_pw(request):
     user = User.objects.get(email=request.data.get('username'))
-    user.update(password=request.data.get('change_pw'))
+    user.password = request.data.get('change_pw')
+    user.save()
 
     return Response({'success': 'success'}, status=status.HTTP_202_ACCEPTED)
 
