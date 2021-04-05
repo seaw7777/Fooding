@@ -24,7 +24,6 @@ def fileupload(request):
     index = 0
     for i in file:
         print(i)
-        
         i.name = str(index) + "test.png" 
         index+=1
         # i.save('test.png',content,save=True)       
@@ -37,4 +36,4 @@ def fileupload(request):
         # tmp_file = os.path.join(settings.MEDIA_ROOT, path)
         
 
-        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_200_OK)
