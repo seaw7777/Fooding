@@ -17,10 +17,18 @@ def fileupload(request):
     # print(request.FILES)
     # user_id = request.data.get('user_id')
     # print(user_id)
+    index = 0
     for i in file:
-    #     print(i)
+        print(i)
+        
+        i.name = str(index) + "test.png" 
+        index+=1
         # i.save('test.png',content,save=True)       
-        path = default_storage.save('./media', ContentFile(i.read()))
+        path = default_storage.save(i.name, i)
+        print(path)
+        print(type(i))
+        print(type(i.read()))
+        print(type(str((i.read()))))
         # os.renames(i , "C:/SSAFY/IMG/test.png")
         # tmp_file = os.path.join(settings.MEDIA_ROOT, path)
         
