@@ -8,13 +8,12 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from stores.serializers import StoreSerializer
-from .serializers import FollowSerializer, UserSerializer, LikeSerializer, ChangePassword
+from .serializers import FollowSerializer, UserSerializer, LikeSerializer
 from .models import Follow, Like, User, Wish
 from stores.models import Store
 from recommend.models import reviewcategory
 from server.settings import SECRET_KEY
-from drf_yasg.utils import swagger_auto_schema
-from django.views import View
+
 
 import jwt
 import datetime
@@ -175,14 +174,12 @@ def login(request):
 
 
 # 비밀번호 변경
-# @api_view(['POST'])
-class chpw(viewsets.GenericViewSet, View):
-    @swagger_auto_schema(request_body=ChangePassword)
-    def change_pw(self, request):
-        user = User.objects.get(email=request.data.get('username'))
-        user.update(password=request.data.get('change_pw'))
+@api_view(['POST'])
+def change_pw(self, request):
+    user = User.objects.get(email=request.data.get('username'))
+    user.update(password=request.data.get('change_pw'))
 
-        return Response({'success': 'success'}, status=status.HTTP_202_ACCEPTED)
+    return Response({'success': 'success'}, status=status.HTTP_202_ACCEPTED)
 
 # 주소지 변경
 
