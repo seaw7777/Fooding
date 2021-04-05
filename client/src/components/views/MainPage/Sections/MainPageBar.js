@@ -33,11 +33,12 @@ function MainPageBar(props, { change }) {
         setlng(position.coords.longitude); // 경도
       });
     }
-    var coord = new kakao.maps.LatLng(38.046176, 128.258871);
+    var coord = new kakao.maps.LatLng(lat, lng);
     geocoder.coord2Address(
       coord.getLng(),
       coord.getLat(),
       function (result, status) {
+        console.log(result);
         if (status === kakao.maps.services.Status.OK) {
           setAddress(result[0].address.address_name);
           console.log(result);
