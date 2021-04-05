@@ -3,7 +3,7 @@ import { LeftCircleOutlined } from '@ant-design/icons';
 import UserInfoUpdate from './Sections/UserInfoUpdate';
 import UserImageUpdate from './Sections/UserImageUpdate';
 
-function UserUpdatePage() {
+function UserUpdatePage(props) {
   const [checkModal, setcheckModal] = useState(false);
 
   const modalHandler = () => {
@@ -28,7 +28,7 @@ function UserUpdatePage() {
         회원정보 수정
       </div>
       <UserImageUpdate />
-      <UserInfoUpdate />
+      <UserInfoUpdate user={props.user.loginSuccess} />
     </div>
   );
 }
