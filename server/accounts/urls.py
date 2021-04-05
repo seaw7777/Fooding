@@ -1,6 +1,7 @@
 from django.urls import path, include
 from . import views
 
+from .views import chpw
 app_name = 'accounts'
 
 urlpatterns = [
@@ -10,7 +11,8 @@ urlpatterns = [
     path('followerInfo/<int:id>/', views.follower_info),
     path('followingInfo/<int:id>/', views.following_info),
     path('likeInfo/<int:id>/', views.like_info),
-    path('change_pw/', views.change_pw),
+    path('change_pw/', chpw.as_view({"post":"change_pw"})),
+    # path('change_pw/', views.change_pw),
     path('change_address/', views.change_address),
     path('make_follower/<int:user_id>&&<int:follower_id>/', views.make_follower),
     path('delete_follower/<int:user_id>&&<int:follower_id>/', views.delete_follower),

@@ -23,3 +23,6 @@ class WishSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wish
         fields = ('id', 'user_id', 'store_id')
+
+class ChangePassword(serializers.Serializer):
+    u_password = serializers.CharField(help_text="비밀번호")
