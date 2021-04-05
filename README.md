@@ -32,12 +32,39 @@
 
 # Install
 
-> Install Info
+## Django
+#### 가상환경 생성
+```
+    python -m venv venv
+    python manage.py migrate
+```
+#### 가상환경 진입
+```
+    source venv/Scripts/activate
+```
+#### 패키지 설치
+```
+    pip install -r requirements.txt
+```
+#### DB 설계
+```
+    python manage.py migrate
+```
+#### Django 실행
+```
+    python manage.py runserver
+```
 
+## React
+#### 패키지 설치
+```
+    npm i
+```
+#### 패키지 실행
+```
+    npm run start
+```
 
-# 배포
-
-> 배포 Info
 
 
 # Project Construction
@@ -104,6 +131,11 @@ img
 ### ERD
 
 <img src="images/ERD.png">
+
+
+### DB Table
+
+<img src="images/DB.png">
 
 ### Wire Frame
 
