@@ -1,12 +1,12 @@
 import React from 'react';
-import StoreCard from '../../../../utils/StoreCard';
+import StoreCard from 'utils/StoreCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 function AccompanyCard(props) {
-  const roomNumber = [1, 2, 3, 4, 5, 6];
-  // console.log(props.select) 선택한 값 확인
-  const renderStoreCard = roomNumber.map((number, index) => {
-    return <StoreCard store={number} />;
+  const Stores = props.select;
+
+  const renderStoreCard = Stores.map((store, index) => {
+    return <StoreCard key={index} store={store} />;
   });
   return (
     <div>

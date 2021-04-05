@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { UserOutlined } from '@ant-design/icons';
 const settings = {
-  // dots: true,
   infinite: true,
-  // speed: 500,
   slidesToShow: 4,
   slidesToScroll: 4,
 };
@@ -63,14 +61,6 @@ function RecommendFooder(props) {
                 {fooder.nickname}
               </div>
             </Link>
-            {/* <Button
-                  type="primary"
-                  shape="round"
-                  size={'small'}
-                  style={{ backgroundColor: '#faad14', borderColor: '#faad14' }}
-                >
-                  팔로우
-                </Button> */}
           </div>
         ))}
       </Slider>

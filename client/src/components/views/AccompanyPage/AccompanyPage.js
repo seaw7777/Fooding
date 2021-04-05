@@ -1,12 +1,35 @@
 import React, { useState } from 'react';
 import { Row, Col } from 'antd';
 import AccompanyCard from './Sections/AccompanyCard';
+import { fetchAccompany } from '_api/Recommend';
 
-function AccompanyPage() {
-  const [Select, setSelect] = useState('');
+function AccompanyPage(props) {
+  const [Select, setSelect] = useState([]);
+  const [Accompany, setAccompany] = useState('');
 
   const SelectChoice = accompany => {
-    setSelect(accompany);
+    setAccompany(accompany);
+    let body = {
+      user_id: props.user.loginSuccess.id,
+      companion: accompany,
+    };
+    fetchAccompany(body)
+      .then(res => {
+        setSelect(res.data);
+      })
+      .catch(err => console.log(err));
+  };
+
+  const AccompanyName = accompany => {
+    if (accompany === 'parent') {
+      return '부모님과 함께 가기 좋은 가게들입니다.';
+    } else if (accompany === 'friend') {
+      return '친구와 함께 가기 좋은 가게들입니다.';
+    } else if (accompany === 'children') {
+      return '아이들과 함께 가기 좋은 가게들입니다.';
+    } else if (accompany === 'pet') {
+      return '반려동물과 함께 가기 좋은 가게들입니다.';
+    }
   };
 
   return (
@@ -17,6 +40,7 @@ function AccompanyPage() {
           width: '100%',
           paddingBottom: '2rem',
           paddingTop: '0.5rem',
+          height: '214px',
         }}
       >
         <div style={{ margin: '18px' }}>
@@ -57,6 +81,15 @@ function AccompanyPage() {
               />
               <div>반려동물</div>
             </Col>
+            <p
+              style={{
+                fontSize: '18px',
+                fontWeight: 'bold',
+                margin: 'auto',
+              }}
+            >
+              {AccompanyName(Accompany)}
+            </p>
           </Row>
         </div>
       </div>
