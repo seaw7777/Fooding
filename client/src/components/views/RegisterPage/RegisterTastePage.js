@@ -71,45 +71,49 @@ function RegisterTastePage(props) {
         list={TasteList}
         handleFilters={filters => handleFilters(filters)}
       />
-      <Link
-        to={{
-          pathname: '/register',
-          state: {
-            email: props.location.state.email,
-            nickname: props.location.state.nickname,
-            password: props.location.state.password,
-            address: props.location.state.address,
-          },
-        }}
-      >
-        <Button
-          type="primary"
-          value="defalut"
-          style={{
-            display: 'flex',
-            margin: '2rem auto',
-            background: 'orange*5',
-            borderColor: 'orange-5',
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+        <Link
+          to={{
+            pathname: '/register',
+            state: {
+              email: props.location.state.email,
+              nickname: props.location.state.nickname,
+              password: props.location.state.password,
+              address: props.location.state.address,
+            },
           }}
         >
-          뒤로가기
-        </Button>
-      </Link>
-      <a href={`/`}>
-        <Button
-          type="primary"
-          value="defalut"
-          onClick={handleSubmit}
-          style={{
-            display: 'flex',
-            margin: '2rem auto',
-            background: 'orange*5',
-            borderColor: 'orange-5',
-          }}
-        >
-          완료
-        </Button>
-      </a>
+          <Button
+            type="primary"
+            value="defalut"
+            style={{
+              display: 'flex',
+              margin: '2rem auto',
+              background: 'orange*5',
+              borderColor: 'orange-5',
+              backgroundColor: '#faad14',
+              borderColor: '#faad14',
+            }}
+          >
+            뒤로가기
+          </Button>
+        </Link>
+        <a href={`/main`}>
+          <Button
+            type="primary"
+            value="defalut"
+            onClick={handleSubmit}
+            style={{
+              display: 'flex',
+              margin: '2rem auto',
+              backgroundColor: '#faad14',
+              borderColor: '#faad14',
+            }}
+          >
+            완료
+          </Button>
+        </a>
+      </div>
     </div>
   );
 }

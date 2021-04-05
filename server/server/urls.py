@@ -22,27 +22,28 @@ from drf_yasg import openapi
 from django.conf.urls.static import static
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="Snippets API",
-      default_version='v1',
-      description="Test description",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="contact@snippets.local"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
+    openapi.Info(
+        title="Snippets API",
+        default_version='v1',
+        description="Test description",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="contact@snippets.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
 )
 
 urlpatterns = [
-    path("swagger/", schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path("swagger/", schema_view.with_ui('swagger',
+                                         cache_timeout=0), name='schema-swagger-ui'),
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),
-    path('accompany/', include('accompany.urls')),
-    path('main/', include('main.urls')),
-    path('reviews/', include('reviews.urls')),
-    path('recommend/', include('recommend.urls')),
-    path('search/', include('search.urls')),
-    path('stores/', include('stores.urls')),
-    path('filemanaged/',include('filemanaged.urls'))
-]+ static(settings.MEDIA_URL , document_root=settings.MEDIA_ROOT)
+    path('fooding/accounts/', include('accounts.urls')),
+    path('fooding/accompany/', include('accompany.urls')),
+    path('fooding/main/', include('main.urls')),
+    path('fooding/reviews/', include('reviews.urls')),
+    path('fooding/recommend/', include('recommend.urls')),
+    path('fooding/search/', include('search.urls')),
+    path('fooding/stores/', include('stores.urls')),
+    path('fooding/filemanaged/', include('filemanaged.urls'))
+]

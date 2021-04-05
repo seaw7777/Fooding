@@ -5,7 +5,6 @@ import NicknameObj from 'utils/NickName';
 import EmailModal from './Sections/EmailModla';
 import { Form, Input, Cascader, Select, Button, Steps, Typography } from 'antd';
 import 'antd/dist/antd.css';
-import { ConsoleSqlOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
@@ -68,13 +67,16 @@ const RegisterPage = props => {
   const onNickNameHandler = event => {
     const newNickNameFirst = NicknameObj['first'];
     let idx = Math.floor(Math.random() * 6);
-
     let RandomeFirst =
-      newNickNameFirst[Math.floor(Math.random() * newNickNameFirst.length)];
-    const newNickNameSecond = NicknameObj['second'];
+      newNickNameFirst[
+        Math.floor(Math.random() * (newNickNameFirst.length - 1))
+      ];
 
+    const newNickNameSecond = NicknameObj['second'];
     let RandomeSecond =
-      newNickNameSecond[Math.floor(Math.random() * newNickNameSecond.length)];
+      newNickNameSecond[
+        Math.floor(Math.random() * (newNickNameSecond.length - 1))
+      ];
     const RandomeNickname = RandomeFirst + RandomeSecond;
     console.log(RandomeNickname);
     setNickName(RandomeNickname);
@@ -86,22 +88,45 @@ const RegisterPage = props => {
     setAddress(address);
   };
 
-  const handlerSubmit = event => {
-    console.log(event);
+  const renderButton = () => {
+    console.log(Email === '' || NickName === '' || Password === '');
+    // console.log(Address[0] === undefined);
+    if (
+      Email === '' ||
+      NickName === '' ||
+      Password === '' ||
+      Address[0] === undefined
+    ) {
+      return (
+        <Button
+          disabled
+          style={{ backgroundColor: '#faad14', borderColor: '#faad14' }}
+        >
+          다음
+        </Button>
+      );
+    } else {
+      return (
+        <Link
+          to={{
+            pathname: '/register/taste',
+            state: {
+              email: Email,
+              nickname: NickName,
+              password: Password,
+              address: Address,
+            },
+          }}
+        >
+          <Button
+            style={{ backgroundColor: '#faad14', borderColor: '#faad14' }}
+          >
+            다음
+          </Button>
+        </Link>
+      );
+    }
   };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
 
   return (
     <div style={{ margin: '5% auto', padding: '2rem' }}>
@@ -117,7 +142,6 @@ const RegisterPage = props => {
         onFinish={onFinish}
         initialValues={{
           residence: ['경북', '구미'],
-          prefix: '86',
         }}
         scrollToFirstError
       >
@@ -214,30 +238,17 @@ const RegisterPage = props => {
             },
           ]}
         >
-          <Cascader onChange={onAddressHandler} options={residences} />
+          <Cascader
+            onChange={onAddressHandler}
+            options={residences}
+            defaultValue={['경북', '구미']}
+          />
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
           <div style={{ display: 'flex' }}>
             <EmailModal />
-            <Link
-              to={{
-                pathname: '/register/taste',
-                state: {
-                  email: Email,
-                  nickname: NickName,
-                  password: Password,
-                  address: Address,
-                },
-              }}
-            >
-              <Button
-                onClick={handlerSubmit}
-                style={{ backgroundColor: '#faad14', borderColor: '#faad14' }}
-              >
-                다음
-              </Button>
-            </Link>
+            {renderButton()}
           </div>
         </Form.Item>
       </Form>

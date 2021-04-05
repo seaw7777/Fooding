@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.response import Response
+from rest_framework import status, viewsets
 from rest_framework.decorators import api_view
 from rest_framework import viewsets
 from rest_framework import status
@@ -8,6 +9,9 @@ from rest_framework.decorators import api_view
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 import os
+from drf_yasg.utils import swagger_auto_schema
+from django.views import View
+from .serializers import uploadImage
 
 # Create your views here.
 @api_view(['POST'])
@@ -33,4 +37,4 @@ def fileupload(request):
         # tmp_file = os.path.join(settings.MEDIA_ROOT, path)
         
 
-    return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_200_OK)

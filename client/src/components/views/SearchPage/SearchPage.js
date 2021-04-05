@@ -6,6 +6,7 @@ import FooderList from './Sections/FooderList';
 import StoreCard from 'utils/StoreCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { fetchSearchStore, fetchSearchFooder } from '_api/Search';
+import './Sections/SearchPage.css';
 
 function SearchPage(props) {
   const userId = props.user.loginSuccess.id;
@@ -99,12 +100,13 @@ function SearchPage(props) {
     console.log(event.key);
     if (InputValue === '가게 이름을 검색해주세요.') {
       fetchSearchStore(SearchValue)
-        .then(res => setStores(res.data))
+        .then(res => {
+          setStores(res.data);
+        })
         .catch(err => console.log(err));
       setSearchValue('');
       return <Input value="" />;
     } else if (InputValue === '푸더의 이름을 검색해주세요.') {
-      console.log(Fooders);
       const find = Fooders.filter(
         fooder =>
           fooder.nickname.includes(SearchValue) ||
@@ -145,7 +147,11 @@ function SearchPage(props) {
           onChange={handleSearchValue}
           onPressEnter={EnterSearchKeyword}
           value={SearchValue}
-          style={{ height: '50px', width: '85%' }}
+          shape="round"
+          style={{
+            height: '50px',
+            width: '85%',
+          }}
           prefix={<SearchOutlined />}
         />
       </div>

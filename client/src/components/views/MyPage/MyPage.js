@@ -218,31 +218,6 @@ function MyPage(props) {
             <span>{props.user.loginSuccess.spoon_cnt}</span>
           </Col>
         </Row>
-        <Row style={rowStyle}>
-          <Col>
-            <Link to="/review/check-receipt">
-              <Button
-                shape="round"
-                style={{
-                  backgroundColor: '#F4A460',
-                  borderColor: '#F4A460',
-                  lineHeight: 'center',
-                }}
-                icon={
-                  <ProfileFilled
-                    style={{
-                      fontSize: '20px',
-                      color: 'black',
-                    }}
-                  />
-                }
-                size={'large'}
-              >
-                리뷰 작성
-              </Button>
-            </Link>
-          </Col>
-        </Row>
       </div>
 
       <div>

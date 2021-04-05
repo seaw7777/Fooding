@@ -14,6 +14,7 @@ from stores.models import Store
 from recommend.models import reviewcategory
 from server.settings import SECRET_KEY
 
+
 import jwt
 import datetime
 
@@ -39,108 +40,107 @@ def signup(request):
             address=request.data.get('address'),
             spoon_cnt=0,
         ).save()
-        
+
         # 리뷰 카테고리 컬럼 생성
         userid = User.objects.get(email=request.data.get('email'))
         reviewcategory.objects.create(
-                    user_id = userid.id,
-                    krzzimandtang = 0,
-                    krbbq = 0,
-                    krgukbap = 0,
-                    krstewandcasserole = 0,
-                    krporkfeetandBossam = 0,
-                    krseafood = 0,
-                    krnoodles = 0,
-                    krhomecooking = 0,
-                    krchicken = 0,
-                    krfood = 0,
-                    bunsick =0,
-                    jpfriedfood =0,
-                    jpsashimi=0,
-                    jphomecooking=0,
-                    jpseafood=0,
-                    jpnoodles=0,
-                    jpfood=0,
-                    cddrink=0,
-                    cdcafe=0,
-                    cddessert=0,
-                    chnoodles=0,
-                    chfriedfood=0,
-                    chbbq=0,
-                    chfood=0,
-                    wenoodles=0,
-                    wepizza=0,
-                    wesalad=0,
-                    wefood=0,
-                    brbar=0,
-                    brjpanbar=0,
-                    bkbakery=0,
-                    fffood=0,
-                ).save()
+            user_id=userid.id,
+            krzzimandtang=0,
+            krbbq=0,
+            krgukbap=0,
+            krstewandcasserole=0,
+            krporkfeetandBossam=0,
+            krseafood=0,
+            krnoodles=0,
+            krhomecooking=0,
+            krchicken=0,
+            krfood=0,
+            bunsick=0,
+            jpfriedfood=0,
+            jpsashimi=0,
+            jphomecooking=0,
+            jpseafood=0,
+            jpnoodles=0,
+            jpfood=0,
+            cddrink=0,
+            cdcafe=0,
+            cddessert=0,
+            chnoodles=0,
+            chfriedfood=0,
+            chbbq=0,
+            chfood=0,
+            wenoodles=0,
+            wepizza=0,
+            wesalad=0,
+            wefood=0,
+            brbar=0,
+            brjpanbar=0,
+            bkbakery=0,
+            fffood=0,
+        ).save()
 
         # 카테고리 별 선호도 초기값 셋팅
         taste = request.data.get('taste')
         for i in taste:
-            if(i=="한식"):
+            if(i == "한식"):
                 reviewcategory.objects.update(
-                    krzzimandtang = 1,
-                    krbbq = 1,
-                    krgukbap = 1,
-                    krstewandcasserole = 1,
-                    krporkfeetandBossam = 1,
-                    krseafood = 1,
-                    krnoodles = 1,
-                    krhomecooking = 1,
-                    krchicken = 1,
-                    krfood = 1,
+                    krzzimandtang=1,
+                    krbbq=1,
+                    krgukbap=1,
+                    krstewandcasserole=1,
+                    krporkfeetandBossam=1,
+                    krseafood=1,
+                    krnoodles=1,
+                    krhomecooking=1,
+                    krchicken=1,
+                    krfood=1,
                 )
-            elif(i=="분식"):
+            elif(i == "분식"):
                 reviewcategory.objects.update(
-                    bunsick = 1,
+                    bunsick=1,
                 )
-            elif(i=="일식"):
+            elif(i == "일식"):
                 reviewcategory.objects.update(
-                    jpfriedfood =1,
+                    jpfriedfood=1,
                     jpsashimi=1,
                     jphomecooking=1,
                     jpseafood=1,
                     jpnoodles=1,
                     jpfood=1,
                 )
-            elif(i=="카페"):
+            elif(i == "카페"):
                 reviewcategory.objects.update(
-                    cddrink =1,
+                    cddrink=1,
                     cdcafe=1,
                     cddessert=1,
                 )
-            elif(i=="중식"):
+            elif(i == "중식"):
                 reviewcategory.objects.update(
                     chnoodles=1,
                     chfriedfood=1,
                     chbbq=1,
                     chfood=1,
                 )
-            elif(i=="양식"):
-                    reviewcategory.objects.update(
+            elif(i == "양식"):
+                reviewcategory.objects.update(
                     wenoodles=1,
                     wepizza=1,
                     wesalad=1,
                     wefood=1,
                 )
-            elif(i=="술집"):
+            elif(i == "술집"):
                 reviewcategory.objects.update(
-                    brbar =1,
+                    brbar=1,
                     brjpanbar=1,
                 )
-            elif(i=="베이커리"):
+            elif(i == "베이커리"):
                 reviewcategory.objects.update(
-                    bkbakery = 1,
+                    bkbakery=1,
                 )
-            elif(i=="패스트푸드"):
+            elif(i == "패스트푸드"):
                 reviewcategory.objects.update(
-                    fffood = 1,
+                    fffood=1,
                 )
-
 
         return Response({'success': 'success'}, status=status.HTTP_201_CREATED)
 
@@ -164,7 +164,7 @@ def login(request):
 
             user = User.objects.get(email=request.data.get('username'))
 
-            return Response({'loginSuccess': True, 'id':user.id, 'email': request.data.get('username'), 'nickname': user.nickname, 'address': user.address, 'spoon_cnt': user.spoon_cnt, 'grade': user.grade, 'token': token}, status=status.HTTP_200_OK)
+            return Response({'loginSuccess': True, 'id': user.id, 'email': request.data.get('username'), 'nickname': user.nickname, 'address': user.address, 'spoon_cnt': user.spoon_cnt, 'grade': user.grade, 'token': token}, status=status.HTTP_200_OK)
 
         else:
             return Response({'loginSuccess': False, 'message1': '입력된 이메일 혹은 비밀번호가 틀렸습니다'})
@@ -177,11 +177,14 @@ def login(request):
 @api_view(['POST'])
 def change_pw(request):
     user = User.objects.get(email=request.data.get('username'))
-    user.update(password=request.data.get('change_pw'))
-    
+    user.password = request.data.get('change_pw')
+    user.save()
+
     return Response({'success': 'success'}, status=status.HTTP_202_ACCEPTED)
 
 # 주소지 변경
+
+
 @api_view(['POST'])
 def change_address(request):
     print(request.data.get('user_id'))
@@ -191,15 +194,17 @@ def change_address(request):
         change_address_name = change_address_name + i + " "
     print(change_address_name)
     user = User.objects.get(id=request.data.get('user_id'))
-    
+
     # print(user)
     user.address = change_address_name
     user.save()
     # user.update(address = change_address_name)
-    
+
     return Response({'success': 'success'}, status=status.HTTP_200_OK)
-    
+
 # 회원별 회원정보 불러오기
+
+
 @api_view(['GET'])
 def user_info(request, id):
     if User.objects.filter(id=id).exists():
@@ -278,22 +283,27 @@ def like_info(request, id):
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
 
-#팔로우하기
+# 팔로우하기
+
+
 @api_view(['GET'])
-def make_follower(request, user_id,follower_id):
+def make_follower(request, user_id, follower_id):
     if User.objects.filter(id=user_id).exists():
         Follow.objects.create(
-            follow_id = follower_id,
-            following_id = user_id
+            follow_id=follower_id,
+            following_id=user_id
         ).save()
         return Response({'message': '완료'}, status=status.HTTP_200_OK)
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
-#언팔로우하기
+# 언팔로우하기
+
+
 @api_view(['GET'])
-def delete_follower(request, user_id,follower_id):
+def delete_follower(request, user_id, follower_id):
     if User.objects.filter(id=user_id).exists():
-        Follow.objects.filter(follow_id = follower_id , following_id = user_id).delete()
+        Follow.objects.filter(follow_id=follower_id,
+                              following_id=user_id).delete()
         return Response({'message': '완료'}, status=status.HTTP_200_OK)
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
@@ -303,7 +313,7 @@ def delete_follower(request, user_id,follower_id):
 @api_view(['GET'])
 def check_follow(request, user_id, follower_id):
     if User.objects.filter(id=user_id).exists():
-        if Follow.objects.filter(follow_id = follower_id, following_id = user_id).exists():
+        if Follow.objects.filter(follow_id=follower_id, following_id=user_id).exists():
             return Response({'message': '완료'}, status.HTTP_200_OK)
         else:
             return Response({'message': '팔로우 되어 있지 않습니다.'}, status.HTTP_400_BAD_REQUEST)
@@ -318,55 +328,56 @@ def make_wish(request, user_id, store_id):
         return Response({'message': '이미 등록 된 가게입니다.'}, status=status.HTTP_400_BAD_REQUEST)
     else:
         Wish.objects.create(
-            user_id = user_id,
-            store_id = store_id,
+            user_id=user_id,
+            store_id=store_id,
         ).save()
         return Response({'message': '완료'}, status=status.HTTP_200_OK)
-        
 
 
 # 찜 취소
 @api_view(['GET'])
-def delete_wish(request, user_id,store_id):
-    if Wish.objects.filter(user_id=user_id, store_id = store_id).exists():
-        Wish.objects.filter(store_id = store_id , user_id = user_id).delete()
+def delete_wish(request, user_id, store_id):
+    if Wish.objects.filter(user_id=user_id, store_id=store_id).exists():
+        Wish.objects.filter(store_id=store_id, user_id=user_id).delete()
         return Response({'message': '완료'}, status=status.HTTP_200_OK)
     else:
         return Response({'message': '찜 정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
 
-#찜한 가게 불러오기
+# 찜한 가게 불러오기
+
+
 @api_view(['GET'])
 def select_wish(request, user_id):
     if User.objects.filter(id=user_id).exists():
         store = []
-        store_id_list = Wish.objects.filter(user_id =user_id)
+        store_id_list = Wish.objects.filter(user_id=user_id)
         dummy = []
-        
+
         for i in store_id_list:
             # print(i.store_id)
             print(i.store_id)
             du = Store.objects.get(id=i.store_id)
             # print("아이디 : ",du.friend)
-            store.append({                    
-                            "id" : du.id,
-                            "store_name": du.store_name,
-                            "area" : du.area,
-                            "tel" : du.tel,
-                            "address" : du.address,
-                            "lat" : du.lat,
-                            "lng" : du.lng,
-                            "main_category" : du.main_category,
-                            "middle_category" : du.middle_category,
-                            "review_cnt" : du.review_cnt,
-                            "star" : du.star,
-                            "pet" : du.pet,
-                            "children" : du.children,
-                            "parents" :du.parents,
-                            "friend" : du.friend
+            store.append({
+                "id": du.id,
+                "store_name": du.store_name,
+                "area": du.area,
+                "tel": du.tel,
+                "address": du.address,
+                "lat": du.lat,
+                "lng": du.lng,
+                "main_category": du.main_category,
+                "middle_category": du.middle_category,
+                "review_cnt": du.review_cnt,
+                "star": du.star,
+                "pet": du.pet,
+                "children": du.children,
+                "parent": du.parent,
+                "friend": du.friend
             })
             print("진입")
         print(store)
-        
-        return JsonResponse(store,safe = False, json_dumps_params={'ensure_ascii': False} ,status=status.HTTP_200_OK)
+
+        return JsonResponse(store, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
     else:
         return Response({'message': '잘못된 계정 접근 입니다.'}, status=status.HTTP_400_BAD_REQUEST)
