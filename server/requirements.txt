@@ -8,4 +8,5 @@ djangorestframework-jwt
 django-cors-headers
 numpy==1.17.3
 pandas==0.25.3
+Pillow==8.2.0
 # uWSGI==2.0.19.1
