@@ -78,7 +78,7 @@ const RegisterPage = props => {
         Math.floor(Math.random() * (newNickNameSecond.length - 1))
       ];
     const RandomeNickname = RandomeFirst + RandomeSecond;
-
+    console.log(RandomeNickname);
     setNickName(RandomeNickname);
   };
 

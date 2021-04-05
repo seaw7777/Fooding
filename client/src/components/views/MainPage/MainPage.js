@@ -5,8 +5,8 @@ import { Typography } from 'antd';
 import MainPageBar from './Sections/MainPageBar';
 import RecommendFooder from './Sections/RecommendFooder';
 import StoreCard from 'utils/StoreCard';
-import { fetchStoresMainPage, StoreRecommendInfo } from '_api/Stores';
-import { fetchInfluencer } from '_api/Recommend';
+import { fetchStoresMainPage, ChangeUserAddress } from '_api/Stores';
+import { fetchInfluencer, fetchRecommendStore } from '_api/Recommend';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { changeUserInfo } from '../../../_actions/user_actions';
 import { FcFlashOn } from 'react-icons/fc';
@@ -27,7 +27,8 @@ function MainPage(props) {
         const response = await fetchInfluencer(props.user.loginSuccess.id);
         setFooders(response.data);
 
-        const res = await fetchStoresMainPage();
+        const res = await fetchRecommendStore(props.user.loginSuccess.id);
+        console.log(res.data);
         setStores(res.data);
       } catch (err) {
         console.log(err);
@@ -56,12 +57,12 @@ function MainPage(props) {
     // 주소바꾼다는 API
 
     // GET 아이디만 보내면 된다.
-    StoreRecommendInfo(body)
+    ChangeUserAddress(body)
       .then(res => {
-        console.log('???????');
         console.log(res.data);
+        window.location.replace('/main');
         // 지역 정보 보냈을 때 데이터가 아직 안넘어온 거 같은데
-        setStores(res.data);
+        // setStores(res.data);
       })
       .catch(err => {
         console.log(err);
