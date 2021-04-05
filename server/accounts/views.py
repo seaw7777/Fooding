@@ -175,7 +175,7 @@ def login(request):
 
 # 비밀번호 변경
 @api_view(['POST'])
-def change_pw(self, request):
+def change_pw(request):
     user = User.objects.get(email=request.data.get('username'))
     user.update(password=request.data.get('change_pw'))
 
