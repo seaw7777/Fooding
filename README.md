@@ -37,11 +37,6 @@
 > 배포 Info
 
 
-# DB & Settings
-
-> DB & Settings Info
-
-
 # Project Construction
 
 > FrontEnd(React.js), BackEnd(Django), DataBase(MySql)
@@ -99,17 +94,24 @@ img
 * 작성한 리뷰의 다이어리 형식과 상세 정보 조회 가능
 * 찜한 장소에 대한 조회 가능
 
-# SUB1 D107 
 
-# 역할 분담
+
+# 세부 기획
+
+### ERD
+
+<img src="images/ERD.png">
+
+### Wire Frame
+
+<img src="images/WireFrame1.png">
+
+<img src="images/WireFrame2.png">
+
+<img src="images/WireFrame3.png">
+
+
+# 팀원 소개 및 역할
 
 <img src="images/TeamInfo.png">
 
-
-
-
-- 정예림 : 팀장 , 프론트 엔드
-- 이주이 : 프론트 엔드
-- 조희은 : 백 엔드, 배포
-- 조현철 : 빅데이터
-- 윤준오 : 백 엔드, 빅데이터
