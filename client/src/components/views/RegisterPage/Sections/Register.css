@@ -18,3 +18,7 @@ div.ant-steps-item.ant-steps-item-finish span.anticon.anticon-check.ant-steps-fi
 .ant-steps-item-finish > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title::after{
   background-color: #FF6347;
 }
+
+.ant-btn:hover, .ant-btn:focus {
+  color:black
+}

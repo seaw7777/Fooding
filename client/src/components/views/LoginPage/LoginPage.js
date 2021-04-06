@@ -50,9 +50,17 @@ function LoginPage(props) {
   return (
     <div className="loginpage">
       <div className="header">
-        <h2> 로그인 </h2>
+        <img
+          className="login_logo"
+          src="/images/Fooding/로고 이미지.png"
+          style={{ height: '200px', margin: 'auto' }}
+        />
       </div>
-      <form onSubmit={handleSubmit} style={{ width: '300px' }}>
+      <form
+        className="login_form"
+        onSubmit={handleSubmit}
+        style={{ width: '300px' }}
+      >
         <Form.Item
           name="email"
           rules={[
@@ -84,23 +92,40 @@ function LoginPage(props) {
             placeholder="Password"
           />
         </Form.Item>
+        <div className="login_btn">
+          <Form.Item style={{ textAlign: 'center' }}>
+            <Button
+              style={{
+                backgroundColor: '#F08080',
+                borderColor: '#F08080',
+              }}
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+              block
+            >
+              Log in
+            </Button>
+          </Form.Item>
 
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-            block
-          >
-            Log in
-          </Button>
-        </Form.Item>
-
-        <Form.Item style={{ textAlign: 'center' }}>
-          <Link to="/register">회원가입</Link>
-          <br />
-          <a href="">비밀번호 찾기</a>
-        </Form.Item>
+          <Form.Item style={{ textAlign: 'center' }}>
+            <Link to="/register" style={{ color: 'black' }}>
+              <Button
+                style={{
+                  backgroundColor: '#F08080',
+                  borderColor: '#F08080',
+                }}
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+                block
+              >
+                회원가입
+              </Button>
+            </Link>
+            <br />
+          </Form.Item>
+        </div>
       </form>
     </div>
   );
