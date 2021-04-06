@@ -236,6 +236,7 @@ def follower_info(request, id):
                 "email": fw.email,
                 "address": fw.address,
                 "spoon_cnt": fw.spoon_cnt,
+                "grade": fw.grade,
             })
 
         return JsonResponse(follower, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
@@ -262,6 +263,7 @@ def following_info(request, id):
                 "email": fw.email,
                 "address": fw.address,
                 "spoon_cnt": fw.spoon_cnt,
+                "grade": fw.grade,
             })
 
         return JsonResponse(following, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
