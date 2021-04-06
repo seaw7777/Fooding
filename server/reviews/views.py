@@ -8,7 +8,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.serializers import Serializer
-
+from django.core.files.storage import default_storage
 from .serializers import ReviewSerializer
 from .models import Review, Store
 from accounts.models import User
@@ -97,6 +97,28 @@ def review_write(request):
         star = request.data.get('star'),
         write_date = request.data.get('write_date'),
     ).save()
+    re = Review.objects.get(store_id = request.data.get('store_id'), user_id = request.data.get('user_id'),contents = request.data.get('contents'))
+    
+    file = request.FILES.getlist('files')
+
+    #리뷰 이미지 저장
+    index = 0
+    store_index = 0
+    for f in file:
+        f.name = str(re.id)+"_"+ str(request.data.get('user_id')) + "_" + str(index)+".png"
+        default_storage.save("review"+'/'+f.name, f)
+        
+        f.name = str(request.data.get('store_id')) +"_"+ str(store_index)+".png" 
+        path = f.name
+        while default_storage.exists("store"+'/'+path):
+            store_index += 1
+            f.name = str(request.data.get('store_id')) +"_"+ str(store_index)+".png" 
+            path = f.name
+        f.name = str(request.data.get('store_id')) +"_"+ str(store_index)+".png" 
+        default_storage.save("store"+'/'+f.name, f)
+        index += 1
+    
+
 
     # 스푼 카운트 갱신 및 등급 조정
     userdata = User.objects.filter(id=request.data.get('user_id')).values()
