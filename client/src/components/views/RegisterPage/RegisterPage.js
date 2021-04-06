@@ -100,7 +100,12 @@ const RegisterPage = props => {
       return (
         <Button
           disabled
-          style={{ backgroundColor: '#faad14', borderColor: '#faad14' }}
+          style={{
+            backgroundColor: '	#FFA07A',
+            borderColor: '#FFA07A',
+            position: 'absolute',
+            right: '0',
+          }}
         >
           다음
         </Button>
@@ -119,7 +124,12 @@ const RegisterPage = props => {
           }}
         >
           <Button
-            style={{ backgroundColor: '#faad14', borderColor: '#faad14' }}
+            style={{
+              backgroundColor: '#FFA07A',
+              borderColor: '#FFA07A',
+              position: 'absolute',
+              right: '0',
+            }}
           >
             다음
           </Button>
@@ -216,16 +226,27 @@ const RegisterPage = props => {
           rules={[
             {
               required: true,
-              message: 'Please input your nickname!',
               whitespace: true,
             },
           ]}
         >
-          <Title level={5}>{NickName}</Title>
+          <div style={{ display: 'flex' }}>
+            <Title level={5} style={{ width: '80%' }}>
+              {NickName}
+            </Title>
+            <Button
+              className="nickname-btn"
+              size={size}
+              onClick={() => onNickNameHandler()}
+              style={{
+                backgroundColor: '#FFA07A',
+                borderColor: '#FFA07A',
+              }}
+            >
+              랜덤선택
+            </Button>
+          </div>
         </Form.Item>
-        <Button size={size} onClick={() => onNickNameHandler()}>
-          랜덤선택
-        </Button>
 
         <Form.Item
           name="residence"
@@ -246,10 +267,8 @@ const RegisterPage = props => {
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
-          <div style={{ display: 'flex' }}>
-            <EmailModal />
-            {renderButton()}
-          </div>
+          {/* <EmailModal /> */}
+          {renderButton()}
         </Form.Item>
       </Form>
     </div>
