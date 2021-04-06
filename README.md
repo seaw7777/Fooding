@@ -1,16 +1,14 @@
 <p align="center">
 <img src="images/logo.png">
 </p>
-<h1> Fooding   ![Generic badge](https://img.shields.io/badge/version-1.1.1-green.svg)</h1>
+<h1> Fooding   ![Generic badge](https://img.shields.io/badge/version-1.1.1-orange.svg)</h1>
 <h2 align="center"> Tech Stack </h2> 
 
 <p align="center">
-<img src="https://img.shields.io/badge/Python-3766AB?style=flat-square&logo=Python&logoColor=white" margin="3px">
-<img src="https://img.shields.io/apm/v/npm.svg?color=red&label=Python&logo=Python&logoColor=blue&style=social">
-<img src="https://img.shields.io/apm/v/npm.svg?color=blue&label=Python&logo=Python&logoColor=blue">
+<img src="https://img.shields.io/badge/Python-3.6.8-blue?style=flat&logo=Python">
+<img src="https://img.shields.io/badge/React-17.0.2-9cf?style=flat&logo=React">
+<img src="https://img.shields.io/badge/Django-3.1.1-green?style=flat&logo=Django">
 
-<img src="https://img.shields.io/badge/Django-092E20?style=flat-square&logo=Django&logoColor=white" >
-<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white" >
 </p>
 <p align="center">
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white">
@@ -32,7 +30,7 @@
 
 # Install
 
-## Django
+### Django
 #### 가상환경 생성
 ```
     python -m venv venv
@@ -55,7 +53,7 @@
     python manage.py runserver
 ```
 
-## React
+### React
 #### 패키지 설치
 ```
     npm i
@@ -64,12 +62,6 @@
 ```
     npm run start
 ```
-
-
-
-# Project Construction
-
-> FrontEnd(React.js), BackEnd(Django), DataBase(MySql)
 
 
 # 기능
