@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import HttpResponse
+from django.core.files.storage import default_storage
 
 from rest_framework import viewsets
 from rest_framework import status
@@ -182,9 +183,18 @@ def change_pw(request):
 
     return Response({'success': 'success'}, status=status.HTTP_202_ACCEPTED)
 
+# 프로필 이미지 변경
+@api_view(['POST'])
+def change_image(request):
+    id = request.data.get('user_id')
+    # user = User.objects.get(id = id)
+    file = request.FILES['file']
+    file.name = str(id) + "_profile.png"
+
+    path = default_storage.save("user"+'/'+file.name, file)
+    return Response(status=status.HTTP_200_OK)
+
 # 주소지 변경
-
-
 @api_view(['POST'])
 def change_address(request):
     print(request.data.get('user_id'))
