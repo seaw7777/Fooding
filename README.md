@@ -3,6 +3,18 @@
 </p>
 <h1 font-weight:bold> Fooding   ![Generic badge](https://img.shields.io/badge/version-1.1.1-orange.svg)</h1><br>
   
+# About Fooding
+
+> 『검증된 리뷰와 함께! 사용자 follow 기반 맛집 추천 서비스』
+
+<br>
+
+# Why Fooding
+
+>  음식점 리뷰 검증을 통해 신뢰성 있는 정보와 취향이 비슷한 사용자 기반의 맛집 정보를 제공하기 위해 제작했습니다.
+
+<br>
+
 ## __Symbolic Character__ 
 <img src="images/Character.png">
 
@@ -22,17 +34,9 @@
 </p>
 <br>
 
-# About Fooding
+## __Project Structure__
 
-> 『검증된 리뷰와 함께! 사용자 follow 기반 맛집 추천 서비스』
-
-<br>
-
-# Why Fooding
-
->  음식점 리뷰 검증을 통해 신뢰성 있는 정보와 취향이 비슷한 사용자 기반의 맛집 정보를 제공하기 위해 제작했습니다.
-
-<br>
+<img src="images/Structure.png">
 
 # Install
 
