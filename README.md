@@ -2,6 +2,10 @@
 <img src="images/logo.png">
 </p>
 <h1> Fooding   ![Generic badge](https://img.shields.io/badge/version-1.1.1-orange.svg)</h1>
+
+<h2 align="center"> Symbolic Character </h2>
+<img src="images/Character.png">
+
 <h2 align="center"> Tech Stack </h2> 
 
 <p align="center">
