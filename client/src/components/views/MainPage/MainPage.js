@@ -19,7 +19,8 @@ function MainPage(props) {
   const [Fooders, setFooders] = useState([]);
   const [Stores, setStores] = useState([]);
   const { Title, Text } = Typography;
-
+  console.log(document.body.clientWidth);
+  console.log(document.body.clientHeight - 95);
   useEffect(() => {
     const MainData = async () => {
       try {
@@ -89,7 +90,7 @@ function MainPage(props) {
       <MainPageBar change={handlerAddress} address={Address} />
       <div
         style={{
-          height: 550,
+          height: document.body.clientHeight - 154,
           overflow: 'auto',
           display: 'flex',
           flexDirection: 'column',
