@@ -140,15 +140,10 @@ function StoreDetailPage(props) {
             alignItems: 'center',
           }}
         >
-          <InfiniteScroll
-            dataLength={Reviews.length}
-            style={{ height: '220px' }}
-          >
-            <div style={{ height: '220px' }}>
-              {Reviews.map((review, index) => (
-                <ReviewCard review={review}></ReviewCard>
-              ))}
-            </div>
+          <InfiniteScroll dataLength={Reviews.length}>
+            {Reviews.map((review, index) => (
+              <ReviewCard review={review}></ReviewCard>
+            ))}
           </InfiniteScroll>
         </div>
       </div>
@@ -157,8 +152,8 @@ function StoreDetailPage(props) {
 
   return (
     <div>
-      <ImageSlider images={Images} />
       <div>
+        <ImageSlider images={Images} />
         <div
           style={{
             display: 'flex',
@@ -237,14 +232,16 @@ function StoreDetailPage(props) {
         <div>
           <Tabs className="myClass" fill defaultActiveKey="storeMap">
             <Tab eventKey="storeMap" title="지도">
-              <div
-                id="myMap"
-                style={{
-                  width: '300px',
-                  height: '270px',
-                  margin: '0.5rem auto',
-                }}
-              ></div>
+              <div>
+                <div
+                  id="myMap"
+                  style={{
+                    width: '300px',
+                    height: '270px',
+                    margin: '0.5rem auto',
+                  }}
+                ></div>
+              </div>
             </Tab>
             <Tab eventKey="storeReview" title="리뷰">
               <div>{renderReviewCard()}</div>
