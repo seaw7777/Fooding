@@ -278,13 +278,16 @@ def recommendStore(request,id):
             flag = True
         else:
             search_index = region_index(region_name[0])
+
         #팔로우 된 사람들이 쓴 리뷰중 사용자에게 맞는 음식점 목록 불러오기
         #특별시 및 광역시 와 각종 도를 구분하여 검색
         if(flag == True):
             for fwid in follower:
                 rv = Review.objects.filter(id=fwid).values()
+                
                 for st in rv:
                     string = Store.objects.get(id=st['store_id'])
+                    print("추천된 가게 : "+ string.store_name + " , " + string.main_category+string.middle_category + " , " + string.address + " , " + region_name[0])
                     for j in my_category:
                         if(j == (string.main_category+string.middle_category) and region_name[0] in string.address):
                             dummy_store.append(string.id)
@@ -298,6 +301,7 @@ def recommendStore(request,id):
                         if(j == (string.main_category+string.middle_category) and region_name[1] in string.address):
                             if(search_index[0] in string.address or search_index[1] in string.address):
                                 dummy_store.append(string.id)
+        print("나온 값 : ")
         print(dummy_store)
         #중복제거
         for i in dummy_store:
@@ -306,6 +310,7 @@ def recommendStore(request,id):
 
         # 좋아요된 가게제거
         for i in wish_store:
+            print("좋아요된 가게 : "+str(i.store_id))
             try:
                 dummy_store2.remove(i.store_id)
             except ValueError:

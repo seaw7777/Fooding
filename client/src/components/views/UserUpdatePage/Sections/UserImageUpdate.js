@@ -8,7 +8,7 @@ import { SERVER } from 'Config.js';
 function UserImageUpdate(props) {
   const [isModalVisible, setIsModalVisible] = useState(props.checkit);
   const [imageUrl, setimageUrl] = useState('');
-
+  console.log(props.userId);
   useEffect(() => {
     setimageUrl(
       `http://j4d107.p.ssafy.io:8000/media/user/${props.userId}_profile.png`,
@@ -25,31 +25,14 @@ function UserImageUpdate(props) {
     //   `http://j4d107.p.ssafy.io:8000/media/user/${props.userId}_profile.png`,
     // );
     window.location.replace('/mypage/update');
+    setimageUrl(
+      `http://j4d107.p.ssafy.io:8000/media/user/${props.userId}_profile.png`,
+    );
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-
-  // const prop = {
-  //   name: 'file',
-  //   action: '//jsonplaceholder.typicode.com/posts/',
-  //   headers: {
-  //     authorization: 'authorization-text',
-  //   },
-  //   onChange(info) {
-  //     // 파일 한 개만 업로드 되도록 해야함
-  //     // 확인 눌렀을 때 부모 컴포넌트 데이터 넘기고 이미지 업로드 되야함
-  //     if (info.file.status !== 'uploading') {
-  //       console.log(info.file, info.fileList);
-  //     }
-  //     if (info.file.status === 'done') {
-  //       message.success(`${info.file.name} file uploaded successfully`);
-  //     } else if (info.file.status === 'error') {
-  //       message.error(`${info.file.name} file upload failed.`);
-  //     }
-  //   },
-  // };
 
   const changeImage = picture => {
     picture.preventDefault();
@@ -101,7 +84,7 @@ function UserImageUpdate(props) {
           size={64}
           icon={<UserOutlined />}
           onClick={showModal}
-          src={<img src={imageUrl} alt="없음" onError={renderImageUrl} />}
+          src={<img src={imageUrl} onError={renderImageUrl} />}
         />
       </Badge>
       <>

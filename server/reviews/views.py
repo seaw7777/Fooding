@@ -44,10 +44,6 @@ def review_info(request, id):
         
         return JsonResponse(review_data, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
 
-        # serializer = ReviewSerializer(review_data, many=True)
- 
-        # return Response(serializer.data, store_num, status=status.HTTP_200_OK)
-
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -71,6 +67,7 @@ def review_list(request, store_id):
                 "write_date": r.write_date,
                 "store_id": r.store_id,
                 "star": r.star,
+                "image" : r.image,
             })
 
         return JsonResponse(review_user, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
@@ -91,14 +88,20 @@ def review_cur(request):
 # 리뷰 작성
 @api_view(['POST'])
 def review_write(request):
-    Review.objects.create(
+    print(request.data.get('write_date'))
+    instance = Review.objects.create(
         user_id = request.data.get('user_id'),
         store_id = request.data.get('store_id'),
         contents = request.data.get('contents'),
         star = request.data.get('star'),
         write_date = request.data.get('write_date'),
-    ).save()
-    re = Review.objects.get(store_id = request.data.get('store_id'), user_id = request.data.get('user_id'),contents = request.data.get('contents'))
+        image = 0,
+    )
+    # re = Review.objects.get(store_id = request.data.get('store_id'), user_id = request.data.get('user_id'),contents = request.data.get('contents'))
+    reid = instance.pk
+    instance.save()
+    re = Review.objects.get(id= reid)
+    print(reid)
     st = Store.objects.get(id = request.data.get('store_id'))
 
     file = request.FILES.getlist('files')
@@ -107,7 +110,8 @@ def review_write(request):
     index = 0
     store_index = 0
     for f in file:
-        f.name = str(re.id)+"_"+ str(request.data.get('user_id')) + "_" + str(index)+".png"
+        # f.name = str(re.id)+ "_" + str(index)+".png"
+        f.name = str(re.id)+ "_" + str(index)+".png"
         default_storage.save("review"+'/'+f.name, f)
         
         f.name = str(request.data.get('store_id')) +"_"+ str(store_index)+".png" 
@@ -119,14 +123,12 @@ def review_write(request):
         f.name = str(request.data.get('store_id')) +"_"+ str(store_index)+".png" 
         default_storage.save("store"+'/'+f.name, f)
         index += 1
-        
-    re.objects.update(
-        image = index
-    )
+    print(index)
+    re.image = index
+    re.save()
 
-    st.objects.update(
-        image = st.image + index
-    )
+    st.image = st.image + index
+    st.save()
 
     # 스푼 카운트 갱신 및 등급 조정
     userdata = User.objects.filter(id=request.data.get('user_id')).values()

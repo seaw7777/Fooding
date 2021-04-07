@@ -17,10 +17,12 @@ function ReviewPage(props) {
   const store_id = props.location.state.store_id;
   const user_id = props.location.state.user_id;
   const [picture, setpicture] = useState([]);
+
   let today = new Date();
   let year = today.getFullYear();
   let month = today.getMonth();
   let day = today.getDay();
+  let time = today.getTime();
 
   const handleAccompany = (id, value) => {
     console.log(id.slice(0, 10));
@@ -55,6 +57,14 @@ function ReviewPage(props) {
         (day < 10 ? '0' + day : day),
       // Companion: Accompany,
     };
+    console.log(
+      year +
+        '-' +
+        (month < 10 ? '0' + month : month) +
+        '-' +
+        (day < 10 ? '0' + day : day) +
+        'T00:00:00:00Z',
+    );
     formData.append('user_id', user_id);
     formData.append('store_id', parseInt(store_id));
     formData.append('contents', Contents);
@@ -65,7 +75,8 @@ function ReviewPage(props) {
         '-' +
         (month < 10 ? '0' + month : month) +
         '-' +
-        (day < 10 ? '0' + day : day),
+        (day < 10 ? '0' + day : day) +
+        'T00:00-0000',
     );
 
     postUserReview(formData)
