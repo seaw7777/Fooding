@@ -190,7 +190,8 @@ def change_image(request):
     # user = User.objects.get(id = id)
     file = request.FILES['file']
     file.name = str(id) + "_profile.png"
-
+    if(default_storage.exists("user" + '/' + file.name)):
+        default_storage.delete("user" + '/' + file.name)
     path = default_storage.save("user"+'/'+file.name, file)
     return Response(status=status.HTTP_200_OK)
 
