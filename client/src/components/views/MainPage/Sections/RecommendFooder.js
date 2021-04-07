@@ -1,15 +1,7 @@
-<<<<<<< HEAD
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from 'antd';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-=======
-import React, { useState } from 'react';
-import { Card, Avatar, Carousel, Button } from 'antd';
-import { Link } from 'react-router-dom';
-import Slider from 'react-slick';
-import { UserOutlined } from '@ant-design/icons';
->>>>>>> 41e91871070e2276a236b862dfa5ea4382854040
 
 const settings = {
   infinite: true,
@@ -62,7 +54,7 @@ function RecommendFooder(props) {
                     width: '50px',
                     height: '50px',
                     borderRadius: '50%',
-                    border: 'solid green',
+                    border: '3px dotted #FF7F50',
                     marginLeft: '1.4rem',
                   }}
                   onError={renderFooderImage}

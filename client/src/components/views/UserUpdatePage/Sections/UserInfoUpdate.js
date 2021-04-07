@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import { Card, Form, Input, Button } from 'antd';
+import { Card, Input, Button } from 'antd';
 import { updateUserPassword } from '_api/User';
 
 function UserInfoUpdate(props) {
-  // const [nowPassword, setnowPassword] = useState('');
   const [newPassword, setnewPassword] = useState('');
   const [newPasswordCheck, setnewPasswordCheck] = useState('');
   const [Compare, setCompare] = useState(false);
 
-  // const nowPasswordHandler = event => {
-  //   // 현재 비밀번호 맞는지 확인해야함
-  //   setnowPassword(event.currentTarget.value);
-  // };
   const newPasswordHandler = event => {
     setnewPassword(event.currentTarget.value);
   };
@@ -32,9 +27,6 @@ function UserInfoUpdate(props) {
     } else if (newPasswordCheck.length > 1 && !Compare) {
       return '비밀번호를 다시 확인해주세요.';
     }
-    // if (newPassword === newPasswordCheck) {
-
-    // }
   };
 
   const submitHandler = event => {
@@ -56,7 +48,13 @@ function UserInfoUpdate(props) {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <Card bordered={true} style={{ width: 350 }}>
         <br />
         {/* <span style={{ fontSize: '12px' }}>현재 비밀번호</span>

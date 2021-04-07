@@ -180,7 +180,7 @@ function ReviewPage(props) {
           name="files"
           multiple
           onChange={onDrop}
-          label="인증할 영수증을 선택하세요."
+          label="인증할 사진을 선택하세요."
         />
       </div>
       <div id="container">

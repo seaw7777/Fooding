@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Avatar, Badge, Modal, Button, Image, message, Empty } from 'antd';
 import { UserOutlined, EditOutlined } from '@ant-design/icons';
-import { AiOutlineUpload } from 'react-icons/ai';
 import axios from 'axios';
 import { SERVER } from 'Config.js';
 
@@ -95,7 +94,12 @@ function UserImageUpdate(props) {
             <Button key="back" onClick={handleCancel}>
               취소
             </Button>,
-            <Button key="submit" type="primary" onClick={handleOk}>
+            <Button
+              key="submit"
+              type="primary"
+              onClick={handleOk}
+              style={{ backgroundColor: '#faad14', borderColor: '#faad14' }}
+            >
               확인
             </Button>,
           ]}
