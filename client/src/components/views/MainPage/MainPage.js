@@ -28,8 +28,8 @@ function MainPage(props) {
         setFooders(response.data);
 
         const res = await fetchRecommendStore(props.user.loginSuccess.id);
-        console.log(res.data);
         setStores(res.data);
+        // 만약에 빈 배열이면 10장
       } catch (err) {
         console.log(err);
       }
@@ -107,7 +107,7 @@ function MainPage(props) {
             맛집 추천
             <FcFlashOn />
           </Title>
-          {renderStoreCard}
+          {Stores === [] ? console.log('y') : renderStoreCard}
         </InfiniteScroll>
       </div>
     </div>
