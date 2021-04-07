@@ -6,12 +6,17 @@ import { Input, Button } from 'antd';
 import ImageUploader from 'react-images-upload';
 import './Review.css';
 import { postUserReview } from '_api/Review';
+import axios from 'axios';
+import { SERVER } from 'Config.js';
 
 function ReviewPage(props) {
   const { TextArea } = Input;
   const [Star, setStar] = useState(0);
   const [Accompany, setAccompany] = useState('');
   const [Contents, setContents] = useState('');
+  const [realFormData, setrealFormData] = useState({});
+  const [fileArray, setfileArray] = useState([]);
+
   const store_id = props.location.state.store_id;
   const user_id = props.location.state.user_id;
   const [picture, setpicture] = useState([]);
@@ -34,6 +39,12 @@ function ReviewPage(props) {
     setContents(event.currentTarget.value);
   };
   const handleReview = event => {
+    const fileLength = fileArray.length > 10 ? 10 : fileArray.length;
+    let formData = new FormData();
+    for (let i = 0; i < fileLength; i++) {
+      formData.append('files', fileArray[i]);
+    }
+
     let body = {
       user_id: user_id,
       store_id: parseInt(store_id),
@@ -47,8 +58,20 @@ function ReviewPage(props) {
         (day < 10 ? '0' + day : day),
       // Companion: Accompany,
     };
+    formData.append('user_id', user_id);
+    formData.append('store_id', parseInt(store_id));
+    formData.append('contents', Contents);
+    formData.append('star', Star);
+    formData.append(
+      'write_date',
+      year +
+        '-' +
+        (month < 10 ? '0' + month : month) +
+        '-' +
+        (day < 10 ? '0' + day : day),
+    );
 
-    postUserReview(body)
+    postUserReview(formData)
       .then(res => {
         console.log(res);
         let ele = event.target;
@@ -68,9 +91,8 @@ function ReviewPage(props) {
   };
 
   const onDrop = picture => {
-    let newpicture = picture;
-    setpicture(newpicture);
-    console.log(picture[picture.length - 1]);
+    picture.preventDefault();
+    setfileArray(picture.target.files);
   };
 
   return (
@@ -144,14 +166,21 @@ function ReviewPage(props) {
           onChange={handleContent}
         />
       </div>
-      <div>
-        <ImageUploader
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {/* <ImageUploader
           withIcon={true}
           buttonText="사진 등록"
           onChange={onDrop}
           imgExtension={['.jpg', '.gif', '.png', '.gif']}
           maxFileSize={5242880}
           label="리뷰 사진을 등록하세요."
+        /> */}
+        <input
+          type="file"
+          name="files"
+          multiple
+          onChange={onDrop}
+          label="인증할 영수증을 선택하세요."
         />
       </div>
       <div id="container">

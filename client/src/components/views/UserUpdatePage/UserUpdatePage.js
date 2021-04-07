@@ -27,7 +27,7 @@ function UserUpdatePage(props) {
         </a>
         회원정보 수정
       </div>
-      <UserImageUpdate />
+      <UserImageUpdate userId={props.user.loginSuccess.id} />
       <UserInfoUpdate user={props.user.loginSuccess} />
     </div>
   );

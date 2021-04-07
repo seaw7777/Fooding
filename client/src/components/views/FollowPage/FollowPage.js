@@ -11,36 +11,93 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 function FollowPage(props) {
   const [followList, setfollowList] = useState([]);
   const [followingList, setfollowingList] = useState([]);
+  const [followButtonStyle, setfollowButtonStyle] = useState({});
+  const [followingButtonStyle, setfollowingButtonStyle] = useState({});
+  const [showFollowList, setshowFollowList] = useState(
+    props.location.state.followButton,
+  );
+  const [showFollowingList, setshowFollowingList] = useState(
+    props.location.state.followingButton,
+  );
   useEffect(() => {
-    if (props.user.loginSuccess.email) {
+    if (props.location.state.userId) {
       axios
-        .get(`${SERVER}accounts/followerInfo/${props.user.loginSuccess.id}`)
+        .get(`${SERVER}accounts/followerInfo/${props.location.state.userId}`)
         .then(res => {
           setfollowList(res.data);
         })
         .catch(err => console.log(err));
 
       axios
-        .get(`${SERVER}accounts/followingInfo/${props.user.loginSuccess.id}`)
+        .get(`${SERVER}accounts/followingInfo/${props.location.state.userId}`)
         .then(res => {
           setfollowingList(res.data);
         })
         .catch(err => console.log(err));
     }
   }, []);
-  // followingList => 바로 불러올 것인가?
 
-  const [showFollowList, setshowFollowList] = useState(true);
-  const [showFollowingList, setshowFollowingList] = useState(false);
+  useEffect(() => {
+    if (props.location.state.followButton) {
+      console.log('????');
+      setfollowButtonStyle({
+        color: 'white',
+        backgroundColor: '#faad14',
+        borderColor: '#faad14',
+      });
+      setfollowingButtonStyle({
+        color: '#faad14',
+        backgroundColor: 'white',
+        borderColor: '#faad14',
+        // borderColor: '#faad14',
+        // backgroundColor: 'white',
+      });
+    } else {
+      setfollowButtonStyle({
+        color: '#faad14',
+        backgroundColor: 'white',
+        borderColor: '#faad14',
+      });
+
+      setfollowingButtonStyle({
+        color: 'white',
+        backgroundColor: '#faad14',
+        borderColor: '#faad14',
+      });
+    }
+  }, []);
 
   const showFollowListButton = () => {
     setshowFollowList(true);
     setshowFollowingList(false);
+    setfollowButtonStyle({
+      color: 'white',
+      backgroundColor: '#faad14',
+      borderColor: '#faad14',
+    });
+    setfollowingButtonStyle({
+      color: '#faad14',
+      backgroundColor: 'white',
+      borderColor: '#faad14',
+      // borderColor: '#faad14',
+      // backgroundColor: 'white',
+    });
   };
 
   const showFollowingListButton = () => {
     setshowFollowList(false);
     setshowFollowingList(true);
+    setfollowButtonStyle({
+      color: '#faad14',
+      backgroundColor: 'white',
+      borderColor: '#faad14',
+    });
+
+    setfollowingButtonStyle({
+      color: 'white',
+      backgroundColor: '#faad14',
+      borderColor: '#faad14',
+    });
   };
 
   return (
@@ -57,31 +114,29 @@ function FollowPage(props) {
             style={{ fontSize: '25px', marginRight: '10px' }}
           />
         </a>
-        팔로우 관리
+        팔로우/ 팔로잉 관리
       </div>
       <div style={{ marginTop: '1rem' }}>
         <Button
           type="primary"
           shape="round"
           size={'small'}
-          style={{
-            marginRight: '10px',
-            backgroundColor: '#faad14',
-            borderColor: '#faad14',
-          }}
+          style={followButtonStyle}
           onClick={showFollowListButton}
         >
           팔로우
         </Button>
-        <Button
-          type="primary"
-          shape="round"
-          size={'small'}
-          onClick={showFollowingListButton}
-          style={{ backgroundColor: '#faad14', borderColor: '#faad14' }}
-        >
-          팔로잉
-        </Button>
+        <div style={{ display: 'inline', marginLeft: '0.5rem' }}>
+          <Button
+            type="primary"
+            shape="round"
+            size={'small'}
+            onClick={showFollowingListButton}
+            style={followingButtonStyle}
+          >
+            팔로잉
+          </Button>
+        </div>
       </div>
       <div
         style={{

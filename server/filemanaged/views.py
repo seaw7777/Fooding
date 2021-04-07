@@ -18,10 +18,10 @@ from .serializers import uploadImage
 def fileupload(request):
     file = request.FILES.getlist('files')
     # file = request.FILES['files']
-    print(file)
-    print(" 파일길이 : " + str(len(file)))
-    print(request.POST)
-    print(request.FILES)
+    # print(file)
+    # print(" 파일길이 : " + str(len(file)))
+    # print(request.POST)
+    # print(request.FILES)
     # user_id = request.data.get('user_id')
     # print(user_id)
     index = 0
@@ -30,11 +30,13 @@ def fileupload(request):
         i.name = str(index) + "test.png" 
         path = i.name
         print(path)
-        while default_storage.exists("store"+'/'+path):
-            index+=1
-            i.name = str(index) + "test.png"
-            path = i.name
-            print(path)
+        if(default_storage.exists("store"+'/'+path)):
+            default_storage.delete("store"+'/'+path)
+        # while default_storage.exists("store"+'/'+path):
+        #     index+=1
+        #     i.name = str(index) + "test.png"
+        #     path = i.name
+        #     print(path)
         path = default_storage.save("store"+'/'+i.name, i)
         print(path)
         

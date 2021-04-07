@@ -35,7 +35,8 @@ function StoreDetailPage(props) {
           storeId,
           props.user.loginSuccess.id,
         );
-
+        console.log('?????');
+        console.log(response.data[0]);
         setStoreInfo(response.data[0]);
         setlikeStoreCheck(response.data[0].isWish);
         const res = await fetchStoreReview(storeId);
@@ -153,7 +154,7 @@ function StoreDetailPage(props) {
   return (
     <div>
       <div>
-        <ImageSlider images={Images} />
+        <ImageSlider images={Images} storeId={storeId} />
         <div
           style={{
             display: 'flex',

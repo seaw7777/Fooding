@@ -4,7 +4,7 @@ import { Row, Col, Avatar, Badge, Button, Dropdown, Menu } from 'antd';
 import { Tabs, Tab, Card } from 'react-bootstrap';
 import { logoutUser } from '../../../_actions/user_actions';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserOutlined, EditOutlined, ProfileFilled } from '@ant-design/icons';
 import ReviewCard from '../../../utils/ReviewCard';
 import Diary from './Sections/Diary';
@@ -44,6 +44,7 @@ function MyPage(props) {
   const [userFollowerInfo, setuserFollowerInfo] = useState([]);
   const [userFollowingInfo, setuserFollowingInfo] = useState([]);
   const [userLikePlace, setuserLikePlace] = useState([]);
+  const [imageUrl, setimageUrl] = useState('');
 
   useEffect(() => {
     const MainData = async () => {
@@ -67,7 +68,13 @@ function MyPage(props) {
       }
     };
     MainData();
+    setimageUrl(
+      `http://j4d107.p.ssafy.io:8000/media/user/${props.user.loginSuccess.id}_profile.png`,
+    );
   }, []);
+  const renderImageUrl = () => {
+    setimageUrl('/images/basicUser.png');
+  };
 
   const showDiaryPageButton = () => {
     setshowDiaryPage(true);
@@ -167,7 +174,12 @@ function MyPage(props) {
                 href="/mypage/update"
                 style={{ color: 'black', textDecoration: 'none' }}
               >
-                <Avatar size={50} icon={<UserOutlined />} />
+                <Avatar
+                  size={50}
+                  src={
+                    <img src={imageUrl} alt="없음" onError={renderImageUrl} />
+                  }
+                />
               </a>
             </Badge>
           </Col>
@@ -193,17 +205,36 @@ function MyPage(props) {
             <span>{myReview.length}</span>
           </Col>
           <Col span={6}>
-            <NavLink
-              to="/follow"
+            <Link
+              to={{
+                pathname: '/follow',
+                state: {
+                  followButton: true,
+                  followingButton: false,
+                  userId: props.user.loginSuccess.id,
+                },
+              }}
               style={{ color: 'black', textDecoration: 'none' }}
             >
               팔로우
-            </NavLink>
+            </Link>
             <br />
             <span>{userFollowerInfo.length}</span>
           </Col>
           <Col span={6}>
-            <span>팔로잉</span>
+            <Link
+              to={{
+                pathname: '/follow',
+                state: {
+                  followButton: false,
+                  followingButton: true,
+                  userId: props.user.loginSuccess.id,
+                },
+              }}
+              style={{ color: 'black', textDecoration: 'none' }}
+            >
+              팔로잉
+            </Link>
             <br />
             <span>{userFollowingInfo.length}</span>
           </Col>

@@ -56,7 +56,7 @@ function UserInfoUpdate(props) {
   };
 
   return (
-    <div style={{ display: 'fledx', justifyContent: 'center' }}>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
       <Card bordered={true} style={{ width: 350 }}>
         <br />
         {/* <span style={{ fontSize: '12px' }}>현재 비밀번호</span>
