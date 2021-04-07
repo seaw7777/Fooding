@@ -10,6 +10,7 @@ class Review(models.Model):
     write_date = models.DateTimeField(blank=True, null=True)
     store = models.ForeignKey(Store, models.DO_NOTHING, blank=True, null=True)
     star = models.IntegerField(blank=True, null=True)
+    image = models.IntegerField(blank=True, null=True)
     
     class Meta:
         managed = False

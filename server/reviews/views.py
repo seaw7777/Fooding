@@ -39,6 +39,7 @@ def review_info(request, id):
                 "contents": i.contents,
                 "write_date": i.write_date,
                 "star": i.star,
+                "image" : i.image,
             })
         
         return JsonResponse(review_data, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
@@ -98,9 +99,10 @@ def review_write(request):
         write_date = request.data.get('write_date'),
     ).save()
     re = Review.objects.get(store_id = request.data.get('store_id'), user_id = request.data.get('user_id'),contents = request.data.get('contents'))
-    
-    file = request.FILES.getlist('files')
+    st = Store.objects.get(id = request.data.get('store_id'))
 
+    file = request.FILES.getlist('files')
+    
     #리뷰 이미지 저장
     index = 0
     store_index = 0
@@ -117,8 +119,13 @@ def review_write(request):
         f.name = str(request.data.get('store_id')) +"_"+ str(store_index)+".png" 
         default_storage.save("store"+'/'+f.name, f)
         index += 1
-    
+    re.objects.update(
+        image = index
+    )
 
+    st.objects.update(
+        image = st.image + index
+    )
 
     # 스푼 카운트 갱신 및 등급 조정
     userdata = User.objects.filter(id=request.data.get('user_id')).values()
