@@ -81,6 +81,11 @@ def signup(request):
         ).save()
 
         # 카테고리 별 선호도 초기값 셋팅
+<<<<<<< Updated upstream
+=======
+
+        reviewdata = reviewcategory.objects.filter(user_id=request.data.get('user_id')).values()
+>>>>>>> Stashed changes
         taste = request.data.get('taste')
         for i in taste:
             if(i == "한식"):
