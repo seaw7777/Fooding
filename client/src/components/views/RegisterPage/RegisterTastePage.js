@@ -44,6 +44,7 @@ function RegisterTastePage(props) {
         address: props.location.state.address,
         taste: TasteLi,
       };
+      console.log(body);
       dispatch(registerUser(body)).then(response => {
         if (response.payload.success === 'success') {
           props.history.push('/login');

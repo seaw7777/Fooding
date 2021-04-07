@@ -286,7 +286,7 @@ function MyPage(props) {
             {showReviewCardPage && (
               <div
                 style={{
-                  height: 295,
+                  height: document.body.clientHeight - 390,
                   overflow: 'auto',
                   display: 'flex',
                   flexDirection: 'column',
@@ -302,7 +302,7 @@ function MyPage(props) {
           <Tab eventKey="likePlace" title="찜한 장소">
             <div
               style={{
-                height: 350,
+                height: document.body.clientHeight - 342,
                 overflow: 'auto',
                 display: 'flex',
                 flexDirection: 'column',
