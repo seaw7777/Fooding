@@ -79,7 +79,7 @@ function SearchPage(props) {
     return (
       <div
         style={{
-          height: 485,
+          height: document.body.clientHeight - 255,
           overflow: 'auto',
           display: 'flex',
           flexDirection: 'column',

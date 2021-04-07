@@ -133,7 +133,7 @@ function StoreDetailPage(props) {
         </Link>
         <div
           style={{
-            height: '220px',
+            height: document.body.clientHeight - 500,
             overflow: 'auto',
             display: 'flex',
             flexDirection: 'column',
@@ -178,7 +178,6 @@ function StoreDetailPage(props) {
                 display: 'flex',
                 justifyContent: 'space-space',
                 alignItems: 'center',
-
                 marginTop: '0.5rem',
               }}
             >
@@ -216,7 +215,7 @@ function StoreDetailPage(props) {
         </div>
         <div
           style={{
-            border: 'solid 1px #FF4500',
+            border: 'solid 2px #FF4500',
             padding: '1rem',
             width: '90%',
             margin: '0rem auto 0.5rem',
@@ -232,13 +231,19 @@ function StoreDetailPage(props) {
         <div>
           <Tabs className="myClass" fill defaultActiveKey="storeMap">
             <Tab eventKey="storeMap" title="지도">
-              <div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignContent: 'center',
+                  marginTop: '1rem',
+                }}
+              >
                 <div
                   id="myMap"
                   style={{
-                    width: '300px',
-                    height: '270px',
-                    margin: '0.5rem auto',
+                    height: '15rem',
+                    width: '80%',
                   }}
                 ></div>
               </div>
