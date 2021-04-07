@@ -44,10 +44,6 @@ def review_info(request, id):
         
         return JsonResponse(review_data, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
 
-        # serializer = ReviewSerializer(review_data, many=True)
- 
-        # return Response(serializer.data, store_num, status=status.HTTP_200_OK)
-
     else:
         return Response({'message': '회원정보가 존재하지 않습니다'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -71,6 +67,7 @@ def review_list(request, store_id):
                 "write_date": r.write_date,
                 "store_id": r.store_id,
                 "star": r.star,
+                "image" : r.image,
             })
 
         return JsonResponse(review_user, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
@@ -119,7 +116,7 @@ def review_write(request):
         f.name = str(request.data.get('store_id')) +"_"+ str(store_index)+".png" 
         default_storage.save("store"+'/'+f.name, f)
         index += 1
-        
+
     re.objects.update(
         image = index
     )
