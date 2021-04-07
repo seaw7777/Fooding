@@ -69,6 +69,7 @@ function ReviewPage(props) {
     formData.append('store_id', parseInt(store_id));
     formData.append('contents', Contents);
     formData.append('star', Star);
+    formData.append('Companion', Accompany);
     formData.append(
       'write_date',
       year +
@@ -174,17 +175,22 @@ function ReviewPage(props) {
           onChange={handleContent}
         />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <input
-          type="file"
-          name="files"
-          multiple
-          onChange={onDrop}
-          label="인증할 사진을 선택하세요."
-        />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          width: '70%',
+          margin: 'auto',
+        }}
+      >
+        <input type="file" name="files" multiple onChange={onDrop} />
       </div>
       <div id="container">
-        <button id="button" onClick={handleReview}></button>
+        <button
+          id="button"
+          onClick={handleReview}
+          style={{ marginTop: '1rem' }}
+        ></button>
       </div>
     </div>
   );
