@@ -88,14 +88,20 @@ def review_cur(request):
 # 리뷰 작성
 @api_view(['POST'])
 def review_write(request):
-    Review.objects.create(
+    print(request.data.get('write_date'))
+    instance = Review.objects.create(
         user_id = request.data.get('user_id'),
         store_id = request.data.get('store_id'),
         contents = request.data.get('contents'),
         star = request.data.get('star'),
         write_date = request.data.get('write_date'),
-    ).save()
-    re = Review.objects.get(store_id = request.data.get('store_id'), user_id = request.data.get('user_id'),contents = request.data.get('contents'))
+        image = 0,
+    )
+    # re = Review.objects.get(store_id = request.data.get('store_id'), user_id = request.data.get('user_id'),contents = request.data.get('contents'))
+    reid = instance.pk
+    instance.save()
+    re = Review.objects.get(id= reid)
+    print(reid)
     st = Store.objects.get(id = request.data.get('store_id'))
 
     file = request.FILES.getlist('files')
@@ -104,6 +110,7 @@ def review_write(request):
     index = 0
     store_index = 0
     for f in file:
+        # f.name = str(re.id)+ "_" + str(index)+".png"
         f.name = str(re.id)+ "_" + str(index)+".png"
         default_storage.save("review"+'/'+f.name, f)
         
@@ -116,14 +123,12 @@ def review_write(request):
         f.name = str(request.data.get('store_id')) +"_"+ str(store_index)+".png" 
         default_storage.save("store"+'/'+f.name, f)
         index += 1
+    print(index)
+    re.image = index
+    re.save()
 
-    re.objects.update(
-        image = index
-    )
-
-    st.objects.update(
-        image = st.image + index
-    )
+    st.image = st.image + index
+    st.save()
 
     # 스푼 카운트 갱신 및 등급 조정
     userdata = User.objects.filter(id=request.data.get('user_id')).values()
