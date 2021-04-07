@@ -3,6 +3,7 @@ import { Row, Col, Avatar, Badge, Button } from 'antd';
 import { BsCheck } from 'react-icons/bs';
 import { NavLink } from 'react-router-dom';
 import { fetchUserReview } from '../../../_api/Review';
+import { Link } from 'react-router-dom';
 import {
   fetchUserFollowCheck,
   fetchUserFollow,
@@ -26,6 +27,7 @@ function FooderPage(props) {
   const [userFollowerInfo, setuserFollowerInfo] = useState([]);
   const [userFollowingInfo, setuserFollowingInfo] = useState([]);
   const [followCheck, setfollowCheck] = useState(false);
+  const [imageUrl, setimageUrl] = useState('');
   useEffect(() => {
     const MainData = async () => {
       try {
@@ -50,12 +52,17 @@ function FooderPage(props) {
         const following = await fetchUserFollowing(props.match.params.userId);
         setuserFollowingInfo(following.data);
       } catch (err) {
-        console.log(err.message);
-        console.log('??????????????????');
+        console.log(err);
       }
     };
     MainData();
+    setimageUrl(
+      `http://j4d107.p.ssafy.io:8000/media/user/${props.match.params.userId}_profile.png`,
+    );
   }, [followCheck]);
+  const renderImageUrl = () => {
+    setimageUrl('/images/basicUser.png');
+  };
 
   const renderReviewCards = userReviewInfo.map((review, index) => {
     return (
@@ -99,14 +106,10 @@ function FooderPage(props) {
       >
         <Row style={rowStyle}>
           <Col>
-            <Badge
-              offset={[-10, 55]}
-              count={
-                <EditOutlined style={{ fontSize: 20, marginRight: '-22' }} />
-              }
-            >
-              <Avatar size={64} icon={<UserOutlined />} />
-            </Badge>
+            <Avatar
+              size={64}
+              src={<img src={imageUrl} alt="없음" onError={renderImageUrl} />}
+            />
           </Col>
         </Row>
         <Row style={rowStyle}>
@@ -150,12 +153,19 @@ function FooderPage(props) {
             <span>{userReviewInfo.length}</span>
           </Col>
           <Col span={8}>
-            <NavLink
-              to="/follow"
+            <Link
+              to={{
+                pathname: '/follow',
+                state: {
+                  followButton: true,
+                  followingButton: false,
+                  userId: props.match.params.userId,
+                },
+              }}
               style={{ color: 'black', textDecoration: 'none' }}
             >
               팔로우
-            </NavLink>
+            </Link>
             <br />
             <span>{userFollowerInfo.length}</span>
           </Col>

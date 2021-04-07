@@ -11,6 +11,15 @@ export function fetchUserReview(user_id) {
 
 export function postUserReview(review) {
   return axios
-    .post(`${SERVER}reviews/review_write/`, review)
+    .post(
+      `http://59.23.41.85:8088/fooding/reviews/review_write/`,
+      review,
+      // 이건 로컬용이다.
+      {
+        header: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    )
     .then(response => response.data);
 }

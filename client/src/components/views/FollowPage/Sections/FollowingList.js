@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Col, Avatar } from 'antd';
 import { UserOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 function FollowingList(props) {
   const renderFollowList = () =>
@@ -11,9 +12,25 @@ function FollowingList(props) {
         </Col>
         <Col
           span={18}
-          style={{ display: 'flex', alignItems: 'center', marginLeft: '1rem' }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            marginLeft: '1rem',
+          }}
         >
-          {follow.nickname}
+          <Link
+            to={{
+              pathname: `/fooder/${follow.id}`,
+              state: {
+                username: follow.nickname,
+                spoon_cnt: follow.spoon_cnt,
+                grade: follow.grade,
+              },
+            }}
+            style={{ color: 'black' }}
+          >
+            {follow.nickname}
+          </Link>
         </Col>
         <Col style={{ display: 'flex', alignItems: 'center' }}>
           <CloseCircleOutlined style={{ fontSize: '20px' }} />
