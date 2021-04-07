@@ -93,7 +93,6 @@ function RegisterTastePage(props) {
               background: 'orange*5',
               borderColor: 'orange-5',
               backgroundColor: '#faad14',
-              borderColor: '#faad14',
             }}
           >
             뒤로가기

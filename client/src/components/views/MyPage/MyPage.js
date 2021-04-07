@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Col, Avatar, Badge, Button, Dropdown, Menu } from 'antd';
-import { Tabs, Tab, Card } from 'react-bootstrap';
+import { Tabs, Tab } from 'react-bootstrap';
 import { logoutUser } from '../../../_actions/user_actions';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
-import { UserOutlined, EditOutlined, ProfileFilled } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import ReviewCard from '../../../utils/ReviewCard';
 import Diary from './Sections/Diary';
 import Grade from '../../../utils/Grade';

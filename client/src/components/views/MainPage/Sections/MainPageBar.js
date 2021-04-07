@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Typography } from 'antd';
 import { CompassTwoTone } from '@ant-design/icons';
 import 'antd/dist/antd.css';
@@ -19,10 +19,8 @@ const { kakao } = window;
 function MainPageBar(props, { change }) {
   const [lat, setlat] = useState('');
   const [lng, setlng] = useState('');
-  console.log(props.address);
   const [Address, setAddress] = useState('');
   const [IsPostOpen, setIsPostOpen] = useState(false);
-
   const [isZoneCode, setIsZoneCode] = useState();
 
   const nowPlaceHandler = () => {
@@ -38,17 +36,14 @@ function MainPageBar(props, { change }) {
       coord.getLng(),
       coord.getLat(),
       function (result, status) {
-        console.log(result);
         if (status === kakao.maps.services.Status.OK) {
           setAddress(result[0].address.address_name);
-          console.log(result);
           const region_name = [
             result[0].address.region_1depth_name,
             result[0].address.region_2depth_name,
             result[0].address.region_3depth_name,
           ];
           props.change(result[0].address.address_name, lat, lng, region_name);
-          // props.change(result[0].address.address_name);
         }
       },
     );
@@ -65,25 +60,11 @@ function MainPageBar(props, { change }) {
 
     var callback = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
-        // console.log(result[0].road_address.x); // lat
-        // console.log(result[0].road_address.y); // lng
         setlat(result[0].road_address.x); // 위도
         setlng(result[0].road_address.y); //경도
       }
     };
     geocoder.addressSearch(fullAddress, callback);
-
-    // console.log(data.address);
-    // if (data.addressType === 'R') {
-    //   if (data.bname !== '') {
-    //     extraAddress += data.bname;
-    //   }
-    //   if (data.buildingName !== '') {
-    //     extraAddress +=
-    //       extraAddress !== '' ? `, ${data.buildingName}` : data.buildingName;
-    //   }
-    //   fullAddress += extraAddress !== '' ? ` (${extraAddress})` : '';
-    // }
     setIsZoneCode(data.zonecode);
     setAddress(fullAddress);
     setIsPostOpen(!IsPostOpen);

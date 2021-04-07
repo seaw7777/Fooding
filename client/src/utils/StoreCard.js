@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Row, Col, Card, Button, Container, Image } from 'react-bootstrap';
-import { StarFilled, StarOutlined } from '@ant-design/icons';
-import { fetchLikeStore, fetchDeleteStore } from '../_api/User';
-import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import { Card, Image } from 'react-bootstrap';
+import { fetchDeleteStore } from '../_api/User';
+import { AiFillHeart } from 'react-icons/ai';
 
 function StoreCard(props) {
   const [checkLike, setcheckLike] = useState(props.like);

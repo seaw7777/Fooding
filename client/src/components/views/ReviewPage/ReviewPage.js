@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Rating from '@material-ui/lab/Rating';
-
 import Box from '@material-ui/core/Box';
-import { Input, Button } from 'antd';
-import ImageUploader from 'react-images-upload';
+import { Input } from 'antd';
+
 import './Review.css';
 import { postUserReview } from '_api/Review';
-import axios from 'axios';
-import { SERVER } from 'Config.js';
 
 function ReviewPage(props) {
   const { TextArea } = Input;
@@ -167,14 +164,6 @@ function ReviewPage(props) {
         />
       </div>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {/* <ImageUploader
-          withIcon={true}
-          buttonText="사진 등록"
-          onChange={onDrop}
-          imgExtension={['.jpg', '.gif', '.png', '.gif']}
-          maxFileSize={5242880}
-          label="리뷰 사진을 등록하세요."
-        /> */}
         <input
           type="file"
           name="files"

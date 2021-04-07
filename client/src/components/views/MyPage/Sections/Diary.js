@@ -1,6 +1,5 @@
 import React from 'react';
 import { Timeline } from 'antd';
-import { ClockCircleOutlined } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 function Diary(props) {

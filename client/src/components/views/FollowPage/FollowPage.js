@@ -3,7 +3,6 @@ import { Button } from 'antd';
 import { LeftCircleOutlined } from '@ant-design/icons';
 import FollowList from './Sections/FollowList';
 import FollowingList from './Sections/FollowingList';
-import user_reducer from '_reducer/user_reducer';
 import axios from 'axios';
 import { SERVER } from '../../../Config.js';
 import InfiniteScroll from 'react-infinite-scroll-component';

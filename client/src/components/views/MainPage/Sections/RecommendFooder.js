@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card, Avatar, Carousel, Button } from 'antd';
+import { Card } from 'antd';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import { UserOutlined } from '@ant-design/icons';
+
 const settings = {
   infinite: true,
   slidesToShow: 4,

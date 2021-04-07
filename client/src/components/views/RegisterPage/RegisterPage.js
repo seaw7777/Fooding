@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import residences from 'utils/areaInfo';
 import NicknameObj from 'utils/NickName';
-import EmailModal from './Sections/EmailModla';
 import { Form, Input, Cascader, Select, Button, Steps, Typography } from 'antd';
 import 'antd/dist/antd.css';
 
@@ -66,7 +65,7 @@ const RegisterPage = props => {
   // 닉네임 랜덤으로 생성
   const onNickNameHandler = event => {
     const newNickNameFirst = NicknameObj['first'];
-    let idx = Math.floor(Math.random() * 6);
+
     let RandomeFirst =
       newNickNameFirst[
         Math.floor(Math.random() * (newNickNameFirst.length - 1))
@@ -78,19 +77,15 @@ const RegisterPage = props => {
         Math.floor(Math.random() * (newNickNameSecond.length - 1))
       ];
     const RandomeNickname = RandomeFirst + RandomeSecond;
-    console.log(RandomeNickname);
     setNickName(RandomeNickname);
   };
 
   const onAddressHandler = event => {
     let address = event[0] + ' ' + event[1];
-    console.log(address);
     setAddress(address);
   };
 
   const renderButton = () => {
-    console.log(Email === '' || NickName === '' || Password === '');
-    // console.log(Address[0] === undefined);
     if (
       Email === '' ||
       NickName === '' ||

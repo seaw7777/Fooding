@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Avatar } from 'antd';
-import { UserOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 
 function FooderList(props) {
   const renderFollowList = () =>
