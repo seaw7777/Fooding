@@ -104,7 +104,7 @@ def review_write(request):
     index = 0
     store_index = 0
     for f in file:
-        f.name = str(re.id)+"_"+ str(request.data.get('user_id')) + "_" + str(index)+".png"
+        f.name = str(re.id)+ "_" + str(index)+".png"
         default_storage.save("review"+'/'+f.name, f)
         
         f.name = str(request.data.get('store_id')) +"_"+ str(store_index)+".png" 
