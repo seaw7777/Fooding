@@ -29,6 +29,7 @@ def store_detail(request, store_id, user_id):
             "lng" : store.lng,
             "main_category" : store.main_category,
             "middle_category" : store.middle_category,
+            "image" : store.image,
             "review_cnt" : store.review_cnt,
             "isWish" : True,
         })
@@ -42,6 +43,7 @@ def store_detail(request, store_id, user_id):
             "lng" : store.lng,
             "main_category" : store.main_category,
             "middle_category" : store.middle_category,
+            "image" : store.image,
             "review_cnt" : store.review_cnt,
             "isWish" : False,
         })

@@ -119,6 +119,7 @@ def review_write(request):
         f.name = str(request.data.get('store_id')) +"_"+ str(store_index)+".png" 
         default_storage.save("store"+'/'+f.name, f)
         index += 1
+        
     re.objects.update(
         image = index
     )
