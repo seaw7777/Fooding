@@ -52,7 +52,10 @@ function MyPage(props) {
         // redux에 저장된 user id 사용하기
         const review = await fetchUserReview(props.user.loginSuccess.id);
         console.log(review.data);
-        setmyReview(review.data);
+        let reviews = review.data.sort(
+          (a, b) => Date.parse(b.write_date) - Date.parse(a.write_date),
+        );
+        setmyReview(reviews);
 
         const follower = await fetchUserFollow(props.user.loginSuccess.id);
         setuserFollowerInfo(follower.data);

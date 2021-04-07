@@ -4,7 +4,6 @@ import { ClockCircleOutlined } from '@ant-design/icons';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 function Diary(props) {
-  console.log(props.review);
   const renderTimeLine = props.review.map((rv, index) => {
     return (
       <Timeline.Item color="red" style={{ marginTop: '0.1rem' }} key={index}>
