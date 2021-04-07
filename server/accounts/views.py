@@ -81,15 +81,12 @@ def signup(request):
         ).save()
 
         # 카테고리 별 선호도 초기값 셋팅
-<<<<<<< Updated upstream
-=======
 
         reviewdata = reviewcategory.objects.filter(user_id=request.data.get('user_id')).values()
->>>>>>> Stashed changes
         taste = request.data.get('taste')
         for i in taste:
             if(i == "한식"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     krzzimandtang=1,
                     krbbq=1,
                     krgukbap=1,
@@ -102,11 +99,11 @@ def signup(request):
                     krfood=1,
                 )
             elif(i == "분식"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     bunsick=1,
                 )
             elif(i == "일식"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     jpfriedfood=1,
                     jpsashimi=1,
                     jphomecooking=1,
@@ -115,36 +112,36 @@ def signup(request):
                     jpfood=1,
                 )
             elif(i == "카페"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     cddrink=1,
                     cdcafe=1,
                     cddessert=1,
                 )
             elif(i == "중식"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     chnoodles=1,
                     chfriedfood=1,
                     chbbq=1,
                     chfood=1,
                 )
             elif(i == "양식"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     wenoodles=1,
                     wepizza=1,
                     wesalad=1,
                     wefood=1,
                 )
             elif(i == "술집"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     brbar=1,
                     brjpanbar=1,
                 )
             elif(i == "베이커리"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     bkbakery=1,
                 )
             elif(i == "패스트푸드"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     fffood=1,
                 )
 
