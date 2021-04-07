@@ -1,16 +1,30 @@
 <p align="center">
 <img src="images/logo.png">
 </p>
-<h1> Fooding   ![Generic badge](https://img.shields.io/badge/version-1.1.1-green.svg)</h1>
-<h2 align="center"> Tech Stack </h2> 
+<h1 font-weight:bold> Fooding   ![Generic badge](https://img.shields.io/badge/version-1.1.1-orange.svg)</h1><br>
+  
+# About Fooding
+
+> 『검증된 리뷰와 함께! 사용자 follow 기반 맛집 추천 서비스』
+
+<br>
+
+# Why Fooding
+
+>  음식점 리뷰 검증을 통해 신뢰성 있는 정보와 취향이 비슷한 사용자 기반의 맛집 정보를 제공하기 위해 제작했습니다.
+
+<br>
+
+## __Symbolic Character__ 
+<img src="images/Character.png">
+
+## __Tech Stack__  
 
 <p align="center">
-<img src="https://img.shields.io/badge/Python-3766AB?style=flat-square&logo=Python&logoColor=white" margin="3px">
-<img src="https://img.shields.io/apm/v/npm.svg?color=red&label=Python&logo=Python&logoColor=blue&style=social">
-<img src="https://img.shields.io/apm/v/npm.svg?color=blue&label=Python&logo=Python&logoColor=blue">
+<img src="https://img.shields.io/badge/Python-3.6.8-blue?style=flat&logo=Python">
+<img src="https://img.shields.io/badge/React-17.0.2-9cf?style=flat&logo=React">
+<img src="https://img.shields.io/badge/Django-3.1.1-green?style=flat&logo=Django">
 
-<img src="https://img.shields.io/badge/Django-092E20?style=flat-square&logo=Django&logoColor=white" >
-<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white" >
 </p>
 <p align="center">
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white">
@@ -18,63 +32,53 @@
 <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=Docker&logoColor=white" >
 <img src="https://img.shields.io/badge/Jenkins-D24939?style=flat-square&logo=Jenkins&logoColor=white">
 </p>
+<br>
 
+## __Project Structure__
 
-# About Fooding
-
-> 『검증된 리뷰와 함께! 사용자 follow 기반 맛집 추천 서비스』
-
-
-# Why Fooding
-
->  음식점 리뷰 검증을 통해 신뢰성 있는 정보와 취향이 비슷한 사용자 기반의 맛집 정보를 제공하기 위해 제작했습니다.
-
+<img src="images/Structure.png">
 
 # Install
 
-## Django
-#### 가상환경 생성
-```
+### __Django__
++ #### 가상환경 생성
+ ```
     python -m venv venv
     python manage.py migrate
 ```
-#### 가상환경 진입
++ #### 가상환경 진입
 ```
     source venv/Scripts/activate
 ```
-#### 패키지 설치
++ #### 패키지 설치
 ```
     pip install -r requirements.txt
 ```
-#### DB 설계
++ #### DB 설계
 ```
     python manage.py migrate
 ```
-#### Django 실행
++ #### Django 실행
 ```
     python manage.py runserver
 ```
 
-## React
-#### 패키지 설치
+<br>
+
+### __React__
++ #### 패키지 설치
 ```
     npm i
 ```
-#### 패키지 실행
++ #### 패키지 실행
 ```
     npm run start
 ```
-
-
-
-# Project Construction
-
-> FrontEnd(React.js), BackEnd(Django), DataBase(MySql)
-
+<br>
 
 # 기능
 
-### 회원가입 & 로그인
+### __회원가입 & 로그인__
 
 img 
 
@@ -83,9 +87,7 @@ img
 
 
 
-### Fooding 서비스
-
-#### Home
+#### __Home__
 
 img 
 
@@ -94,7 +96,7 @@ img
 * 사용자 기반 맛집 정보 제공
 
 
-#### Search
+#### __Search__
 
 img 
 
@@ -103,7 +105,7 @@ img
 
 
 
-#### Companion
+#### __Companion__
 
 img 
 
@@ -113,7 +115,7 @@ img
  
 
 
-#### MyPage
+#### __MyPage__
 
 img 
 
@@ -124,20 +126,20 @@ img
 * 작성한 리뷰의 다이어리 형식과 상세 정보 조회 가능
 * 찜한 장소에 대한 조회 가능
 
-
+<br>
 
 # 세부 기획
 
-### ERD
+### __ER-Diagram__
 
 <img src="images/ERD.png">
 
 
-### DB Table
+### __DB Table__
 
 <img src="images/DB.png">
 
-### Wire Frame
+### __Wire Frame__
 
 <img src="images/WireFrame1.png">
 

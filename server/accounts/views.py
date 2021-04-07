@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.http import HttpResponse
+from django.core.files.storage import default_storage
 
 from rest_framework import viewsets
 from rest_framework import status
@@ -80,10 +81,12 @@ def signup(request):
         ).save()
 
         # 카테고리 별 선호도 초기값 셋팅
+
+        reviewdata = reviewcategory.objects.filter(user_id=userid.id).values()
         taste = request.data.get('taste')
         for i in taste:
             if(i == "한식"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     krzzimandtang=1,
                     krbbq=1,
                     krgukbap=1,
@@ -96,11 +99,11 @@ def signup(request):
                     krfood=1,
                 )
             elif(i == "분식"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     bunsick=1,
                 )
             elif(i == "일식"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     jpfriedfood=1,
                     jpsashimi=1,
                     jphomecooking=1,
@@ -109,36 +112,36 @@ def signup(request):
                     jpfood=1,
                 )
             elif(i == "카페"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     cddrink=1,
                     cdcafe=1,
                     cddessert=1,
                 )
             elif(i == "중식"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     chnoodles=1,
                     chfriedfood=1,
                     chbbq=1,
                     chfood=1,
                 )
             elif(i == "양식"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     wenoodles=1,
                     wepizza=1,
                     wesalad=1,
                     wefood=1,
                 )
             elif(i == "술집"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     brbar=1,
                     brjpanbar=1,
                 )
             elif(i == "베이커리"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     bkbakery=1,
                 )
             elif(i == "패스트푸드"):
-                reviewcategory.objects.update(
+                reviewdata.update(
                     fffood=1,
                 )
 
@@ -182,9 +185,19 @@ def change_pw(request):
 
     return Response({'success': 'success'}, status=status.HTTP_202_ACCEPTED)
 
+# 프로필 이미지 변경
+@api_view(['POST'])
+def change_image(request):
+    id = request.data.get('user_id')
+    # user = User.objects.get(id = id)
+    file = request.FILES['file']
+    file.name = str(id) + "_profile.png"
+    if(default_storage.exists("user" + '/' + file.name)):
+        default_storage.delete("user" + '/' + file.name)
+    path = default_storage.save("user"+'/'+file.name, file)
+    return Response(status=status.HTTP_200_OK)
+
 # 주소지 변경
-
-
 @api_view(['POST'])
 def change_address(request):
     print(request.data.get('user_id'))
@@ -236,6 +249,7 @@ def follower_info(request, id):
                 "email": fw.email,
                 "address": fw.address,
                 "spoon_cnt": fw.spoon_cnt,
+                "grade": fw.grade,
             })
 
         return JsonResponse(follower, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)
@@ -262,6 +276,7 @@ def following_info(request, id):
                 "email": fw.email,
                 "address": fw.address,
                 "spoon_cnt": fw.spoon_cnt,
+                "grade": fw.grade,
             })
 
         return JsonResponse(following, safe=False, json_dumps_params={'ensure_ascii': False}, status=status.HTTP_200_OK)

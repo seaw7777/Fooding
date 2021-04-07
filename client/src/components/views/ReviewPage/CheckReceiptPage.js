@@ -145,7 +145,7 @@ import Column from 'antd/lib/table/Column';
 
 function CheckReceiptPage(props) {
   const [picture, setpicture] = useState([]);
-  const [ocr, setOcr] = useState('Recognizing...');
+  const [ocr, setOcr] = useState('영수증을 등록해주세요.');
   const [Next, setNext] = useState(false);
 
   const worker = createWorker({
@@ -153,6 +153,7 @@ function CheckReceiptPage(props) {
   });
 
   const doOCR = async () => {
+    setOcr('영수증 인식 중입니다...');
     await worker.load();
     await worker.loadLanguage('kor');
     await worker.initialize('kor');
@@ -160,10 +161,13 @@ function CheckReceiptPage(props) {
       data: { text },
     } = await worker.recognize(picture[picture.length - 1]);
     console.log(text);
+
     console.log(text.includes('매 장') || text.includes('매장'));
     if (text.includes('매 장') || text.includes('매장')) {
-      setOcr('Pass');
+      setOcr('리뷰 작성하러 GoGo!!');
       setNext(true);
+    } else {
+      setOcr('영수증 인식에 실패했습니다 ㅜㅜ');
     }
   };
 
@@ -171,6 +175,7 @@ function CheckReceiptPage(props) {
     let newpicture = picture;
     setpicture(newpicture);
     console.log(picture[picture.length - 1]);
+    setOcr('인증 버튼을 눌러주세요.');
   };
 
   return (
@@ -180,7 +185,7 @@ function CheckReceiptPage(props) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          marginTop: '20%',
+          marginTop: '30%',
         }}
       >
         <h3 style={{ textAlign: 'center' }}>{ocr}</h3>
@@ -193,7 +198,7 @@ function CheckReceiptPage(props) {
           label="인증할 영수증을 선택하세요."
         />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         {Next ? (
           <Link
             to={{
@@ -204,7 +209,14 @@ function CheckReceiptPage(props) {
               },
             }}
           >
-            <Button>다음</Button>
+            <Button
+              style={{
+                backgroundColor: '#faad14',
+                borderColor: '#faad14',
+              }}
+            >
+              다음
+            </Button>
           </Link>
         ) : (
           <Link to="/review/post">
@@ -216,7 +228,15 @@ function CheckReceiptPage(props) {
             인증
           </Button>
         ) : (
-          <Button onClick={doOCR}>인증</Button>
+          <Button
+            onClick={doOCR}
+            style={{
+              backgroundColor: '#faad14',
+              borderColor: '#faad14',
+            }}
+          >
+            인증
+          </Button>
         )}
       </div>
     </div>

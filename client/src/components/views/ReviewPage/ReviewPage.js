@@ -19,6 +19,7 @@ function ReviewPage(props) {
 
   const store_id = props.location.state.store_id;
   const user_id = props.location.state.user_id;
+  const [picture, setpicture] = useState([]);
   let today = new Date();
   let year = today.getFullYear();
   let month = today.getMonth();
@@ -169,6 +170,7 @@ function ReviewPage(props) {
         {/* <ImageUploader
           withIcon={true}
           buttonText="사진 등록"
+          onChange={onDrop}
           imgExtension={['.jpg', '.gif', '.png', '.gif']}
           maxFileSize={5242880}
           label="리뷰 사진을 등록하세요."

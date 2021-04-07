@@ -18,4 +18,5 @@ urlpatterns = [
     path('make_wish/<int:user_id>&&<int:store_id>/', views.make_wish),
     path('delete_wish/<int:user_id>&&<int:store_id>/', views.delete_wish),
     path('select_wish/<int:user_id>/', views.select_wish),
+    path('change_profile_image/',views.change_image),
 ]

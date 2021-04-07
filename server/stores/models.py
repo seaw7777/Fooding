@@ -16,7 +16,8 @@ class Store(models.Model):
     friend = models.IntegerField(blank=True, null=True)
     children = models.IntegerField(blank=True, null=True)
     pet = models.IntegerField(blank=True, null=True)
-
+    image = models.IntegerField(blank=True, null=True)
+    
     class Meta:
         managed = False
         db_table = 'Store'

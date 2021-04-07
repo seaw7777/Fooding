@@ -17,23 +17,27 @@ from .serializers import uploadImage
 @api_view(['POST'])
 def fileupload(request):
     file = request.FILES.getlist('files')
-    print(request.method)
+    # file = request.FILES['files']
+    # print(file)
+    # print(" 파일길이 : " + str(len(file)))
+    # print(request.POST)
     # print(request.FILES)
     # user_id = request.data.get('user_id')
     # print(user_id)
     index = 0
+    print(len(file))
     for i in file:
-        print(i)
         i.name = str(index) + "test.png" 
-        index+=1
-        # i.save('test.png',content,save=True)       
-        path = default_storage.save(i.name, i)
+        path = i.name
         print(path)
-        print(type(i))
-        print(type(i.read()))
-        print(type(str((i.read()))))
-        # os.renames(i , "C:/SSAFY/IMG/test.png")
-        # tmp_file = os.path.join(settings.MEDIA_ROOT, path)
+        if(default_storage.exists("store"+'/'+path)):
+            default_storage.delete("store"+'/'+path)
+        # while default_storage.exists("store"+'/'+path):
+        #     index+=1
+        #     i.name = str(index) + "test.png"
+        #     path = i.name
+        #     print(path)
+        path = default_storage.save("store"+'/'+i.name, i)
+        print(path)
         
-
     return Response(status=status.HTTP_200_OK)
