@@ -17,7 +17,6 @@ import Rating from '@material-ui/lab/Rating';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
 function StoreDetailPage(props) {
-  const [Images, setImages] = useState([1, 2]);
   const { Title, Text } = Typography;
   const [StoreInfo, setStoreInfo] = useState([]);
   const storeId = props.match.params.StoreId;
@@ -35,12 +34,13 @@ function StoreDetailPage(props) {
           storeId,
           props.user.loginSuccess.id,
         );
-        console.log('?????');
-        console.log(response.data[0]);
         setStoreInfo(response.data[0]);
         setlikeStoreCheck(response.data[0].isWish);
         const res = await fetchStoreReview(storeId);
-        setReviews(res.data);
+        let reviews = res.data.sort(
+          (a, b) => Date.parse(b.write_date) - Date.parse(a.write_date),
+        );
+        setReviews(reviews);
         const ress = await StoreMenuInfo(storeId);
         setMenus(ress.data);
 
@@ -154,7 +154,7 @@ function StoreDetailPage(props) {
   return (
     <div>
       <div>
-        <ImageSlider images={Images} storeId={storeId} />
+        <ImageSlider images={StoreInfo.image} storeId={storeId} />
         <div
           style={{
             display: 'flex',

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Avatar, Carousel, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { UserOutlined } from '@ant-design/icons';
+
 const settings = {
   infinite: true,
   slidesToShow: 4,
@@ -10,6 +11,14 @@ const settings = {
 };
 function RecommendFooder(props) {
   const { Meta } = Card;
+  const [hereImage, sethereImage] = useState(true);
+  const [notImage, setnotImage] = useState(false);
+  const defaultProfile = './images/cat.jpg';
+
+  const renderFooderImage = e => {
+    e.target.src = defaultProfile;
+  };
+
   return (
     <div
       style={{
@@ -40,7 +49,7 @@ function RecommendFooder(props) {
             >
               <div>
                 <img
-                  src="./images/cat.jpg"
+                  src={`http://j4d107.p.ssafy.io:8000/media/user/${fooder.id}_profile.png`}
                   style={{
                     margin: '0',
                     width: '50px',
@@ -49,7 +58,22 @@ function RecommendFooder(props) {
                     border: 'solid green',
                     marginLeft: '1.4rem',
                   }}
+                  onError={renderFooderImage}
                 />
+
+                {/* {notImage && (
+                  <img
+                    src="./images/cat.jpg"
+                    style={{
+                      margin: '0',
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '50%',
+                      border: 'solid green',
+                      marginLeft: '1.4rem',
+                    }}
+                  />
+                )} */}
               </div>
               <div
                 style={{
