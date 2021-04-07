@@ -97,7 +97,6 @@ def review_write(request):
         write_date = request.data.get('write_date'),
         image = 0,
     )
-    # re = Review.objects.get(store_id = request.data.get('store_id'), user_id = request.data.get('user_id'),contents = request.data.get('contents'))
     reid = instance.pk
     instance.save()
     re = Review.objects.get(id= reid)
@@ -126,7 +125,15 @@ def review_write(request):
     print(index)
     re.image = index
     re.save()
-
+    
+    if(request.data.get('Companion') == "parent"):
+        st.parent = st.parent + 1
+    elif(request.data.get('Companion') == "friend"):
+        st.friend = st.friend +1
+    elif(request.data.get('Companion') == "pet"):
+        st.pet = st.pet + 1
+    elif(request.data.get('Companion') == "children"):
+        st.children = st.children + 1
     st.image = st.image + index
     st.save()
 
