@@ -19,6 +19,11 @@ function StoreCard(props) {
       setcheckLike(true);
     }
   };
+
+  const defaultProfile = '/images/Fooding/가게 이미지.png';
+  const renderFooderImage = e => {
+    e.target.src = defaultProfile;
+  };
   return (
     <div>
       <Card style={{ width: '18rem', margin: '1rem auto' }}>
@@ -29,9 +34,9 @@ function StoreCard(props) {
           }}
         >
           <Image
-            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+            src="/images/logo.png"
             roundedCircle
-            style={{ width: '50px', height: '50px' }}
+            style={{ marginLeft: '0.5rem', width: '50px', height: '50px' }}
           />
           <div style={{ marginLeft: '0.8rem', width: '100%' }}>
             <Card.Title style={{ fontSize: '18px', margin: '0.3rem' }}>
@@ -59,7 +64,8 @@ function StoreCard(props) {
         <a href={`/store/${props.store.id}`}>
           <Card.Img
             variant="top"
-            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+            src={`https://j4d107.p.ssafy.io/media/store/${props.store.id}_0.png`}
+            onError={renderFooderImage}
           />
         </a>
         <Card.Body style={{ textAlign: 'center' }}>

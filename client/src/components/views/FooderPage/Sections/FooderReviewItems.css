@@ -23,14 +23,3 @@
   transform: translate(-50%, -50%);
   z-index: 2;
 }
-
-/* 
-style={{
-  width: '180px',
-  height: '150px',
-  position: 'relative',
-  backgroundSize: '100%',
-  backgroundImage: `URL('/images/basicImage.jpg')`,
-  opacity: '0.5',
-  marginBottom: '1rem',
-}} */

@@ -1,16 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { LeftCircleOutlined } from '@ant-design/icons';
 import UserInfoUpdate from './Sections/UserInfoUpdate';
 import UserImageUpdate from './Sections/UserImageUpdate';
 
 function UserUpdatePage(props) {
-  const [checkModal, setcheckModal] = useState(false);
-
-  const modalHandler = () => {
-    console.log(checkModal);
-    setcheckModal(true);
-  };
-
   return (
     <div style={{ padding: '1rem' }}>
       <div

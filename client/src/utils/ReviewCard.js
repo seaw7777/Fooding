@@ -8,7 +8,7 @@ function ReviewCard(props) {
   const [reviewUrl, setreviewUrl] = useState('');
   useEffect(() => {
     setreviewUrl(
-      `http://j4d107.p.ssafy.io:8000/media/review/${props.review.id}_0.png`,
+      `https://j4d107.p.ssafy.io/media/review/${props.review.id}_0.png`,
     );
   }, []);
 

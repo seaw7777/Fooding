@@ -49,7 +49,6 @@ function MyPage(props) {
   useEffect(() => {
     const MainData = async () => {
       try {
-        // redux에 저장된 user id 사용하기
         const review = await fetchUserReview(props.user.loginSuccess.id);
         let reviews = review.data.sort(
           (a, b) => Date.parse(b.write_date) - Date.parse(a.write_date),
@@ -125,7 +124,6 @@ function MyPage(props) {
 
   const renderLogout = () => {
     window.localStorage.removeItem('token');
-    // redux 로 지워줘야함
     dispatch(logoutUser());
     props.history.push('/login');
   };

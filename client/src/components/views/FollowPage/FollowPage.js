@@ -38,7 +38,6 @@ function FollowPage(props) {
 
   useEffect(() => {
     if (props.location.state.followButton) {
-      console.log('????');
       setfollowButtonStyle({
         color: 'white',
         backgroundColor: '#faad14',

@@ -25,10 +25,9 @@ function RegisterTastePage(props) {
     { name: '베이커리', link: '/images/taste/베이커리.jpg' },
     { name: '패스트푸드', link: '/images/taste/햄버거.jpg' },
   ]);
-  //Taste Avatar에서 선택한 리스트 받아오는 함수
+
   const handleFilters = filters => {
     const newTasteLi = [...filters];
-    // console.log(newTasteLi);
     setTasteLi(newTasteLi);
   };
   const handleSubmit = event => {

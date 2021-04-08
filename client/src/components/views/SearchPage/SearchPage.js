@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Input, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-
 import FooderList from './Sections/FooderList';
 import StoreCard from 'utils/StoreCard';
 import InfiniteScroll from 'react-infinite-scroll-component';

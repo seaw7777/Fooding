@@ -44,27 +44,6 @@ function ReviewPage(props) {
       formData.append('files', fileArray[i]);
     }
 
-    let body = {
-      user_id: user_id,
-      store_id: parseInt(store_id),
-      contents: Contents,
-      star: Star,
-      write_date:
-        year +
-        '-' +
-        (month < 10 ? '0' + month : month) +
-        '-' +
-        (day < 10 ? '0' + day : day),
-      // Companion: Accompany,
-    };
-    console.log(
-      year +
-        '-' +
-        (month < 10 ? '0' + month : month) +
-        '-' +
-        (day < 10 ? '0' + day : day) +
-        'T00:00:00:00Z',
-    );
     formData.append('user_id', user_id);
     formData.append('store_id', parseInt(store_id));
     formData.append('contents', Contents);

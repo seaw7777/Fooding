@@ -10,7 +10,7 @@ function UserImageUpdate(props) {
   console.log(props.userId);
   useEffect(() => {
     setimageUrl(
-      `http://j4d107.p.ssafy.io:8000/media/user/${props.userId}_profile.png`,
+      `https://j4d107.p.ssafy.io/media/user/${props.userId}_profile.png`,
     );
   }, []);
 
@@ -20,13 +20,8 @@ function UserImageUpdate(props) {
 
   const handleOk = () => {
     setIsModalVisible(false);
-    // setimageUrl(
-    //   `http://j4d107.p.ssafy.io:8000/media/user/${props.userId}_profile.png`,
-    // );
     window.location.replace('/mypage/update');
-    setimageUrl(
-      `http://j4d107.p.ssafy.io:8000/media/user/${props.userId}_profile.png`,
-    );
+    setimageUrl(`cmedia/user/${props.userId}_profile.png`);
   };
 
   const handleCancel = () => {
@@ -50,17 +45,11 @@ function UserImageUpdate(props) {
 
     axios
       .post(`${SERVER}accounts/change_profile_image/`, formData, {
-        // 이건 로컬용이다.
         header: {
           'Content-Type': 'multipart/form-data',
         },
       })
-      // .post(`${SERVER}accounts/change_profile_image/`, formData, {
-      //   // 이건 로컬용이다.
-      //   header: {
-      //     'Content-Type': 'multipart/form-data',
-      //   },
-      // })
+
       .then(res => {
         console.log(res);
       })

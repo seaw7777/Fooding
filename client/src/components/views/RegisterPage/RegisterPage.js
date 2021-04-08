@@ -62,7 +62,6 @@ const RegisterPage = props => {
   const onConfirmPasswordHandler = event => {
     setConfirmPassword(event.currentTarget.value);
   };
-  // 닉네임 랜덤으로 생성
   const onNickNameHandler = event => {
     const newNickNameFirst = NicknameObj['first'];
 
@@ -261,10 +260,7 @@ const RegisterPage = props => {
           />
         </Form.Item>
 
-        <Form.Item {...tailFormItemLayout}>
-          {/* <EmailModal /> */}
-          {renderButton()}
-        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>{renderButton()}</Form.Item>
       </Form>
     </div>
   );
