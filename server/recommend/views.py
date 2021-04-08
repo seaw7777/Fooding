@@ -13,6 +13,7 @@ from reviews.models import Review
 from stores.models import Store
 from accounts.models import Follow,User,Wish
 import random
+
 # from .serializers import RecommendSerializer
 
 from .models import reviewcategory
@@ -22,7 +23,7 @@ from .models import reviewcategory
 # 리뷰 카테고리 테이블 넣기
 def insert_data(data,user_id):
     if reviewcategory.objects.filter(user_id=user_id).exists() :
-        print()
+        pass
     else :
         reviewcategory.objects.create(
             user_id = user_id ,
@@ -59,43 +60,6 @@ def insert_data(data,user_id):
             bkbakery=data[30],
             fffood=data[31]
         ).save()
-
-@api_view(['GET'])
-def test(request):
-    review = Review.objects.all().order_by('user_id').values()
-    dic = ["한식찜/탕","한식고기집","한식국밥","한식전골/찌개","한식족발/보쌈","한식해산물",
-           "한식면요리","한식가정식","한식치킨","한식한식","분식분식","일식튀김","일식회","일식가정식","일식어패류","일식면요리","일식일식",
-           "중식면요리","중식튀김요리","중식구이요리","중식중식","양식면요리","양식피자","양식샐러드","양식해외요리","술집술집","술집일본선술집",
-           "빵집빵집","패스트푸드햄버거","카페음료","카페카페","카페디저트"]
-    data = [0]*32
-    print(len(dic),len(data))
-    # print(review)
-    # print(len(review))
-    user_id = review[0]['user_id']
-    for i in range(len(review)):
-        if user_id != review[i]['user_id']:
-            insert_data(data,user_id)
-            data = [0] * 32
-            user_id = review[i]['user_id']
-        store = Store.objects.filter(id__in=[review[i]['store_id']]).values('main_category','middle_category')
-        for j in range(len(store)):
-            string = store[j]['main_category']+store[j]['middle_category']
-            for p in range(len(dic)):
-                if dic[p] == string:
-                    data[p]+=1
-                    break
-    insert_data(data, user_id)
-    
-    # data = Store.objects.all()
-    # print(data.id)
-    # ran_num = random.randint(0,1000)
-    # for i in data:
-    #     i.parents = random.randint(0,1000)
-    #     i.friend = random.randint(0,1000)
-    #     i.children = random.randint(0,1000)
-    #     i.pet = random.randint(0,1000)
-    #     i.save()
-    return Response({'message':'성공'},status=status.HTTP_200_OK)
 
 def calcos(myinfo,info_list):
 
@@ -140,7 +104,6 @@ def calcos(myinfo,info_list):
 
 def categorysearch(my_interest):
     dic = []
-    # print(my_interest)
     if(my_interest.krzzimandtang != 0):
         dic.append("한식찜/탕")
     if(my_interest.krbbq  != 0):
@@ -271,8 +234,6 @@ def recommendStore(request,id):
         for f in follower_id:
             fw = User.objects.get(id=f.follow_id)
             follower.append(fw.id)
-        
-        print(follower)
 
         if(region_name[0] in ("서울","부산","대구","인천","광주","울산","대전","제주","세종")):
             flag = True
@@ -287,7 +248,6 @@ def recommendStore(request,id):
                 
                 for st in rv:
                     string = Store.objects.get(id=st['store_id'])
-                    print("추천된 가게 : "+ string.store_name + " , " + string.main_category+string.middle_category + " , " + string.address + " , " + region_name[0])
                     for j in my_category:
                         if(j == (string.main_category+string.middle_category) and region_name[0] in string.address):
                             dummy_store.append(string.id)
@@ -296,13 +256,11 @@ def recommendStore(request,id):
                 rv = Review.objects.filter(id=fwid).values()
                 for st in rv:
                     string = Store.objects.get(id=st['store_id'])
-                    print(string.id)
                     for j in my_category:
                         if(j == (string.main_category+string.middle_category) and region_name[1] in string.address):
                             if(search_index[0] in string.address or search_index[1] in string.address):
                                 dummy_store.append(string.id)
-        print("나온 값 : ")
-        print(dummy_store)
+        
         #중복제거
         for i in dummy_store:
             if i not in dummy_store2:
@@ -310,7 +268,6 @@ def recommendStore(request,id):
 
         # 좋아요된 가게제거
         for i in wish_store:
-            print("좋아요된 가게 : "+str(i.store_id))
             try:
                 dummy_store2.remove(i.store_id)
             except ValueError:

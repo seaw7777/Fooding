@@ -40,17 +40,21 @@ function CheckReceiptPage(props) {
     console.log(picture[picture.length - 1]);
     setOcr('인증 버튼을 눌러주세요.');
   };
-  const modal = document.getElementsByClassName('modal')[0];
+
   const span = document.getElementsByClassName('close');
 
   const clickbtn = () => {
     console.log(span);
+    const modal = document.getElementById('myModal');
+    console.log(modal);
     modal.style.display = 'block';
   };
   const clickSpan = () => {
+    const modal = document.getElementById('myModal');
     modal.style.display = 'none';
   };
   window.onclick = event => {
+    const modal = document.getElementById('myModal');
     if (event.target == modal) {
       modal.style.display = 'none';
     }
