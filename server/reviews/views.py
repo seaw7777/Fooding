@@ -2,7 +2,7 @@ from django.db.models import query
 from django.db.models.query import QuerySet
 from django.http import JsonResponse
 from django.shortcuts import render
-
+from django.db.models import Avg
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
@@ -18,8 +18,6 @@ from reviews import serializers
 
 # Create your views here.
 # 회원별 리뷰 불러오기
-
-
 @api_view(['GET'])
 def review_info(request, id):
     if User.objects.filter(id=id).exists():
@@ -87,6 +85,7 @@ def review_cur(request):
 # 리뷰 작성
 @api_view(['POST'])
 def review_write(request):
+
     instance = Review.objects.create(
         user_id = request.data.get('user_id'),
         store_id = request.data.get('store_id'),
@@ -101,7 +100,7 @@ def review_write(request):
     st = Store.objects.get(id = request.data.get('store_id'))
 
     file = request.FILES.getlist('files')
-    
+
     #리뷰 이미지 저장
     index = 0
     store_index = 0
@@ -128,10 +127,13 @@ def review_write(request):
     elif(request.data.get('Companion') == "반려동물"):
         st.pet = st.pet + 1
     elif(request.data.get('Companion') == "아이들"):
-        st.children = st.children + 1
+        st.children = st.children + 1     
     st.image = st.image + index
+    st.review_cnt = st.review_cnt + 1
+    a = Review.objects.filter(store_id = st.id).aggregate(Avg('star'))
+    st.star = int(a['star__avg'])
     st.save()
-    print("진입")
+
     # 스푼 카운트 갱신 및 등급 조정
     userdata = User.objects.filter(id=request.data.get('user_id')).values()
     spoon = userdata[0]["spoon_cnt"]
