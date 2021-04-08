@@ -138,7 +138,10 @@
 
 #### __Store__
 
-img
+<img src="images/Store.png">
+<img src="images/Store2.png">
+<img src="images/Store3.png">
+<br>
 
 * 영수증을 OCR 기능으로 신뢰성 있는 리뷰 작성 가능
 * 가게 상세 정보 조회 가능
