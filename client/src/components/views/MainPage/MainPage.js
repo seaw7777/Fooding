@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 import { Typography } from 'antd';
 import MainPageBar from './Sections/MainPageBar';
 import RecommendFooder from './Sections/RecommendFooder';
@@ -23,13 +22,11 @@ function MainPage(props) {
   useEffect(() => {
     const MainData = async () => {
       try {
-        // redux에 저장된 user id 사용하기
         const response = await fetchInfluencer(props.user.loginSuccess.id);
         setFooders(response.data);
 
         const res = await fetchRecommendStore(props.user.loginSuccess.id);
         setStores(res.data);
-        // 만약에 빈 배열이면 10장
       } catch (err) {
         console.log(err);
       }
@@ -44,8 +41,6 @@ function MainPage(props) {
   const handlerAddress = (ad, lat, lng, region_name) => {
     setAddress(ad);
     dispatch(changeUserInfo(ad));
-    // list
-    // 주소를 한꺼번에 말고 나눠서 보내기
     const body = {
       user_id: props.user.loginSuccess.id,
       lat: lat,
@@ -53,15 +48,10 @@ function MainPage(props) {
       address: ad,
       region_name: region_name,
     };
-    // 주소바꾼다는 API
-
-    // GET 아이디만 보내면 된다.
     ChangeUserAddress(body)
       .then(res => {
         console.log(res.data);
         window.location.replace('/main');
-        // 지역 정보 보냈을 때 데이터가 아직 안넘어온 거 같은데
-        // setStores(res.data);
       })
       .catch(err => {
         console.log(err);

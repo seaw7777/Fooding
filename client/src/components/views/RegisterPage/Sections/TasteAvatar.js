@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Row, Col } from 'antd';
 
 import 'antd/dist/antd.css';
-import { ConsoleSqlOutlined } from '@ant-design/icons';
 
 function TasteAvatar(props) {
   const [Tastes, setTastes] = useState([]);
