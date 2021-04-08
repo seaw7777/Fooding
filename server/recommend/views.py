@@ -244,10 +244,12 @@ def recommendStore(request,id):
         #특별시 및 광역시 와 각종 도를 구분하여 검색
         if(flag == True):
             for fwid in follower:
-                rv = Review.objects.filter(id=fwid).values()
+                # print("팔로우 아이디 : "+str(fwid))
+                rv = Review.objects.filter(user_id=fwid).values()
                 
                 for st in rv:
                     string = Store.objects.get(id=st['store_id'])
+                    print(string.address)
                     for j in my_category:
                         if(j == (string.main_category+string.middle_category) and region_name[0] in string.address):
                             dummy_store.append(string.id)
