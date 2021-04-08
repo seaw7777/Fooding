@@ -85,7 +85,7 @@ function AccompanyPage(props) {
               style={{
                 fontSize: '18px',
                 fontWeight: 'bold',
-                margin: 'auto',
+                margin: '0.5rem auto',
               }}
             >
               {AccompanyName(Accompany)}

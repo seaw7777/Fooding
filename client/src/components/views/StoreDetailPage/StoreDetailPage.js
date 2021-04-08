@@ -17,12 +17,10 @@ import Rating from '@material-ui/lab/Rating';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
 function StoreDetailPage(props) {
-  const [Images, setImages] = useState([1, 2]);
   const { Title, Text } = Typography;
   const [StoreInfo, setStoreInfo] = useState([]);
   const storeId = props.match.params.StoreId;
   const user = useSelector(state => state.user);
-  const [StoreLocation, setStoreLocation] = useState([]);
   const [Reviews, setReviews] = useState([]);
   const [Menus, setMenus] = useState([]);
   const { kakao } = window;
@@ -35,12 +33,13 @@ function StoreDetailPage(props) {
           storeId,
           props.user.loginSuccess.id,
         );
-        console.log('?????');
-        console.log(response.data[0]);
         setStoreInfo(response.data[0]);
         setlikeStoreCheck(response.data[0].isWish);
         const res = await fetchStoreReview(storeId);
-        setReviews(res.data);
+        let reviews = res.data.sort(
+          (a, b) => Date.parse(b.write_date) - Date.parse(a.write_date),
+        );
+        setReviews(reviews);
         const ress = await StoreMenuInfo(storeId);
         setMenus(ress.data);
 
@@ -53,11 +52,10 @@ function StoreDetailPage(props) {
           level: 3,
         };
         const map = new kakao.maps.Map(container, options);
-        const imageSrc = '/images/FoodingMarker.png', // 마커이미지의 주소입니다
-          imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-          imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+        const imageSrc = '/images/FoodingMarker.png',
+          imageSize = new kakao.maps.Size(64, 69),
+          imageOption = { offset: new kakao.maps.Point(27, 69) };
 
-        // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
         const markerImage = new kakao.maps.MarkerImage(
             imageSrc,
             imageSize,
@@ -66,15 +64,13 @@ function StoreDetailPage(props) {
           markerPosition = new kakao.maps.LatLng(
             response.data[0].lat,
             response.data[0].lng,
-          ); // 마커가 표시될 위치입니다
+          );
 
-        // 마커를 생성합니다
         const marker = new kakao.maps.Marker({
           position: markerPosition,
-          image: markerImage, // 마커이미지 설정
+          image: markerImage,
         });
 
-        // 마커가 지도 위에 표시되도록 설정합니다
         marker.setMap(map);
       } catch (err) {
         console.log(err);
@@ -88,7 +84,6 @@ function StoreDetailPage(props) {
     fetchLikeStore(props.user.loginSuccess.id, storeId).then(res => {
       console.log(res.data);
     });
-    console.log(likeStoreCheck);
   };
 
   const dislikeStoreHandler = () => {
@@ -96,7 +91,6 @@ function StoreDetailPage(props) {
     fetchDeleteStore(props.user.loginSuccess.id, storeId).then(res => {
       console.log(res.data);
     });
-    console.log(likeStoreCheck);
   };
 
   const renderReviewCard = () => {
@@ -134,7 +128,7 @@ function StoreDetailPage(props) {
         </Link>
         <div
           style={{
-            height: '220px',
+            height: document.body.clientHeight - 500,
             overflow: 'auto',
             display: 'flex',
             flexDirection: 'column',
@@ -154,7 +148,7 @@ function StoreDetailPage(props) {
   return (
     <div>
       <div>
-        <ImageSlider images={Images} storeId={storeId} />
+        <ImageSlider images={StoreInfo.image} storeId={storeId} />
         <div
           style={{
             display: 'flex',
@@ -179,7 +173,6 @@ function StoreDetailPage(props) {
                 display: 'flex',
                 justifyContent: 'space-space',
                 alignItems: 'center',
-
                 marginTop: '0.5rem',
               }}
             >
@@ -217,7 +210,7 @@ function StoreDetailPage(props) {
         </div>
         <div
           style={{
-            border: 'solid 1px #FF4500',
+            border: 'solid 2px #FF4500',
             padding: '1rem',
             width: '90%',
             margin: '0rem auto 0.5rem',
@@ -233,13 +226,19 @@ function StoreDetailPage(props) {
         <div>
           <Tabs className="myClass" fill defaultActiveKey="storeMap">
             <Tab eventKey="storeMap" title="지도">
-              <div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignContent: 'center',
+                  marginTop: '1rem',
+                }}
+              >
                 <div
                   id="myMap"
                   style={{
-                    width: '300px',
-                    height: '270px',
-                    margin: '0.5rem auto',
+                    height: '15rem',
+                    width: '80%',
                   }}
                 ></div>
               </div>

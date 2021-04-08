@@ -80,7 +80,10 @@
 
 ### __회원가입 & 로그인__
 
-img 
+<img src="images/Login.png">
+<img src="images/Signup.png">
+<img src="images/Signup2.png">
+<br>
 
 * 다양한 닉네임을 랜덤하게 제공해주는 서비스 제공
 * 가입시 음식 취향 선택을 통해 사용자 기반 맛집 추천
@@ -89,7 +92,8 @@ img
 
 #### __Home__
 
-img 
+<img src="images/Home.jpg">
+<br>
 
 * 지역 선택을 통해 원하는 지역 정보만 확인 가능
 * 인기 Fooder 에 대한 추천 서비스
@@ -98,7 +102,9 @@ img
 
 #### __Search__
 
-img 
+<img src="images/Search.png">
+<img src="images/Search2.png">
+<br>
 
 * Fooder(Spoon 100 ↑)의 사용자 검색 기능
 * 가게 검색 기능
@@ -107,7 +113,8 @@ img
 
 #### __Companion__
 
-img 
+<img src="images/Companion.png">
+<br>
 
 * 부모님, 친구, 아이, 반려동물의 동행 정보를 통해 사용자 기반 가게 정보 제공
 * 가게 찜 기능을 통해 언제든 나중에 확인 가능
@@ -117,14 +124,24 @@ img
 
 #### __MyPage__
 
-img 
+<img src="images/Mypage.png">
+<img src="images/Mypage2.png">
+<br>
 
 * 닉네임, 비밀번호 변경 기능 제공
 * 팔로우, 팔로잉 유저 확인 및 취소 가능
-* Fooder 활동으로 얻은 Spoon Poing 확인 가능
-* 영수증을 OCR 기능으로 신뢰성 있는 리뷰 작성 가능
+* Fooder 활동으로 얻은 Spoon Point 확인 가능
+
 * 작성한 리뷰의 다이어리 형식과 상세 정보 조회 가능
 * 찜한 장소에 대한 조회 가능
+
+
+#### __Store__
+
+img
+
+* 영수증을 OCR 기능으로 신뢰성 있는 리뷰 작성 가능
+* 가게 상세 정보 조회 가능
 
 <br>
 

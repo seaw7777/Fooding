@@ -12,7 +12,7 @@ function AccompanyCard(props) {
     <div>
       <div
         style={{
-          height: 400,
+          height: document.body.clientHeight - 333,
           overflow: 'auto',
           display: 'flex',
           flexDirection: 'column',

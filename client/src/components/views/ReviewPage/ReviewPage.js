@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Rating from '@material-ui/lab/Rating';
-
 import Box from '@material-ui/core/Box';
-import { Input, Button } from 'antd';
-import ImageUploader from 'react-images-upload';
+import { Input } from 'antd';
+
 import './Review.css';
 import { postUserReview } from '_api/Review';
-import axios from 'axios';
-import { SERVER } from 'Config.js';
 
 function ReviewPage(props) {
   const { TextArea } = Input;
@@ -20,10 +17,12 @@ function ReviewPage(props) {
   const store_id = props.location.state.store_id;
   const user_id = props.location.state.user_id;
   const [picture, setpicture] = useState([]);
+
   let today = new Date();
   let year = today.getFullYear();
   let month = today.getMonth();
   let day = today.getDay();
+  let time = today.getTime();
 
   const handleAccompany = (id, value) => {
     console.log(id.slice(0, 10));
@@ -45,30 +44,19 @@ function ReviewPage(props) {
       formData.append('files', fileArray[i]);
     }
 
-    let body = {
-      user_id: user_id,
-      store_id: parseInt(store_id),
-      contents: Contents,
-      star: Star,
-      write_date:
-        year +
-        '-' +
-        (month < 10 ? '0' + month : month) +
-        '-' +
-        (day < 10 ? '0' + day : day),
-      // Companion: Accompany,
-    };
     formData.append('user_id', user_id);
     formData.append('store_id', parseInt(store_id));
     formData.append('contents', Contents);
     formData.append('star', Star);
+    formData.append('Companion', Accompany);
     formData.append(
       'write_date',
       year +
         '-' +
         (month < 10 ? '0' + month : month) +
         '-' +
-        (day < 10 ? '0' + day : day),
+        (day < 10 ? '0' + day : day) +
+        'T00:00-0000',
     );
 
     postUserReview(formData)
@@ -166,25 +154,22 @@ function ReviewPage(props) {
           onChange={handleContent}
         />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {/* <ImageUploader
-          withIcon={true}
-          buttonText="사진 등록"
-          onChange={onDrop}
-          imgExtension={['.jpg', '.gif', '.png', '.gif']}
-          maxFileSize={5242880}
-          label="리뷰 사진을 등록하세요."
-        /> */}
-        <input
-          type="file"
-          name="files"
-          multiple
-          onChange={onDrop}
-          label="인증할 영수증을 선택하세요."
-        />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          width: '70%',
+          margin: 'auto',
+        }}
+      >
+        <input type="file" name="files" multiple onChange={onDrop} />
       </div>
       <div id="container">
-        <button id="button" onClick={handleReview}></button>
+        <button
+          id="button"
+          onClick={handleReview}
+          style={{ marginTop: '1rem' }}
+        ></button>
       </div>
     </div>
   );

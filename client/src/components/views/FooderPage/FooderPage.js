@@ -40,9 +40,6 @@ function FooderPage(props) {
         setfollowCheck(false);
       }
       try {
-        // follow 되어있는지 아닌지 확인하기
-        // setFollowCheck()
-        // redux에 저장된 user id 사용하기
         const review = await fetchUserReview(props.match.params.userId);
         setuserReviewInfo(review.data);
 
@@ -124,7 +121,6 @@ function FooderPage(props) {
           </Col>
         </Row>
         <Row style={{ justifyContent: 'center', paddingBottom: '0.5rem' }}>
-          {/* 팔로우 되어있는지 아닌지 확인 해야함 */}
           {followCheck ? (
             <Button
               style={{ color: 'red', borderColor: 'red' }}

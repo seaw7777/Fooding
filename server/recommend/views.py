@@ -13,6 +13,7 @@ from reviews.models import Review
 from stores.models import Store
 from accounts.models import Follow,User,Wish
 import random
+
 # from .serializers import RecommendSerializer
 
 from .models import reviewcategory
@@ -22,7 +23,7 @@ from .models import reviewcategory
 # 리뷰 카테고리 테이블 넣기
 def insert_data(data,user_id):
     if reviewcategory.objects.filter(user_id=user_id).exists() :
-        print()
+        pass
     else :
         reviewcategory.objects.create(
             user_id = user_id ,
@@ -103,7 +104,6 @@ def calcos(myinfo,info_list):
 
 def categorysearch(my_interest):
     dic = []
-    # print(my_interest)
     if(my_interest.krzzimandtang != 0):
         dic.append("한식찜/탕")
     if(my_interest.krbbq  != 0):
@@ -234,18 +234,18 @@ def recommendStore(request,id):
         for f in follower_id:
             fw = User.objects.get(id=f.follow_id)
             follower.append(fw.id)
-        
-        print(follower)
 
         if(region_name[0] in ("서울","부산","대구","인천","광주","울산","대전","제주","세종")):
             flag = True
         else:
             search_index = region_index(region_name[0])
+
         #팔로우 된 사람들이 쓴 리뷰중 사용자에게 맞는 음식점 목록 불러오기
         #특별시 및 광역시 와 각종 도를 구분하여 검색
         if(flag == True):
             for fwid in follower:
                 rv = Review.objects.filter(id=fwid).values()
+                
                 for st in rv:
                     string = Store.objects.get(id=st['store_id'])
                     for j in my_category:
@@ -256,12 +256,11 @@ def recommendStore(request,id):
                 rv = Review.objects.filter(id=fwid).values()
                 for st in rv:
                     string = Store.objects.get(id=st['store_id'])
-                    print(string.id)
                     for j in my_category:
                         if(j == (string.main_category+string.middle_category) and region_name[1] in string.address):
                             if(search_index[0] in string.address or search_index[1] in string.address):
                                 dummy_store.append(string.id)
-        print(dummy_store)
+        
         #중복제거
         for i in dummy_store:
             if i not in dummy_store2:

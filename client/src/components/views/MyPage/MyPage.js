@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
 import { Row, Col, Avatar, Badge, Button, Dropdown, Menu } from 'antd';
-import { Tabs, Tab, Card } from 'react-bootstrap';
+import { Tabs, Tab } from 'react-bootstrap';
 import { logoutUser } from '../../../_actions/user_actions';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
-import { Link } from 'react-router-dom';
-import { UserOutlined, EditOutlined, ProfileFilled } from '@ant-design/icons';
+
+import { EditOutlined } from '@ant-design/icons';
 import ReviewCard from '../../../utils/ReviewCard';
 import Diary from './Sections/Diary';
 import Grade from '../../../utils/Grade';
@@ -49,10 +50,11 @@ function MyPage(props) {
   useEffect(() => {
     const MainData = async () => {
       try {
-        // redux에 저장된 user id 사용하기
         const review = await fetchUserReview(props.user.loginSuccess.id);
-        console.log(review.data);
-        setmyReview(review.data);
+        let reviews = review.data.sort(
+          (a, b) => Date.parse(b.write_date) - Date.parse(a.write_date),
+        );
+        setmyReview(reviews);
 
         const follower = await fetchUserFollow(props.user.loginSuccess.id);
         setuserFollowerInfo(follower.data);
@@ -123,7 +125,6 @@ function MyPage(props) {
 
   const renderLogout = () => {
     window.localStorage.removeItem('token');
-    // redux 로 지워줘야함
     dispatch(logoutUser());
     props.history.push('/login');
   };
@@ -286,7 +287,7 @@ function MyPage(props) {
             {showReviewCardPage && (
               <div
                 style={{
-                  height: 295,
+                  height: document.body.clientHeight - 390,
                   overflow: 'auto',
                   display: 'flex',
                   flexDirection: 'column',
@@ -302,7 +303,7 @@ function MyPage(props) {
           <Tab eventKey="likePlace" title="찜한 장소">
             <div
               style={{
-                height: 350,
+                height: document.body.clientHeight - 342,
                 overflow: 'auto',
                 display: 'flex',
                 flexDirection: 'column',
@@ -320,4 +321,4 @@ function MyPage(props) {
   );
 }
 
-export default MyPage;
+export default withRouter(MyPage);

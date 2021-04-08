@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, Avatar } from 'antd';
-import { UserOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
 function FooderList(props) {
+  const defaultProfile = './images/cat.jpg';
+  const renderImageUrl = e => {
+    e.target.src = defaultProfile;
+  };
   const renderFollowList = () =>
     props.followingList.map((follow, index) => (
       <Link
@@ -18,7 +21,16 @@ function FooderList(props) {
       >
         <Row style={{ margin: '1rem 2.5rem' }} key={index}>
           <Col>
-            <Avatar size="large" icon={<UserOutlined />} />
+            <Avatar
+              size="large"
+              src={
+                <img
+                  src={`https://j4d107.p.ssafy.io/media/user/${follow.id}_profile.png`}
+                  alt="없음"
+                  onError={renderImageUrl}
+                />
+              }
+            />
           </Col>
           <Col
             span={18}

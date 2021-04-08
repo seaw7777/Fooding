@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
-import { Card, Form, Input, Button } from 'antd';
+import { Card, Input, Button } from 'antd';
 import { updateUserPassword } from '_api/User';
+import { withRouter } from 'react-router-dom';
 
 function UserInfoUpdate(props) {
-  // const [nowPassword, setnowPassword] = useState('');
   const [newPassword, setnewPassword] = useState('');
   const [newPasswordCheck, setnewPasswordCheck] = useState('');
   const [Compare, setCompare] = useState(false);
-
-  // const nowPasswordHandler = event => {
-  //   // 현재 비밀번호 맞는지 확인해야함
-  //   setnowPassword(event.currentTarget.value);
-  // };
   const newPasswordHandler = event => {
     setnewPassword(event.currentTarget.value);
   };
   const newPasswordCheckHandler = event => {
-    // 새로운 비밀번호랑 지금 번호랑 같은지 확인해야함
     if (newPassword === event.currentTarget.value) {
       setCompare(true);
     } else {
@@ -26,46 +20,42 @@ function UserInfoUpdate(props) {
   };
 
   const renderComparePW = () => {
-    console.log(Compare);
     if (Compare) {
       return '비밀번호가 같습니다.';
     } else if (newPasswordCheck.length > 1 && !Compare) {
       return '비밀번호를 다시 확인해주세요.';
     }
-    // if (newPassword === newPasswordCheck) {
-
-    // }
   };
 
   const submitHandler = event => {
     event.preventDefault();
-    console.log(newPasswordCheck);
-    console.log(newPassword);
-    // nickname 만 변경,
-    // password 만 변경
-    // 둘 다 변경
     let body = {
       username: props.user.email,
       change_pw: newPassword,
     };
     console.log(body);
-
-    updateUserPassword(body)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    if (newPassword.lenth === 0 || newPasswordCheck.length === 0) {
+      alert('비밀번호를 입력해주세요.');
+    } else {
+      updateUserPassword(body)
+        .then(res => {
+          console.log(res);
+          props.history.push('/mypage');
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
       <Card bordered={true} style={{ width: 350 }}>
         <br />
-        {/* <span style={{ fontSize: '12px' }}>현재 비밀번호</span>
-        <Input
-          onChange={nowPasswordHandler}
-          type="password"
-          value={nowPassword}
-        ></Input> */}
-
         <span style={{ fontSize: '12px' }}>비밀번호</span>
         <Input
           onChange={newPasswordHandler}
@@ -91,4 +81,4 @@ function UserInfoUpdate(props) {
   );
 }
 
-export default UserInfoUpdate;
+export default withRouter(UserInfoUpdate);

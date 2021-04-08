@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 import { Typography } from 'antd';
 import MainPageBar from './Sections/MainPageBar';
 import RecommendFooder from './Sections/RecommendFooder';
 import StoreCard from 'utils/StoreCard';
-import { fetchStoresMainPage, ChangeUserAddress } from '_api/Stores';
+import { ChangeUserAddress } from '_api/Stores';
 import { fetchInfluencer, fetchRecommendStore } from '_api/Recommend';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { changeUserInfo } from '../../../_actions/user_actions';
@@ -14,29 +13,25 @@ const { kakao } = window;
 
 function MainPage(props) {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
   const [Address, setAddress] = useState(''); //초기에 입력한 주소 받아와서 할당하기
   const [Fooders, setFooders] = useState([]);
   const [Stores, setStores] = useState([]);
-  const { Title, Text } = Typography;
+  const { Title } = Typography;
 
   console.log(document.body.clientHeight - 159);
   useEffect(() => {
     const MainData = async () => {
       try {
-        // redux에 저장된 user id 사용하기
         const response = await fetchInfluencer(props.user.loginSuccess.id);
         setFooders(response.data);
 
         const res = await fetchRecommendStore(props.user.loginSuccess.id);
         setStores(res.data);
-        // 만약에 빈 배열이면 10장
       } catch (err) {
         console.log(err);
       }
     };
     MainData();
-    // setAddress(props.user.loginSuccess.address);
   }, []);
 
   useEffect(() => {
@@ -46,8 +41,6 @@ function MainPage(props) {
   const handlerAddress = (ad, lat, lng, region_name) => {
     setAddress(ad);
     dispatch(changeUserInfo(ad));
-    // list
-    // 주소를 한꺼번에 말고 나눠서 보내기
     const body = {
       user_id: props.user.loginSuccess.id,
       lat: lat,
@@ -55,15 +48,10 @@ function MainPage(props) {
       address: ad,
       region_name: region_name,
     };
-    // 주소바꾼다는 API
-
-    // GET 아이디만 보내면 된다.
     ChangeUserAddress(body)
       .then(res => {
         console.log(res.data);
         window.location.replace('/main');
-        // 지역 정보 보냈을 때 데이터가 아직 안넘어온 거 같은데
-        // setStores(res.data);
       })
       .catch(err => {
         console.log(err);

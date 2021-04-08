@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Row, Col } from 'antd';
 import {
@@ -9,7 +9,6 @@ import {
   FcVoicePresentation,
 } from 'react-icons/fc';
 import './Footer.css';
-import { red } from '@material-ui/core/colors';
 
 function Footer() {
   const activeStyle = {

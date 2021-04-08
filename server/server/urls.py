@@ -45,5 +45,4 @@ urlpatterns = [
     path('fooding/recommend/', include('recommend.urls')),
     path('fooding/search/', include('search.urls')),
     path('fooding/stores/', include('stores.urls')),
-    path('fooding/filemanaged/', include('filemanaged.urls'))
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

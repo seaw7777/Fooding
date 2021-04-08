@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Input, Button } from 'antd';
-import { ContainerFilled, SearchOutlined } from '@ant-design/icons';
-import { Tabs, Tab, Nav } from 'react-bootstrap';
+import { SearchOutlined } from '@ant-design/icons';
 import FooderList from './Sections/FooderList';
 import StoreCard from 'utils/StoreCard';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -67,7 +66,6 @@ function SearchPage(props) {
   };
 
   const showFooderInput = val => {
-    console.log(val);
     if (val === 'fooder') {
       setInputValue('푸더의 이름을 검색해주세요.');
     } else {
@@ -79,7 +77,7 @@ function SearchPage(props) {
     return (
       <div
         style={{
-          height: 485,
+          height: document.body.clientHeight - 255,
           overflow: 'auto',
           display: 'flex',
           flexDirection: 'column',
@@ -96,8 +94,6 @@ function SearchPage(props) {
   };
 
   const EnterSearchKeyword = event => {
-    console.log(event.currentTarget.value);
-    console.log(event.key);
     if (InputValue === '가게 이름을 검색해주세요.') {
       fetchSearchStore(SearchValue)
         .then(res => {
@@ -113,7 +109,6 @@ function SearchPage(props) {
           fooder.nickname.toLowerCase().includes(SearchValue),
       );
       setFollowingList(find);
-      console.log(FollowingList);
       setSearchValue('');
     }
   };

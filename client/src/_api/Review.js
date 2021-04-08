@@ -12,9 +12,8 @@ export function fetchUserReview(user_id) {
 export function postUserReview(review) {
   return axios
     .post(
-      `http://59.23.41.85:8088/fooding/reviews/review_write/`,
+      `http://j4d107.p.ssafy.io:8000/fooding/reviews/review_write/`,
       review,
-      // 이건 로컬용이다.
       {
         header: {
           'Content-Type': 'multipart/form-data',

@@ -1,6 +1,4 @@
 import React from 'react';
-import { Badge } from 'antd';
-import { CrownOutlined } from '@ant-design/icons';
 
 function Grade(props) {
   return (

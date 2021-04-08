@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 
 function ReviewCard(props) {
-  console.log(props.review);
+  // console.log(props.review);
+  const [reviewUrl, setreviewUrl] = useState('');
+  useEffect(() => {
+    setreviewUrl(
+      `https://j4d107.p.ssafy.io/media/review/${props.review.id}_0.png`,
+    );
+  }, []);
+
   const renderReviewTitle = () => {
     if (props.review.store_name === undefined) {
       return (
@@ -29,6 +36,10 @@ function ReviewCard(props) {
       );
     }
   };
+
+  const renderImage = () => {
+    setreviewUrl('/images/Fooding/리뷰 이미지1.png');
+  };
   return (
     <div>
       <Col>
@@ -36,7 +47,8 @@ function ReviewCard(props) {
           <Card.Img
             style={{ width: '22rem', height: '8rem' }}
             variant="top"
-            src="/images/Fooding/리뷰 이미지1.png"
+            src={reviewUrl}
+            onError={renderImage}
           />
           <Card.Body>
             {renderReviewTitle()}
