@@ -11,12 +11,10 @@ function ReviewPage(props) {
   const [Star, setStar] = useState(0);
   const [Accompany, setAccompany] = useState('');
   const [Contents, setContents] = useState('');
-  const [realFormData, setrealFormData] = useState({});
   const [fileArray, setfileArray] = useState([]);
 
   const store_id = props.location.state.store_id;
   const user_id = props.location.state.user_id;
-  const [picture, setpicture] = useState([]);
 
   let today = new Date();
   let year = today.getFullYear();
@@ -25,11 +23,8 @@ function ReviewPage(props) {
   let time = today.getTime();
 
   const handleAccompany = (id, value) => {
-    console.log(id.slice(0, 10));
-    console.log(value);
     let tagBtn = document.getElementById(id.slice(0, 10));
     let tagText = document.getElementById(id);
-    console.log(tagBtn);
     tagBtn.style.backgroundColor = 'white';
     tagText.style.color = 'black';
     setAccompany(value);
@@ -43,7 +38,6 @@ function ReviewPage(props) {
     for (let i = 0; i < fileLength; i++) {
       formData.append('files', fileArray[i]);
     }
-
     formData.append('user_id', user_id);
     formData.append('store_id', parseInt(store_id));
     formData.append('contents', Contents);
