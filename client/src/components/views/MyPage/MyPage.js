@@ -29,7 +29,6 @@ const rowStyle = {
 };
 
 function MyPage(props) {
-  console.log(props.user.loginSuccess.spoon_cnt);
   const dispatch = useDispatch();
   const [showDiaryPage, setshowDiaryPage] = useState(true);
   const [showReviewCardPage, setshowReviewCardPage] = useState(false);
