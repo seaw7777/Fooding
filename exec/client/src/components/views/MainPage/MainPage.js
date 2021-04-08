@@ -17,8 +17,6 @@ function MainPage(props) {
   const [Fooders, setFooders] = useState([]);
   const [Stores, setStores] = useState([]);
   const { Title } = Typography;
-
-  console.log(document.body.clientHeight - 159);
   useEffect(() => {
     const MainData = async () => {
       try {
@@ -59,7 +57,6 @@ function MainPage(props) {
   };
 
   const onRemove = id => {
-    console.log(id);
     setStores(Stores.filter(store => store.id != id));
   };
 

@@ -121,17 +121,17 @@ def review_write(request):
     re.image = index
     re.save()
     
-    if(request.data.get('Companion') == "parent"):
+    if(request.data.get('Companion') == "부모님"):
         st.parent = st.parent + 1
-    elif(request.data.get('Companion') == "friend"):
+    elif(request.data.get('Companion') == "친구"):
         st.friend = st.friend +1
-    elif(request.data.get('Companion') == "pet"):
+    elif(request.data.get('Companion') == "반려동물"):
         st.pet = st.pet + 1
-    elif(request.data.get('Companion') == "children"):
+    elif(request.data.get('Companion') == "아이들"):
         st.children = st.children + 1
     st.image = st.image + index
     st.save()
-
+    print("진입")
     # 스푼 카운트 갱신 및 등급 조정
     userdata = User.objects.filter(id=request.data.get('user_id')).values()
     spoon = userdata[0]["spoon_cnt"]
