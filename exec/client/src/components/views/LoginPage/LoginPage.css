@@ -1,0 +1,38 @@
+.loginpage {
+  margin-top: 30%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+.header {
+  text-align: center;
+}
+
+.login_logo {
+  animation: up-down 1.4s infinite ease-in-out alternate;
+}
+@keyframes up-down{
+  from{
+    transform: translatey(0px);
+  }
+  to{
+    transform: translatey(-20px);
+  }
+}
+
+.login_form {
+  border-radius: 10%;
+  border: 3px solid #F08080;
+  padding: 1rem;
+  box-shadow: 5px 5px rgb(255, 255, 255);
+}
+.login_btn{
+  display: flex;
+  width: 80%;
+  margin:auto;
+  justify-content: space-around;
+  margin-bottom: -20px;
+}

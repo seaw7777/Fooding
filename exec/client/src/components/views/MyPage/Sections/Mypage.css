@@ -1,0 +1,16 @@
+@import '~antd/dist/antd.css';
+@import '~bootstrap/dist/css/bootstrap.css';
+
+
+
+button.ant-btn.ant-btn-round.ant-btn-lg {
+  display: flex;
+  align-items: center;
+  color:black
+} 
+.nav-item.nav-link {
+  color:black
+}
+.nav-item.nav-link.active {
+  color:#FF8C00
+}

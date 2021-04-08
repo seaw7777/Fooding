@@ -1,0 +1,25 @@
+@import '~antd/dist/antd.css';
+@import '~bootstrap/dist/css/bootstrap.css';
+
+.item {
+  position: relative;
+  height: 200px;
+  width: 190px;
+  background-size: cover;
+}
+
+.itemcover {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.item .content {
+  position: absolute;
+  top: 85%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
