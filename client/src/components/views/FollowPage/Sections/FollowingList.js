@@ -4,11 +4,24 @@ import { UserOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 function FollowingList(props) {
+  const defaultProfile = './images/cat.jpg';
+  const renderImageUrl = e => {
+    e.target.src = defaultProfile;
+  };
   const renderFollowList = () =>
     props.followingList.map((follow, index) => (
       <Row style={{ marginBottom: '1rem' }} key={index}>
         <Col>
-          <Avatar size="large" icon={<UserOutlined />} />
+          <Avatar
+            size="large"
+            src={
+              <img
+                src={`https://j4d107.p.ssafy.io/media/user/${follow.id}_profile.png`}
+                alt="없음"
+                onError={renderImageUrl}
+              />
+            }
+          />
         </Col>
         <Col
           span={18}

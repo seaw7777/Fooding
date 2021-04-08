@@ -71,7 +71,7 @@ function MyPage(props) {
     };
     MainData();
     setimageUrl(
-      `http://j4d107.p.ssafy.io:8000/media/user/${props.user.loginSuccess.id}_profile.png`,
+      `https://j4d107.p.ssafy.io/media/user/${props.user.loginSuccess.id}_profile.png`,
     );
   }, []);
   const renderImageUrl = () => {
