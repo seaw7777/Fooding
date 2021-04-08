@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Input, Button } from 'antd';
 import { updateUserPassword } from '_api/User';
+import { withRouter } from 'react-router-dom';
 
 function UserInfoUpdate(props) {
   const [newPassword, setnewPassword] = useState('');
@@ -41,10 +42,16 @@ function UserInfoUpdate(props) {
       change_pw: newPassword,
     };
     console.log(body);
-
-    updateUserPassword(body)
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+    if (newPassword.lenth === 0 || newPasswordCheck.length === 0) {
+      alert('비밀번호를 입력해주세요.');
+    } else {
+      updateUserPassword(body)
+        .then(res => {
+          console.log(res);
+          props.history.push('/mypage');
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   return (
@@ -57,13 +64,6 @@ function UserInfoUpdate(props) {
     >
       <Card bordered={true} style={{ width: 350 }}>
         <br />
-        {/* <span style={{ fontSize: '12px' }}>현재 비밀번호</span>
-        <Input
-          onChange={nowPasswordHandler}
-          type="password"
-          value={nowPassword}
-        ></Input> */}
-
         <span style={{ fontSize: '12px' }}>비밀번호</span>
         <Input
           onChange={newPasswordHandler}
@@ -89,4 +89,4 @@ function UserInfoUpdate(props) {
   );
 }
 
-export default UserInfoUpdate;
+export default withRouter(UserInfoUpdate);
