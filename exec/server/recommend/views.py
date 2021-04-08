@@ -61,6 +61,8 @@ def insert_data(data,user_id):
             fffood=data[31]
         ).save()
 
+
+
 def calcos(myinfo,info_list):
 
     index = [0]*34
@@ -234,6 +236,7 @@ def recommendStore(request,id):
         for f in follower_id:
             fw = User.objects.get(id=f.follow_id)
             follower.append(fw.id)
+        
 
         if(region_name[0] in ("서울","부산","대구","인천","광주","울산","대전","제주","세종")):
             flag = True
@@ -244,7 +247,7 @@ def recommendStore(request,id):
         #특별시 및 광역시 와 각종 도를 구분하여 검색
         if(flag == True):
             for fwid in follower:
-                rv = Review.objects.filter(id=fwid).values()
+                rv = Review.objects.filter(user_id=fwid).values()
                 
                 for st in rv:
                     string = Store.objects.get(id=st['store_id'])
@@ -253,14 +256,13 @@ def recommendStore(request,id):
                             dummy_store.append(string.id)
         else:
             for fwid in follower:
-                rv = Review.objects.filter(id=fwid).values()
+                rv = Review.objects.filter(user_id=fwid).values()
                 for st in rv:
                     string = Store.objects.get(id=st['store_id'])
                     for j in my_category:
                         if(j == (string.main_category+string.middle_category) and region_name[1] in string.address):
                             if(search_index[0] in string.address or search_index[1] in string.address):
                                 dummy_store.append(string.id)
-        
         #중복제거
         for i in dummy_store:
             if i not in dummy_store2:

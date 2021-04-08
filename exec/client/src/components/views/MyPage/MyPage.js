@@ -240,12 +240,19 @@ function MyPage(props) {
             <span>{userFollowingInfo.length}</span>
           </Col>
           <Col span={6}>
-            <a
-              href="/mypage/spoon"
+            <Link
+              to={{
+                pathname: '/mypage/spoon',
+                state: {
+                  followButton: false,
+                  followingButton: true,
+                  spoon_cnt: props.user.loginSuccess.spoon_cnt,
+                },
+              }}
               style={{ color: 'black', textDecoration: 'none' }}
             >
               스푼
-            </a>
+            </Link>
             <br />
             <span>{props.user.loginSuccess.spoon_cnt}</span>
           </Col>

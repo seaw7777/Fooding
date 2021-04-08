@@ -4,6 +4,7 @@ import {
   REGISTER_USER,
   LOGOUT_USER,
   CHANGE_USER_ADDRESS,
+  CHANGE_SPOON_CNT,
 } from './types';
 import { SERVER } from 'Config.js';
 
@@ -33,9 +34,15 @@ export const logoutUser = () => ({
 });
 
 export function changeUserInfo(address) {
-  console.log(address);
   return {
     type: CHANGE_USER_ADDRESS,
     payload: address,
+  };
+}
+
+export function changeSpoonCnt(spoon_cnt) {
+  return {
+    type: CHANGE_SPOON_CNT,
+    payload: spoon_cnt,
   };
 }

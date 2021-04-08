@@ -2,7 +2,7 @@ import React from 'react';
 import { LeftCircleOutlined } from '@ant-design/icons';
 import { GiSpoon } from 'react-icons/gi';
 
-function SpoonPage() {
+function SpoonPage(props) {
   return (
     <div style={{ margin: '2rem' }}>
       <div
@@ -23,7 +23,7 @@ function SpoonPage() {
         <GiSpoon
           style={{ color: 'grey', marginRight: '10px', fontSize: '50px' }}
         />
-        100스푼
+        {props.location.state.spoon_cnt}스푼
       </div>
       <p style={{ textAlign: 'center', marginBottom: '30px' }}>
         리뷰 1건당 50 스푼
