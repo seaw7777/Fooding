@@ -11,14 +11,10 @@ export function fetchUserReview(user_id) {
 
 export function postUserReview(review) {
   return axios
-    .post(
-      `http://j4d107.p.ssafy.io:8000/fooding/reviews/review_write/`,
-      review,
-      {
-        header: {
-          'Content-Type': 'multipart/form-data',
-        },
+    .post(`${SERVER}reviews/review_write/`, review, {
+      header: {
+        'Content-Type': 'multipart/form-data',
       },
-    )
+    })
     .then(response => response.data);
 }
