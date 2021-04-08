@@ -41,7 +41,10 @@ function FooderPage(props) {
       }
       try {
         const review = await fetchUserReview(props.match.params.userId);
-        setuserReviewInfo(review.data);
+        let reviews = review.data.sort(
+          (a, b) => Date.parse(b.write_date) - Date.parse(a.write_date),
+        );
+        setuserReviewInfo(reviews);
 
         const follower = await fetchUserFollow(props.match.params.userId);
         setuserFollowerInfo(follower.data);

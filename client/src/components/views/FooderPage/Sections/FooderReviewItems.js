@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './FooderReviewItems.css';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 function FooderReviewItems(props) {
+  const [defaultUrl, setdefaultUrl] = useState('');
+  useEffect(() => {
+    setdefaultUrl(
+      `https://j4d107.p.ssafy.io/media/review/${props.review.id}_0.png`,
+    );
+  }, []);
+
   return (
     <div
+      id="item"
       className="item"
       style={{
-        backgroundImage: `URL('/images/basicImage.jpg')`,
+        backgroundImage: `URL(${defaultUrl})`,
         borderRadius: '20px',
       }}
     >

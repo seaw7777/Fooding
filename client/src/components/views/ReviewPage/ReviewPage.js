@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
 import { Input } from 'antd';
-
+import { changeSpoonCnt } from '../../../_actions/user_actions';
 import './Review.css';
 import { postUserReview } from '_api/Review';
 
 function ReviewPage(props) {
+  const dispatch = useDispatch();
   const { TextArea } = Input;
   const [Star, setStar] = useState(0);
   const [Accompany, setAccompany] = useState('');
@@ -18,8 +20,8 @@ function ReviewPage(props) {
 
   let today = new Date();
   let year = today.getFullYear();
-  let month = today.getMonth();
-  let day = today.getDay();
+  let month = today.getMonth() + 1;
+  let day = today.getDate();
   let time = today.getTime();
 
   const handleAccompany = (id, value) => {
@@ -63,6 +65,8 @@ function ReviewPage(props) {
           setTimeout(ele.classList.add('validate'));
         }, 2250);
         setTimeout(ele.classList.remove('validate'), 1250);
+
+        dispatch(changeSpoonCnt(props.user.loginSuccess.spoon_cnt + 50));
       })
       .catch(err => {
         console.log(err);

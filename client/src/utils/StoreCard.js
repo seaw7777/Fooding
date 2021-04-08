@@ -4,6 +4,7 @@ import { fetchDeleteStore } from '../_api/User';
 import { AiFillHeart } from 'react-icons/ai';
 
 function StoreCard(props) {
+  console.log(props.store);
   const [checkLike, setcheckLike] = useState(props.like);
   const dislikeStoreHandler = () => {
     if (checkLike === true) {

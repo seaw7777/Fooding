@@ -3,6 +3,7 @@ import {
   REGISTER_USER,
   LOGOUT_USER,
   CHANGE_USER_ADDRESS,
+  CHANGE_SPOON_CNT,
 } from '../_actions/types';
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -20,6 +21,14 @@ export default function (state = {}, action) {
         loginSuccess: {
           ...state.loginSuccess,
           address: action.payload,
+        },
+      };
+    case CHANGE_SPOON_CNT:
+      return {
+        ...state,
+        loginSuccess: {
+          ...state.loginSuccess,
+          spoon_cnt: action.payload,
         },
       };
     default:
